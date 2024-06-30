@@ -8,6 +8,7 @@ from rest_framework.test import APIClient
 
 CREATE_USER_URL = reverse('user:create')
 TOKEN_URL = reverse('user:token')
+ME_URL = reverse('user:me')
 
 
 def create_user(**params):
@@ -16,7 +17,7 @@ def create_user(**params):
 
 
 class UserPublicAPITests(TestCase):
-    """Test public features of the user API."""
+    """Test public features of the User API."""
 
     def setUp(self):
         self.client = APIClient()
@@ -91,3 +92,9 @@ class UserPublicAPITests(TestCase):
 
         self.assertNotIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_retrieve_user_unauthorized(self):
+        """Test if authentication is required for Users."""
+        res = self.client.get(path=ME_URL)
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
