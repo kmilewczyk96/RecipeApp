@@ -1,0 +1,23 @@
+.button {
+  font-size: 1.6rem;
+
+  border-radius: 5px;
+
+  padding: 0.8rem 1.6rem;
+}
+
+.cta {
+  color: #e6fcf5;
+  background-color: #087f5b;
+  border: 1px solid rgba(0, 0, 0, 0);
+  transition: box-shadow 0.3s;
+}
+
+@media (hover: hover) {
+  .cta:hover {
+    box-shadow: 0 0 10px rgba(32, 32, 32, 0.7);
+  }
+  .cta:active {
+    box-shadow: 0 0 5px rgba(32, 32, 32, 0.7);
+  }
+}

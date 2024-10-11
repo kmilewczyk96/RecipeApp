@@ -1,36 +1,37 @@
 """
 Views for the User API
 """
-from rest_framework import (
-    authentication,
-    generics,
-    permissions,
-)
+from django.contrib.auth import get_user_model
+
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.response import Response
 from rest_framework.settings import api_settings
+from rest_framework.viewsets import ModelViewSet
 
-from user.serializers import (
-    AuthTokenSerializer,
-    UserSerializer,
-)
+from core.permissions import IsOwnerOrReadOnly
+from user import serializers
 
 
-class CreateUserView(generics.CreateAPIView):
-    """Creates a new User in the database."""
-    serializer_class = UserSerializer
+class UserViewSet(ModelViewSet):
+    serializer_class = serializers.UserSerializer
+    queryset = get_user_model().objects.all()
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsOwnerOrReadOnly]
 
 
 class CreateTokenView(ObtainAuthToken):
     """Create a new Auth Token for User."""
-    serializer_class = AuthTokenSerializer
+    serializer_class = serializers.AuthTokenSerializer
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
-
-class ManageUserView(generics.RetrieveUpdateAPIView):
-    """Manages currently authenticated User."""
-    serializer_class = UserSerializer
-    authentication_classes = [authentication.TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_object(self):
-        return self.request.user
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'userID': user.id
+        })

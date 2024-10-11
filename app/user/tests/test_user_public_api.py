@@ -6,9 +6,12 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 
-CREATE_USER_URL = reverse('user:create')
+USER_URL = reverse('user:user-list')
 TOKEN_URL = reverse('user:token')
-ME_URL = reverse('user:me')
+
+
+def get_detail_url(user_ID):
+    return reverse('user:user-detail', args=[user_ID])
 
 
 def create_user(**params):
@@ -29,7 +32,7 @@ class UserPublicAPITests(TestCase):
             'password': 'some_password123',
             'name': 'John Doe',
         }
-        res = self.client.post(path=CREATE_USER_URL, data=payload)
+        res = self.client.post(path=USER_URL, data=payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         user = get_user_model().objects.get(email=payload['email'])
@@ -43,7 +46,7 @@ class UserPublicAPITests(TestCase):
             'password': 'some_password123',
         }
         create_user(**payload)
-        res = self.client.post(path=CREATE_USER_URL, data=payload)
+        res = self.client.post(path=USER_URL, data=payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -53,7 +56,7 @@ class UserPublicAPITests(TestCase):
             'email': 'test@example.com',
             'password': 'pass'
         }
-        res = self.client.post(path=CREATE_USER_URL, data=payload)
+        res = self.client.post(path=USER_URL, data=payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
         user_exists = get_user_model().objects.filter(email=payload['email']).exists()
@@ -92,9 +95,3 @@ class UserPublicAPITests(TestCase):
 
         self.assertNotIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-
-    def test_retrieve_user_unauthorized(self):
-        """Test if authentication is required for Users."""
-        res = self.client.get(path=ME_URL)
-
-        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)

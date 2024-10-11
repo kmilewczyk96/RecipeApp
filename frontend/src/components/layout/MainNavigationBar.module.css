@@ -1,0 +1,49 @@
+.main-navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: rgba(32, 32, 32, 0.90);
+}
+
+.main-navigation nav {
+  display: flex;
+  max-width: 130rem;
+  justify-content: space-between;
+
+  padding: 1.2rem 0;
+  margin: 0 auto;
+}
+
+.main-navigation ul {
+  display: flex;
+  gap: 2.4rem;
+  list-style: none;
+}
+
+.site-links a:link,
+.site-links a:visited,
+.site-links button {
+  background-color: transparent;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 1.6rem;
+  color: #f1f3f5;
+  border: 1px solid rgba(0, 0, 0, 0);
+  transition: color 0.5s, border 0.5s;
+
+  padding: 0.4rem 0.8rem;
+}
+
+.site-links a.active {
+  color: #f8f9fa;
+  border-bottom-color: #f8f9fa;
+}
+
+@media (hover: hover) {
+  .site-links a:hover,
+  .site-links button:hover {
+    color: #f8f9fa;
+    border-bottom-color: #f8f9fa;
+  }
+}

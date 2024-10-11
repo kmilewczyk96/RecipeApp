@@ -1,0 +1,58 @@
+.form-wrapper {
+  max-width: 60rem;
+  background-image: linear-gradient(#f8f9fa, #f1f3f5);
+
+  box-shadow: 1px 1px 10px rgba(32, 32, 32, 0.1);
+  border: 1px solid #adb5bd;
+  border-radius: 12px;
+  padding: 6rem 12rem;
+  margin: 32rem auto 0;
+}
+
+.form-wrapper .inputs {
+  margin-bottom: 2.4rem;
+}
+
+.form-wrapper .actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2.4rem;
+}
+
+.form-wrapper .actions a {
+  font-size: 1.6rem;
+  border: 1px solid rgba(0, 0, 0, 0);
+  transition: border 0.3s;
+
+  padding: 0.2rem 0.4rem;
+}
+
+@media (hover: hover) {
+  .form-wrapper .actions a:hover {
+    border-bottom-color: #212529;
+  }
+}
+
+.error-message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  background-color: #ffc9c9;
+  color: #c92a2a;
+  border: 1px solid #c92a2a;
+  border-radius: 3px;
+
+  padding: 1.6rem 0.8rem;
+  margin-bottom: 1.6rem;
+}
+
+.error-message p {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.error-message span {
+  font-size: 1.2rem;
+}
