@@ -7,7 +7,7 @@ import LoginPage, {loginAction} from "./pages/LoginPage.jsx";
 import {logoutAction} from "./pages/Logout.js";
 import RegisterPage, {registerAction} from "./pages/RegisterPage.jsx";
 import RootPage from "./pages/RootPage.jsx";
-import UserProfilePage, {userProfileLoader} from "./pages/UserProfilePage.jsx";
+import UserDetailPage, {userDetailLoader} from "./pages/UserDetailPage.jsx";
 
 
 const router = createBrowserRouter([
@@ -36,7 +36,14 @@ const router = createBrowserRouter([
       {
         path: "users",
         children: [
-          {path: ":userID", element: <UserProfilePage/>, loader: userProfileLoader},
+          {path: ":userID", element: <UserDetailPage/>, loader: userDetailLoader},
+        ]
+      },
+      {
+        path: "my-profile",
+        id: "my-profile",
+        children: [
+          {index: true, element: <UserDetailPage/>}
         ]
       }
     ]

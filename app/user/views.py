@@ -34,12 +34,6 @@ class UserDetailView(RetrieveAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    # def get_object(self):
-    #     serializer_ctx = self.get_serializer_context()
-    #     userID = serializer_ctx['request']['userID']
-    #     user = get_user_model().objects.get(id=userID)
-    #     return user
-
 
 class AuthUserDetailView(RetrieveUpdateDestroyAPIView):
     """Get currently authenticated User details."""

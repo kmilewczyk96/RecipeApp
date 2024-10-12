@@ -47,3 +47,17 @@
     border-bottom-color: #f8f9fa;
   }
 }
+
+.banner:link,
+.banner:visited {
+  background-color: transparent;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #f1f3f5;
+  border: 1px solid rgba(0, 0, 0, 0);
+  transition: color 0.5s, border 0.5s;
+
+  padding: 0.4rem 0.8rem;
+}

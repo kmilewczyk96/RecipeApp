@@ -11,7 +11,7 @@ export default function MainNavigationBar() {
       <li>
         <NavLink
           className={({isActive}) => isActive ? style["active"] : null}
-          to={"/user"}
+          to={"/my-profile"}
         >My Profile</NavLink>
       </li>
       <li>
@@ -45,7 +45,7 @@ export default function MainNavigationBar() {
     <header className={style["main-navigation"]}>
       <nav>
         <div>
-          <NavLink to={"/"} className={style["banner"]}>RecipeApp</NavLink>
+          <NavLink to={"/"} className={style["banner"]}>Recipe App</NavLink>
           <ul>
             <li>
 
