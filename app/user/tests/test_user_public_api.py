@@ -6,12 +6,12 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 
-USER_URL = reverse('user:user-list')
+USER_URL = reverse('user:list-create')
 TOKEN_URL = reverse('user:token')
 
 
 def get_detail_url(user_ID):
-    return reverse('user:user-detail', args=[user_ID])
+    return reverse('user:details', args=[user_ID])
 
 
 def create_user(**params):

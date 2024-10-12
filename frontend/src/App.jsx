@@ -7,6 +7,7 @@ import LoginPage, {loginAction} from "./pages/LoginPage.jsx";
 import {logoutAction} from "./pages/Logout.js";
 import RegisterPage, {registerAction} from "./pages/RegisterPage.jsx";
 import RootPage from "./pages/RootPage.jsx";
+import UserProfilePage, {userProfileLoader} from "./pages/UserProfilePage.jsx";
 
 
 const router = createBrowserRouter([
@@ -30,6 +31,12 @@ const router = createBrowserRouter([
         children: [
           {path: "register", element: <RegisterPage/>, action: registerAction},
           {path: "login", element: <LoginPage/>, action: loginAction}
+        ]
+      },
+      {
+        path: "users",
+        children: [
+          {path: ":userID", element: <UserProfilePage/>, loader: userProfileLoader},
         ]
       }
     ]

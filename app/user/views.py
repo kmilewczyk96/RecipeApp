@@ -6,19 +6,50 @@ from django.contrib.auth import get_user_model
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveAPIView,
+    RetrieveUpdateDestroyAPIView
+)
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
-from rest_framework.viewsets import ModelViewSet
 
-from core.permissions import IsOwnerOrReadOnly
+from core.permissions import AuthenticatedOrPostOnly
 from user import serializers
 
 
-class UserViewSet(ModelViewSet):
+class UserView(ListCreateAPIView):
+    """Basic view that allows retrieving Users when authenticated."""
     serializer_class = serializers.UserSerializer
     queryset = get_user_model().objects.all()
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [AuthenticatedOrPostOnly]
+
+
+class UserDetailView(RetrieveAPIView):
+    """Basic view that allows check User details when authenticated."""
+    serializer_class = serializers.UserSerializer
+    queryset = get_user_model().objects.all()
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    # def get_object(self):
+    #     serializer_ctx = self.get_serializer_context()
+    #     userID = serializer_ctx['request']['userID']
+    #     user = get_user_model().objects.get(id=userID)
+    #     return user
+
+
+class AuthUserDetailView(RetrieveUpdateDestroyAPIView):
+    """Get currently authenticated User details."""
+    serializer_class = serializers.UserSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        """Retrieve currently authenticated User."""
+        return self.request.user
 
 
 class CreateTokenView(ObtainAuthToken):

@@ -6,11 +6,12 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 
-USER_URL = reverse('user:user-list')
+USER_URL = reverse('user:list-create')
+USER_ME = reverse('user:me')
 
 
 def get_detail_url(user_ID):
-    return reverse('user:user-detail', args=[user_ID])
+    return reverse('user:details', args=[user_ID])
 
 
 def create_user(**params):
@@ -36,8 +37,7 @@ class UserPrivateAPITests(TestCase):
             'name': 'My New Name',
             'password': 'updated_password123',
         }
-        url = get_detail_url(self.user.id)
-        res = self.client.patch(path=url, data=payload)
+        res = self.client.patch(path=USER_ME, data=payload)
 
         self.user.refresh_from_db()
         self.assertEqual(self.user.name, payload['name'])
@@ -52,37 +52,19 @@ class UserPrivateAPITests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
-    def test_other_user_read_only(self):
-        """Test if only safe methods can be performed on other profiles."""
-        other_user = create_user(email='other_user@example.com', password='SomePassword123')
-        url = get_detail_url(other_user.id)
-        payload = {
-            'email': 'other_email@example.com',
-            'name': 'Some name',
-            'password': 'SomeNewPassword123'
-        }
-        responses = [
-            self.client.patch(url, payload),
-            self.client.put(url, payload),
-            self.client.delete(url)
-        ]
-        for res in responses:
-            self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
-
     def test_non_safe_methods_on_self(self):
         """User can modify his profile or delete it permanently."""
-        url = get_detail_url(self.user.id)
         payload = {
             'email': 'other_email@example.com',
             'name': 'Some name',
             'password': 'SomeNewPassword123'
         }
         responses = [
-            self.client.patch(url, payload),
-            self.client.put(url, payload),
+            self.client.patch(USER_ME, payload),
+            self.client.put(USER_ME, payload),
         ]
         for res in responses:
             self.assertEqual(res.status_code, status.HTTP_200_OK)
 
-        del_res = self.client.delete(url)
+        del_res = self.client.delete(USER_ME)
         self.assertEqual(del_res.status_code, status.HTTP_204_NO_CONTENT)
