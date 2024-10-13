@@ -1,0 +1,13 @@
+.profile-layout {
+  display: flex;
+  flex-direction: column;
+  width: 120rem;
+  gap: 3.2rem;
+
+  margin: 16rem auto;
+}
+
+.profile-layout div {
+  width: 100%;
+  margin: 0 auto;
+}

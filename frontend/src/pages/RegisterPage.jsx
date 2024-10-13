@@ -16,7 +16,7 @@ export async function registerAction({request}){
     name: data.get("name")
   };
 
-  const response = await fetch("http://localhost:8000/api/user/create/", {
+  const response = await fetch("http://localhost:8000/api/user/users/", {
     method: request.method,
     headers: {
       "Content-Type": "application/json"

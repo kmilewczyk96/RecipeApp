@@ -5,6 +5,7 @@ import {authLoader, tokenLoader} from "./util/auth-token.js";
 import HomePage from "./pages/HomePage.jsx";
 import LoginPage, {loginAction} from "./pages/LoginPage.jsx";
 import {logoutAction} from "./pages/Logout.js";
+import MyProfilePage, {myProfileLoader} from "./pages/MyProfilePage.jsx";
 import RegisterPage, {registerAction} from "./pages/RegisterPage.jsx";
 import RootPage from "./pages/RootPage.jsx";
 import UserDetailPage, {userDetailLoader} from "./pages/UserDetailPage.jsx";
@@ -42,8 +43,9 @@ const router = createBrowserRouter([
       {
         path: "my-profile",
         id: "my-profile",
+        loader: myProfileLoader,
         children: [
-          {index: true, element: <UserDetailPage/>}
+          {index: true, element: <MyProfilePage/>}
         ]
       }
     ]
