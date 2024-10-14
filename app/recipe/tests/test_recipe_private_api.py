@@ -6,7 +6,10 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from core.models import Recipe
-from recipe.serializers import RecipeDetailSerializer
+from recipe.serializers import (
+    RecipeSerializer,
+    RecipeDetailSerializer
+)
 
 
 RECIPES_URL = reverse('recipe:recipe-list')
@@ -57,6 +60,7 @@ class RecipePrivateAPITests(TestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_create_recipe(self):
+        """Test if creating recipe with valid data is successful."""
         res = self.client.post(RECIPES_URL, data={
             'name': 'Some dish',
             'time_minutes': 25,
@@ -65,3 +69,18 @@ class RecipePrivateAPITests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         recipe = Recipe.objects.get(id=res.data['id'])
         self.assertEqual(recipe.user, self.user)
+
+    def test_recipe_filter_by_user(self):
+        """Test if filter params are applied correctly."""
+        recipe1 = create_recipe(user=self.user)
+        recipe1 = RecipeSerializer(recipe1)
+        recipe2 = create_recipe(user=self.other_user, name='some other dish')
+        recipe2 = RecipeSerializer(recipe2)
+
+        params = {'users': {self.other_user.id}}
+        res = self.client.get(RECIPES_URL, params)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertNotIn(recipe1.data, res.data)
+        self.assertIn(recipe2.data, res.data)
+        self.assertEqual(len(res.data), 1)
