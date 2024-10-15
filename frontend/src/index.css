@@ -31,7 +31,10 @@ button {
 }
 
 button {
+  display: inline-block;
   cursor: pointer;
+  text-decoration: none;
+  text-align: center;
 }
 
 a:link,
@@ -40,4 +43,9 @@ a:visited {
   font: inherit;
   text-decoration: none;
   color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
 }

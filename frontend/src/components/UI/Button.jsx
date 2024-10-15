@@ -1,8 +1,14 @@
 import style from "./Button.module.css";
 
 
-export default function Button({cta, children, ...props}) {
+export default function Button({cta, className, children, ...props}) {
+  const classes = cta ? style["button"] + " " + style["cta"] : style["button"];
+
   return (
-    <button className={cta ? style["button"] + " " + style["cta"] : style["button"]} {...props}>{children}</button>
-  )
+    <button
+      className={classes + " " + className}
+      {...props}
+    >{children}
+    </button>
+  );
 };

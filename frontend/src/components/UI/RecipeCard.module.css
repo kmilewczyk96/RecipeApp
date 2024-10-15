@@ -1,0 +1,32 @@
+.recipe-card {
+  border: 2px solid #adb5bd;
+  transition: transform 0.5s, box-shadow 0.3s;
+
+  padding: 0.4rem 1.2rem 0.8rem;
+}
+
+.recipe-info {
+  margin-bottom: 1.2rem;
+}
+
+.recipe-info h2 {
+  font-size: 2.4rem;
+}
+
+.recipe-info > p {
+  font-size: 1.6rem;
+}
+
+.actions {
+  display: flex;
+}
+
+.recipe-button {
+  font-size: 1.2rem;
+}
+
+@media (hover:hover) {
+  .recipe-card:hover {
+    box-shadow: 0 5px 5px rgba(32, 32, 32, 0.32);
+  }
+}
