@@ -57,6 +57,16 @@ class Recipe(models.Model):
     name = models.CharField(max_length=255)
     time_minutes = models.IntegerField()
     description = models.TextField(blank=True)
+    tags = models.ManyToManyField('Tag')
+
+    def __str__(self):
+        return self.name
+
+
+class Tag(models.Model):
+    """Tag model."""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
