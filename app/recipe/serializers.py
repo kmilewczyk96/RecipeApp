@@ -1,5 +1,6 @@
 """Serializers for recipe API."""
 from django.http import Http404
+from django.utils.functional import Promise
 
 from rest_framework import serializers
 
@@ -15,7 +16,14 @@ class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ['id', 'name']
-        read_only_fields = ['id']
+        extra_kwargs = {
+            'id': {
+                'validators': [],
+            },
+            'name': {
+                'validators': [],
+            },
+        }
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -29,6 +37,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """Create a Recipe."""
+        print(validated_data)
         tags = validated_data.pop('tags', [])
         recipe = Recipe.objects.create(**validated_data)
 

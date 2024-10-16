@@ -22,14 +22,14 @@ def get_detail_url(recipe_id):
     return reverse('recipe:recipe-detail', args=[recipe_id])
 
 
-def create_recipe(user, **params):
+def create_recipe(user, **payload):
     DEFAULTS = {
         'user': user,
         'name': 'Some recipe',
         'time_minutes': 5,
         'description': 'Some description.'
     }
-    DEFAULTS.update(params)
+    DEFAULTS.update(payload)
     recipe = Recipe.objects.create(**DEFAULTS)
 
     return recipe
@@ -80,8 +80,8 @@ class RecipePrivateAPITests(TestCase):
         recipe2 = create_recipe(user=self.other_user, name='some other dish')
         recipe2 = RecipeSerializer(recipe2)
 
-        params = {'users': {self.other_user.id}}
-        res = self.client.get(RECIPES_URL, params)
+        payload = {'users': {self.other_user.id}}
+        res = self.client.get(RECIPES_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertNotIn(recipe1.data, res.data)
@@ -93,17 +93,17 @@ class RecipePrivateAPITests(TestCase):
         tag1 = Tag.objects.create(name='Vegetarian')
         tag2 = Tag.objects.create(name='Gluten free')
 
-        params = {
+        payload = {
             'name': 'Coleslaw Salad',
             'time_minutes': 15,
             'description': 'One of the most popular salads.',
             'tags': [
-                {'name': tag1.name},
+                {'id': tag1.id, 'name': tag1.name},
                 {'name': tag2.name},
             ]
         }
 
-        res = self.client.post(RECIPES_URL, params, format='json')
+        res = self.client.post(RECIPES_URL, data=payload, format='json')
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(res.data['tags']), 2)
 
@@ -113,7 +113,7 @@ class RecipePrivateAPITests(TestCase):
         tag_name = tag.name
         tag.delete()
 
-        params = {
+        payload = {
             'name': 'Coleslaw Salad',
             'time_minutes': 15,
             'description': 'One of the most popular salads.',
@@ -121,5 +121,5 @@ class RecipePrivateAPITests(TestCase):
                 {'name': tag_name},
             ]
         }
-        res = self.client.post(RECIPES_URL, params, format='json')
+        res = self.client.post(RECIPES_URL, payload, format='json')
         self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
