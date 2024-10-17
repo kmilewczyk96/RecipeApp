@@ -99,7 +99,7 @@ class RecipePrivateAPITests(TestCase):
             'description': 'One of the most popular salads.',
             'tags': [
                 {'id': tag1.id, 'name': tag1.name},
-                {'name': tag2.name},
+                {'id': tag2.id, 'name': tag2.name},
             ]
         }
 
@@ -110,6 +110,7 @@ class RecipePrivateAPITests(TestCase):
     def test_create_recipe_with_non_existing_tags(self):
         """Test if attempt to create Recipe with non-existing Tags fails."""
         tag = Tag.objects.create(name='Vegetarian')
+        tag_id = tag.id
         tag_name = tag.name
         tag.delete()
 
@@ -118,7 +119,7 @@ class RecipePrivateAPITests(TestCase):
             'time_minutes': 15,
             'description': 'One of the most popular salads.',
             'tags': [
-                {'name': tag_name},
+                {'id': tag_id, 'name': tag_name},
             ]
         }
         res = self.client.post(RECIPES_URL, payload, format='json')

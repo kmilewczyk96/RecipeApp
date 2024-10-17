@@ -17,17 +17,30 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
         extra_kwargs = {
             'id': {
-                'validators': [],
+                'read_only': True,
+            }
+        }
+
+
+class NestedTagSerializer(TagSerializer):
+    """Serializer for nested tags."""
+
+    class Meta(TagSerializer.Meta):
+        read_only_fields = []
+        extra_kwargs = {
+            'id': {
+                'read_only': False,
             },
             'name': {
                 'validators': [],
+                'required': False,
             },
         }
 
 
 class RecipeSerializer(serializers.ModelSerializer):
     """Serializer for recipes."""
-    tags = TagSerializer(many=True, required=False)
+    tags = NestedTagSerializer(many=True, required=False)
 
     class Meta:
         model = Recipe
@@ -36,6 +49,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """Create a Recipe."""
+        print(validated_data)
         tags = validated_data.pop('tags', [])
         recipe = Recipe.objects.create(**validated_data)
 
