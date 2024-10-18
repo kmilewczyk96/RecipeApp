@@ -13,9 +13,9 @@
 
 @media (hover: hover) {
   .cta:hover {
-    box-shadow: 0 0 10px rgba(32, 32, 32, 0.7);
+    box-shadow: 0 0 10px rgba(32, 32, 32, 0.3);
   }
   .cta:active {
-    box-shadow: 0 0 5px rgba(32, 32, 32, 0.7);
+    box-shadow: 0 0 5px rgba(32, 32, 32, 0.3);
   }
 }

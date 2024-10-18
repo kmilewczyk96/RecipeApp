@@ -40,7 +40,7 @@ button {
 a:link,
 a:visited {
   display: inline-block;
-  font: inherit;
+  font-family: inherit;
   text-decoration: none;
   color: inherit;
 }

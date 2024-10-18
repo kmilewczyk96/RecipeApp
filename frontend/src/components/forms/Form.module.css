@@ -9,18 +9,25 @@
   margin: 32rem auto 0;
 }
 
-.form-wrapper .inputs {
+dialog .form-wrapper {
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+}
+
+.inputs {
   margin-bottom: 2.4rem;
 }
 
-.form-wrapper .actions {
+.actions {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 2.4rem;
 }
 
-.form-wrapper .actions a {
+.actions a {
   font-size: 1.6rem;
   border: 1px solid rgba(0, 0, 0, 0);
   transition: border 0.3s;

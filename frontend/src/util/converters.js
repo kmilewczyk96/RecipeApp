@@ -4,7 +4,7 @@ export function convertToHoursString(timeInMinutes) {
   minutes -= hours * 60;
 
   if (hours) {
-    return `${hours}h${minutes}`
+    return `${hours}h${minutes === 0 ? "" : minutes}`
   } else {
     return `${minutes}min.`
   }

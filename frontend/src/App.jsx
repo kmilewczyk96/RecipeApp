@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage.jsx";
 import LoginPage, {loginAction} from "./pages/LoginPage.jsx";
 import {logoutAction} from "./pages/Logout.js";
 import MyProfilePage, {myProfileLoader, myProfileRecipesLoader} from "./pages/MyProfilePage.jsx";
+import {addRecipeAction} from "./pages/RecipesPage.jsx";
 import RegisterPage, {registerAction} from "./pages/RegisterPage.jsx";
 import RootPage from "./pages/RootPage.jsx";
 import UserDetailPage, {userDetailLoader} from "./pages/UserDetailPage.jsx";
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
         children: [
           {index: true, element: <MyProfilePage/>, loader: myProfileRecipesLoader}
         ]
+      },
+      {
+        path: "recipes",
+        action: addRecipeAction,
       }
     ]
   }
