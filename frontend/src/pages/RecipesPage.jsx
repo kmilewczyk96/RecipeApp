@@ -13,6 +13,7 @@ export async function addRecipeAction({request}) {
   const recipe = {
     name: data.get("name"),
     time_minutes: data.get("time-required"),
+    description: data.get("description"),
   };
 
   const response = await fetch("http://localhost:8000/api/recipe/recipes/", {

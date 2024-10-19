@@ -34,6 +34,7 @@ export default function CreateRecipeForm() {
           <div className={style["inputs"]}>
             <CustomInput id="name" type="text" label="Name:" required/>
             <CustomInput id="time-required" type="number" label="Time required:" required/>
+            <CustomInput id="description" type="text" label="Description:" textArea/>
           </div>
           <div className={style["actions"]}>
             <Button cta>Submit</Button>
