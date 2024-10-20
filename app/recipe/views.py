@@ -49,7 +49,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             users = users.split(',')
             queryset = queryset.filter(user_id__in=users)
 
-        return queryset.distinct()
+        return queryset.distinct().order_by('-created')
 
     def get_serializer_class(self):
         """Return the appropriate serializer class for request."""

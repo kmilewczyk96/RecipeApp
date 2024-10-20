@@ -44,8 +44,8 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ['id', 'name', 'time_minutes', 'tags']
-        read_only_fields = ['id']
+        fields = ['id', 'name', 'time_minutes', 'tags', 'created', 'modified']
+        read_only_fields = ['id', 'created', 'modified']
 
     def create(self, validated_data):
         """Create a Recipe."""

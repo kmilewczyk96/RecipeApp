@@ -34,12 +34,16 @@ class UserAdmin(BaseUserAdmin):
             {
                 'fields': (
                     'last_login',
+                    'created',
+                    'modified',
                 )
             }
         )
     )
     readonly_fields = [
         'last_login',
+        'created',
+        'modified',
     ]
     add_fieldsets = (
         (
@@ -56,6 +60,8 @@ class UserAdmin(BaseUserAdmin):
                     'is_active',
                     'is_staff',
                     'is_superuser',
+                    'created',
+                    'modified',
                 ),
             }
         ),

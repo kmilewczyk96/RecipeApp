@@ -41,6 +41,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     objects = UserManager()
 
@@ -58,6 +60,8 @@ class Recipe(models.Model):
     time_minutes = models.IntegerField()
     description = models.TextField(blank=True)
     tags = models.ManyToManyField('Tag')
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name

@@ -1,12 +1,18 @@
 import style from "./RecipeCard.module.css";
 
+import {useNavigate} from "react-router-dom";
+
 import Button from "./Button.jsx";
 
 import {convertToHoursString} from "../../util/converters.js";
 
 
 export default function RecipeCard({recipe}) {
+  const navi = useNavigate();
   const timeRequired = convertToHoursString(recipe.time_minutes);
+  function clickHandler() {
+    navi(`/recipes/${recipe.id}`);
+  }
 
   return (
     <article className={style["recipe-card"]}>
@@ -24,7 +30,7 @@ export default function RecipeCard({recipe}) {
         <p>TODO: appliances required</p>
       </div>
       <div className={style["actions"]}>
-        <Button to={`/recipes/${recipe.id}`} className={style["recipe-button"]}>Open</Button>
+        <Button onClick={clickHandler} className={style["recipe-button"]}>Open</Button>
         <p className={style["subscriber-info"]}>Heart</p>
       </div>
     </article>
