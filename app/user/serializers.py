@@ -32,6 +32,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
+
 class UserStrictSerializer(serializers.ModelSerializer):
     """Serializer for showing base User info: ID and name."""
 
