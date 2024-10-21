@@ -1,8 +1,10 @@
 .recipe-card {
   border: 2px solid #adb5bd;
   transition: transform 0.5s, box-shadow 0.3s;
+  background-image: url("../../assets/backgrounds/menu_background.jpg");
+  background-size: auto;
 
-  padding: 0.4rem 1.2rem 0.8rem;
+  padding: 3.2rem 0 4.8rem;
 }
 
 .recipe-info {
@@ -10,7 +12,14 @@
 }
 
 .recipe-info h2 {
+  background-color: #212529;
+  color: #e6fcf5;
+
   font-size: 2.4rem;
+  text-align: center;
+  text-transform: uppercase;
+
+  padding: 1.2rem 2.4rem;
 }
 
 .recipe-info > p {

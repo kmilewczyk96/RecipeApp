@@ -1,3 +1,8 @@
+/*@font-face {*/
+/*  font-family: "Josefin";*/
+/*  src: local("JosefinSans"), url("fonts/JosefinSans-VariableFont_wght.ttf") format("truetype");*/
+/*}*/
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -14,7 +19,9 @@ html {
   font-weight: 400;
 
   color: #212529;
-  background-color: #e9ecef;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("assets/backgrounds/light_mode_main.svg");
+  min-height: 100vh;
+  background-size: 300px;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
