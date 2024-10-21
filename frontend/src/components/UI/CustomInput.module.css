@@ -11,7 +11,7 @@
 
 .custom-input input,
 .custom-input textarea {
-  resize: none;
+  resize: vertical;
   font-family: inherit;
   letter-spacing: 0.075rem;
   line-height: 1.3;

@@ -32,6 +32,14 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
+class UserStrictSerializer(serializers.ModelSerializer):
+    """Serializer for showing base User info: ID and name."""
+
+    class Meta:
+        model = get_user_model()
+        fields = ['id', 'name']
+        read_only_fields = fields
+
 
 class AuthTokenSerializer(serializers.Serializer):
     """Serializer for the User Auth Token."""

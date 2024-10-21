@@ -7,6 +7,7 @@ from core.models import (
     Recipe,
     Tag,
 )
+from user.serializers import UserStrictSerializer
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -26,7 +27,6 @@ class NestedTagSerializer(TagSerializer):
     """Serializer for nested tags."""
 
     class Meta(TagSerializer.Meta):
-        read_only_fields = []
         extra_kwargs = {
             'id': {
                 'read_only': False,
@@ -40,12 +40,13 @@ class NestedTagSerializer(TagSerializer):
 
 class RecipeSerializer(serializers.ModelSerializer):
     """Serializer for recipes."""
+    user = UserStrictSerializer(read_only=True)
     tags = NestedTagSerializer(many=True, required=False)
 
     class Meta:
         model = Recipe
-        fields = ['id', 'name', 'time_minutes', 'tags', 'created', 'modified']
-        read_only_fields = ['id', 'created', 'modified']
+        fields = ['id', 'user', 'name', 'time_minutes', 'tags', 'created', 'modified']
+        read_only_fields = ['id', 'user', 'created', 'modified']
 
     def create(self, validated_data):
         """Create a Recipe."""
