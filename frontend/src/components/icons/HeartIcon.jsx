@@ -1,7 +1,7 @@
 import style from "./HeartIcon.module.css";
 
 
-export default function HeartIcon({size="24", colorHex="#000000", ...props}) {
+export default function HeartIcon({size="24", colorHex="#000000"}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

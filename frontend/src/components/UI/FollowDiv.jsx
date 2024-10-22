@@ -1,6 +1,6 @@
 import style from "./FollowDiv.module.css";
 
-import HeartIcon from "./HeartIcon.jsx";
+import HeartIcon from "../icons/HeartIcon.jsx";
 
 
 export default function FollowDiv() {

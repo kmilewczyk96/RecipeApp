@@ -16,3 +16,7 @@
   row-gap: 4.8rem;
   margin: 0 auto;
 }
+
+.recipe-grid .recipes li {
+  align-self: flex-end;
+}

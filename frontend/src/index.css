@@ -1,7 +1,7 @@
-/*@font-face {*/
-/*  font-family: "Josefin";*/
-/*  src: local("JosefinSans"), url("fonts/JosefinSans-VariableFont_wght.ttf") format("truetype");*/
-/*}*/
+@font-face {
+  font-family: "Creative";
+  src: local("RibeyeMarrow"), url("fonts/RibeyeMarrow-Regular.ttf") format("truetype");
+}
 
 * {
   box-sizing: border-box;
@@ -55,4 +55,8 @@ a:visited {
 ul,
 ol {
   list-style: none;
+}
+
+svg {
+  flex-shrink: 0;
 }

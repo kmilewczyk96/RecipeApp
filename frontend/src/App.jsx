@@ -12,7 +12,6 @@ import RegisterPage, {registerAction} from "./pages/RegisterPage.jsx";
 import RootPage from "./pages/RootPage.jsx";
 import UserDetailPage, {userDetailLoader} from "./pages/UserDetailPage.jsx";
 
-// import "./fonts/JosefinSans-VariableFont_wght.ttf";
 
 
 const router = createBrowserRouter([
