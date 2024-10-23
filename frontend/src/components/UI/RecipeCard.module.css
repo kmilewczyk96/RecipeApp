@@ -11,8 +11,10 @@
 }
 
 .recipe-card h2 {
+  position: relative;
   background-color: #212529;
   color: #e6fcf5;
+  overflow: hidden;
 
   font-family: "Creative", system-ui;
   font-size: 2.4rem;
@@ -21,6 +23,19 @@
 
   padding: 2.4rem;
   margin-bottom: 1.8rem;
+}
+
+.recipe-card h2::after {
+  content: "";
+  position: absolute;
+  width: 10rem;
+  height: 100%;
+  background-color: #fff;
+  top: 0;
+  left: -50%;
+  transform: skew(-30deg);
+  box-shadow: 0 0 20px #fff;
+  animation-fill-mode: forwards;
 }
 
 .recipe-info {
@@ -36,9 +51,7 @@
 }
 
 .recipe-info-line > p {
-  display: inline-block;
   font-size: 1.6rem;
-  word-wrap: break-word;
 }
 
 .actions {
@@ -66,17 +79,31 @@
   margin-bottom: 1.2rem;
 }
 
-
 @media (hover:hover) {
-  .recipe-card:hover {
-    box-shadow: 0 0 18px rgba(32, 32, 32, 0.5);
+  .recipe-card:hover h2::after {
+    animation: glare 4s ease-in, step-start 1s;
+    animation-delay: 0.2s;
+    animation-iteration-count: infinite;
   }
 
   .recipe-button:hover {
     width: 100%;
     background-color: #212529;
     color: #e6fcf5;
-    text-indent: 10px;
-    letter-spacing: 10px;
+    text-indent: 5px;
+    letter-spacing: 5px;
+    border-top-color: #212529;
+    border-bottom-color: #212529;
+  }
+}
+
+@keyframes glare {
+  0% {
+    left: -50%;
+    opacity: 0.3;
+  }
+  25%, 100% {
+    left: 150%;
+    opacity: 0.5;
   }
 }
