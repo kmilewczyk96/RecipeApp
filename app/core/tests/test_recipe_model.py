@@ -4,7 +4,7 @@ from django.test import TestCase
 from core import models
 
 
-class RecipeAPITests(TestCase):
+class RecipeModelTests(TestCase):
     """Tests for Recipe model."""
 
     def setUp(self):
