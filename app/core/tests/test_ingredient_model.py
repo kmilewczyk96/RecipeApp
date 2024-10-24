@@ -8,7 +8,7 @@ from core.models import (
 )
 
 
-def create_ingredient(**payload):
+def create_ingredient(**params):
     """Utility function to create base Ingredient in the database."""
     INGREDIENT = {
         'name': 'Ingredient',
@@ -16,7 +16,7 @@ def create_ingredient(**payload):
         'unit': 'g',
         'kcal_per_100_units': 2000,
     }
-    INGREDIENT.update(**payload)
+    INGREDIENT.update(**params)
 
     return Ingredient.objects.create(**INGREDIENT)
 
@@ -48,10 +48,7 @@ class IngredientModelTests(TestCase):
         tag2 = Tag.objects.create(name='gluten free')
         tag3 = Tag.objects.create(name='lactose free')
 
-        ingredient = create_ingredient(
-            alt_unit='spoon',
-            alt_to_unit_conversion=20,
-        )
+        ingredient = create_ingredient(alt_unit='spoon', alt_to_unit_conversion=20)
         ingredient.excluded_tags.add(tag1, tag2)
         ingredient.refresh_from_db()
 
@@ -63,10 +60,7 @@ class IngredientModelTests(TestCase):
 
     def test_create_with_zero_calories(self):
         """Test if creating Ingredient with no calories is successful."""
-        ingredient = create_ingredient(
-            name='Water',
-            kcal_per_100_units=0,
-        )
+        ingredient = create_ingredient(name='Water', kcal_per_100_units=0)
 
         self.assertIn(ingredient, Ingredient.objects.all())
 
@@ -74,36 +68,24 @@ class IngredientModelTests(TestCase):
         """Test if attempting to create Ingredient with negative values fails."""
         with self.assertRaises(ValidationError):
             with transaction.atomic():
-                create_ingredient(
-                    alt_to_unit_conversion=-1
-                )
+                create_ingredient(alt_to_unit_conversion=-1)
 
         with self.assertRaises(ValidationError):
             with transaction.atomic():
-                create_ingredient(
-                    kcal_per_100_units=-5
-                )
+                create_ingredient(kcal_per_100_units=-5)
 
     def test_alt_to_unit_conversion_check(self):
         """Test if attempting to create or update Ingredient with alt unit and no conversion value fails."""
         with self.assertRaises(ValidationError):
             with transaction.atomic():
-                create_ingredient(
-                    alt_unit='pinch'
-                )
+                create_ingredient(alt_unit='pinch')
 
         with self.assertRaises(ValidationError):
             with transaction.atomic():
-                ingredient = create_ingredient(
-                    alt_unit='pinch',
-                    alt_to_unit_conversion=50,
-                )
+                ingredient = create_ingredient(alt_unit='pinch', alt_to_unit_conversion=50)
                 ingredient.alt_to_unit_conversion = None
                 ingredient.save()
 
         with self.assertRaises(ValidationError):
             with transaction.atomic():
-                create_ingredient(
-                    alt_unit='pinch',
-                    alt_to_unit_conversion=0,
-                )
+                create_ingredient(alt_unit='pinch', alt_to_unit_conversion=0)

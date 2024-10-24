@@ -4,6 +4,7 @@
   left: 0;
   width: 100vw;
   background-color: rgba(32, 32, 32, 0.90);
+  z-index: 99;
 }
 
 .main-navigation nav {
