@@ -5,27 +5,11 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from core.models import (
-    Recipe,
-    Tag,
-)
+from core.models import Tag
 from recipe.serializers import TagSerializer
 
 
 TAGS_URL = reverse('recipe:tag-list')
-
-
-def create_recipe(user, **params):
-    DEFAULTS = {
-        'user': user,
-        'name': 'Some recipe',
-        'time_minutes': 5,
-        'description': 'Some description.'
-    }
-    DEFAULTS.update(params)
-    recipe = Recipe.objects.create(**DEFAULTS)
-
-    return recipe
 
 
 class PrivateTagAPITests(TestCase):

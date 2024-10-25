@@ -12,6 +12,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from core.models import (
+    Ingredient,
     Recipe,
     Tag,
 )
@@ -64,8 +65,16 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 
 class TagListView(ListAPIView):
-    """View for managing Tag API."""
+    """View for listing Tag API."""
     serializer_class = serializers.TagSerializer
     queryset = Tag.objects.all()
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+class IngredientListView(ListAPIView):
+    """View for listing Ingredient API."""
+    serializer_class = serializers.IngredientSerializer
+    queryset = Ingredient.objects.all()
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
