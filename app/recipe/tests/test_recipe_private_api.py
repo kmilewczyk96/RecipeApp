@@ -5,7 +5,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from core.models import Recipe
+from core.models import Recipe, Ingredient
 from recipe.serializers import (
     RecipeSerializer,
     RecipeDetailSerializer
@@ -24,7 +24,7 @@ def create_recipe(user, **payload):
         'user': user,
         'name': 'Some recipe',
         'time_minutes': 5,
-        'description': 'Some description.'
+        'description': 'Some description.',
     }
     DEFAULTS.update(payload)
     recipe = Recipe.objects.create(**DEFAULTS)
@@ -61,14 +61,31 @@ class RecipePrivateAPITests(TestCase):
 
     def test_create_recipe(self):
         """Test if creating recipe with valid data is successful."""
+        ingredient = Ingredient.objects.create(
+            name='Some ingredient',
+            kcal_per_100_units=100,
+        )
         res = self.client.post(RECIPES_URL, data={
             'name': 'Some dish',
             'time_minutes': 25,
-            'description': 'Some description.'
-        })
+            'description': 'Some description.',
+            'r_ingredients': [
+                {'ingredient': {'id': ingredient.id}, 'quantity': 5},
+            ],
+        }, format='json')
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         recipe = Recipe.objects.get(id=res.data['id'])
         self.assertEqual(recipe.user, self.user)
+
+    def test_create_recipe_without_ingredients(self):
+        """Test if attempting to create Recipe without Ingredients fails."""
+        res = self.client.post(RECIPES_URL, data={
+            'name': 'Some dish',
+            'time_minutes': 25,
+            'description': 'Some description.',
+            'r_ingredients': [],
+        }, format='json')
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_recipe_filter_by_user(self):
         """Test if filter params are applied correctly."""
