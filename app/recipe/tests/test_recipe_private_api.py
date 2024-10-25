@@ -5,10 +5,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from core.models import (
-    Recipe,
-    Tag,
-)
+from core.models import Recipe
 from recipe.serializers import (
     RecipeSerializer,
     RecipeDetailSerializer
@@ -87,40 +84,3 @@ class RecipePrivateAPITests(TestCase):
         self.assertNotIn(recipe1.data, res.data)
         self.assertIn(recipe2.data, res.data)
         self.assertEqual(len(res.data), 1)
-
-    def test_create_recipe_with_existing_tags(self):
-        """Test if creating recipes with Tags is successful."""
-        tag1 = Tag.objects.create(name='Vegetarian')
-        tag2 = Tag.objects.create(name='Gluten free')
-
-        payload = {
-            'name': 'Coleslaw Salad',
-            'time_minutes': 15,
-            'description': 'One of the most popular salads.',
-            'tags': [
-                {'id': tag1.id, 'name': tag1.name},
-                {'id': tag2.id, 'name': tag2.name},
-            ]
-        }
-
-        res = self.client.post(RECIPES_URL, data=payload, format='json')
-        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(len(res.data['tags']), 2)
-
-    def test_create_recipe_with_non_existing_tags(self):
-        """Test if attempt to create Recipe with non-existing Tags fails."""
-        tag = Tag.objects.create(name='Vegetarian')
-        tag_id = tag.id
-        tag_name = tag.name
-        tag.delete()
-
-        payload = {
-            'name': 'Coleslaw Salad',
-            'time_minutes': 15,
-            'description': 'One of the most popular salads.',
-            'tags': [
-                {'id': tag_id, 'name': tag_name},
-            ]
-        }
-        res = self.client.post(RECIPES_URL, payload, format='json')
-        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)

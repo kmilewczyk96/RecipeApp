@@ -70,5 +70,33 @@ class RecipeModelTests(TestCase):
             quantity=10,
         ) for ingredient in ingredients]
 
-        self.assertEqual(len(recipe_ingredients), len(recipe.recipeingredient_set.all()))
+        self.assertEqual(len(recipe_ingredients), len(recipe.r_ingredients.all()))
         self.assertEqual(len(models.Recipe.objects.all()), 1)
+
+    def test_auto_create_tags(self):
+        """Test if Tags are assigned automatically based on Recipe Ingredient's excluded Tags."""
+        tags = [create_tag(name=name) for name in ('vegan', 'vegetarian', 'seafood free')]
+        ingredient1 = create_ingredient(name='egg')
+        ingredient1.excluded_tags.add(tags[0])
+        ingredient2 = create_ingredient(name='some_meat')
+        ingredient2.excluded_tags.add(tags[0], tags[1])
+
+        recipe = models.Recipe.objects.create(
+            user=self.user,
+            name='SomeRecipe',
+            time_minutes=20,
+        )
+
+        self.assertEqual(len(recipe.tags), 3)
+
+        create_recipe_ingredient(
+            recipe=recipe,
+            ingredient=ingredient1,
+        )
+        create_recipe_ingredient(
+            recipe=recipe,
+            ingredient=ingredient2,
+        )
+
+        self.assertEqual(len(recipe.tags), 1)
+        self.assertEqual(recipe.tags[0], tags[2])

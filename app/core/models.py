@@ -61,9 +61,13 @@ class Recipe(models.Model):
     name = models.CharField(max_length=255)
     time_minutes = models.IntegerField()
     description = models.TextField(blank=True)
-    tags = models.ManyToManyField('Tag')
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+
+    @property
+    def tags(self):
+        excluded_tags = self.r_ingredients.values_list('ingredient__excluded_tags', flat=True)
+        return Tag.objects.exclude(id__in=excluded_tags)
 
     def __str__(self):
         return self.name
@@ -134,7 +138,7 @@ class Ingredient(models.Model):
 class RecipeIngredient(models.Model):
     """Recipe Ingredient model."""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='r_ingredients')
     ingredient = models.ForeignKey(to=Ingredient, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)])
 
