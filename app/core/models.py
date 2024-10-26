@@ -69,6 +69,11 @@ class Recipe(models.Model):
         excluded_tags = self.r_ingredients.values_list('ingredient__excluded_tags', flat=True)
         return Tag.objects.exclude(id__in=excluded_tags)
 
+    @property
+    def kcal(self):
+        r_ingredients = self.r_ingredients.values_list('quantity', 'ingredient__kcal_per_100_units')
+        return round(sum((quantity * kcal_per_100 for quantity, kcal_per_100 in r_ingredients)) / 100, ndigits=1)
+
     def __str__(self):
         return self.name
 

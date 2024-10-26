@@ -16,7 +16,6 @@ from core.models import (
     Recipe,
     Tag,
 )
-from core.permissions import IsOwnerOrReadOnly
 from recipe import serializers
 
 
@@ -36,7 +35,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.RecipeDetailSerializer
     queryset = Recipe.objects.all()
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         """Retrieve all recipes."""
