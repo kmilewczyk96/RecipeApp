@@ -1,5 +1,7 @@
 import {json, useLoaderData} from "react-router-dom";
 
+import RecipeDetailPageLayout from "../components/layout/RecipeDetailPageLayout.jsx";
+
 import {getToken} from "../util/auth-token.js";
 
 
@@ -7,7 +9,7 @@ export default function RecipeDetailPage() {
   const recipe = useLoaderData();
 
   return (
-    <p>{recipe.name}</p>
+    <RecipeDetailPageLayout recipe={recipe}/>
   );
 };
 

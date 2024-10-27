@@ -35,7 +35,7 @@ class PrivateIngredientAPITests(TestCase):
 
     def test_get_ingredient_list(self):
         """Tests if get request returns expected response."""
-        ingredients = [create_ingredient(name=name) for name in ('egg', 'avocado', 'potato')]
+        ingredients = [create_ingredient(name=name) for name in ('avocado', 'egg', 'potato')]
         serializer = IngredientSerializer(ingredients, many=True)
 
         res = self.client.get(INGREDIENTS_URL)

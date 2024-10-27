@@ -3,6 +3,7 @@ import style from "./RecipeCard.module.css";
 import {Link, useNavigate} from "react-router-dom";
 
 import Button from "./Button.jsx";
+import EnergyIcon from "../icons/EnergyIcon.jsx";
 import PinIcon from "../icons/PinIcon.jsx";
 import FollowDiv from "./FollowDiv.jsx";
 import PlantIcon from "../icons/PlantIcon.jsx";
@@ -17,6 +18,14 @@ export default function RecipeCard({recipe}) {
   const timeRequired = convertToHoursString(recipe.time_minutes);
   function clickHandler() {
     navi(`/recipes/${recipe.id}`);
+  }
+  let veganTag = '';
+  if (recipe.tag_names.includes('vegan')) {
+    veganTag = 'vegan';
+  } else if (recipe.tag_names.includes('vegetarian')) {
+    veganTag = 'vegetarian';
+  } else {
+    veganTag = 'non-vegetarian';
   }
 
   return (
@@ -36,8 +45,12 @@ export default function RecipeCard({recipe}) {
           <p>{timeRequired}</p>
         </div>
         <div className={style["recipe-info-line"]}>
+          <EnergyIcon hexColor={"#fab005"}/>
+          <p>{recipe.kcal}kcal.</p>
+        </div>
+        <div className={style["recipe-info-line"]}>
           <PlantIcon hexColor={"#2b8a3e"}/>
-          <p>Vegan</p>
+          <p>{veganTag}</p>
         </div>
       </div>
       <div className={style["actions"]}>

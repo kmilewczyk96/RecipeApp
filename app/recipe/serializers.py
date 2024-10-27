@@ -26,10 +26,11 @@ class IngredientSerializer(serializers.ModelSerializer):
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     """Serializer for Recipe Ingredients."""
     ingredient = IngredientSerializer()
+    kcal = serializers.FloatField(read_only=True)
 
     class Meta:
         model = RecipeIngredient
-        fields = ['id', 'ingredient', 'quantity']
+        fields = ['id', 'ingredient', 'kcal', 'quantity']
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -44,13 +45,13 @@ class TagSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     """Serializer for Recipes."""
     user = UserStrictSerializer(read_only=True)
-    tags = TagSerializer(many=True, read_only=True)
+    tag_names = serializers.ListSerializer(child=serializers.CharField(), read_only=True)
     kcal = serializers.FloatField(read_only=True)
 
     class Meta:
         model = Recipe
-        fields = ['id', 'user', 'name', 'time_minutes', 'tags', 'kcal', 'created', 'modified']
-        read_only_fields = ['id', 'user', 'tags', 'kcal', 'created', 'modified']
+        fields = ['id', 'user', 'name', 'time_minutes', 'tag_names', 'kcal', 'created', 'modified']
+        read_only_fields = ['id', 'user', 'tag_names', 'kcal', 'created', 'modified']
 
 
 class RecipeDetailSerializer(RecipeSerializer):

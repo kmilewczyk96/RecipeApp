@@ -66,13 +66,22 @@ class Recipe(models.Model):
 
     @property
     def tags(self):
-        excluded_tags = self.r_ingredients.values_list('ingredient__excluded_tags', flat=True)
+        excluded_tags = self.r_ingredients.values_list('ingredient__excluded_tags', flat=True).distinct()
+        excluded_tags = [tag for tag in excluded_tags if excluded_tags is not None]
+
         return Tag.objects.exclude(id__in=excluded_tags)
 
     @property
+    def tag_names(self):
+        tags = self.tags
+        tag_names = tags.values_list('name', flat=True)
+
+        return tag_names
+
+    @property
     def kcal(self):
-        r_ingredients = self.r_ingredients.values_list('quantity', 'ingredient__kcal_per_100_units')
-        return round(sum((quantity * kcal_per_100 for quantity, kcal_per_100 in r_ingredients)) / 100, ndigits=1)
+        r_ingredients_kcals = [ri.kcal for ri in self.r_ingredients.all()]
+        return sum(r_ingredients_kcals)
 
     def __str__(self):
         return self.name
@@ -139,6 +148,9 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['name']
+
 
 class RecipeIngredient(models.Model):
     """Recipe Ingredient model."""
@@ -150,6 +162,10 @@ class RecipeIngredient(models.Model):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.full_clean()
         super().save()
+
+    @property
+    def kcal(self):
+        return round(self.quantity * self.ingredient.kcal_per_100_units / 100, ndigits=1)
 
     def __str__(self):
         return f'{self.recipe}: {self.ingredient}.'
