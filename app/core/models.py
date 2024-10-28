@@ -53,14 +53,40 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Recipe(models.Model):
     """Recipe model."""
+    CUISINES = [
+        ('american', 'American'),
+        ('chinese', 'Chinese'),
+        ('french', 'French'),
+        ('greek', 'Greek'),
+        ('indian', 'Indian'),
+        ('italian', 'Italian'),
+        ('japanese', 'Japanese'),
+        ('lebanese', 'Lebanese'),
+        ('mexican', 'Mexican'),
+        ('thai', 'Thai'),
+        ('turkish', 'Turkish'),
+        ('vietnamese', 'Vietnamese'),
+        ('other', 'Other'),
+    ]
+    TYPES = [
+        ('cold_beverage', 'Cold beverage'),
+        ('dessert', 'Dessert'),
+        ('hot_beverage', 'Hot beverage'),
+        ('main', 'Main'),
+        ('snack', 'Snack'),
+        ('soup', 'Soup'),
+        ('other', 'Other'),
+    ]
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
     name = models.CharField(max_length=255)
+    cuisine = models.CharField(max_length=32, choices=CUISINES, default='other', blank=False, null=False)
+    recipe_type = models.CharField(max_length=32, choices=TYPES, default='other', blank=False, null=False)
     time_minutes = models.IntegerField()
-    description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 

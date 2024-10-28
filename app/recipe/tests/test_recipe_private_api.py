@@ -24,7 +24,6 @@ def create_recipe(user, **payload):
         'user': user,
         'name': 'Some recipe',
         'time_minutes': 5,
-        'description': 'Some description.',
     }
     DEFAULTS.update(payload)
     recipe = Recipe.objects.create(**DEFAULTS)
@@ -68,7 +67,6 @@ class RecipePrivateAPITests(TestCase):
         res = self.client.post(RECIPES_URL, data={
             'name': 'Some dish',
             'time_minutes': 25,
-            'description': 'Some description.',
             'r_ingredients': [
                 {'ingredient': {'id': ingredient.id}, 'quantity': 5},
             ],
@@ -82,7 +80,6 @@ class RecipePrivateAPITests(TestCase):
         res = self.client.post(RECIPES_URL, data={
             'name': 'Some dish',
             'time_minutes': 25,
-            'description': 'Some description.',
             'r_ingredients': [],
         }, format='json')
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)

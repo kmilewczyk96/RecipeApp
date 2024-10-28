@@ -50,7 +50,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ['id', 'user', 'name', 'time_minutes', 'tag_names', 'kcal', 'created', 'modified']
+        fields = ['id', 'user', 'name', 'cuisine', 'recipe_type', 'time_minutes', 'tag_names', 'kcal', 'created', 'modified']
         read_only_fields = ['id', 'user', 'tag_names', 'kcal', 'created', 'modified']
 
 
@@ -59,7 +59,7 @@ class RecipeDetailSerializer(RecipeSerializer):
     r_ingredients = RecipeIngredientSerializer(many=True, required=True)
 
     class Meta(RecipeSerializer.Meta):
-        fields = RecipeSerializer.Meta.fields + ['description', 'r_ingredients']
+        fields = RecipeSerializer.Meta.fields + ['r_ingredients']
 
     def create(self, validated_data):
         r_ingredients = validated_data.pop('r_ingredients', [])

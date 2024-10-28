@@ -50,10 +50,11 @@ class RecipeModelTests(TestCase):
             user=self.user,
             name='Some recipe name',
             time_minutes=720,
-            description='Sample recipe description.'
         )
 
         self.assertEqual(str(recipe), recipe.name)
+        self.assertEqual(recipe.recipe_type, 'other')
+        self.assertEqual(recipe.cuisine, 'other')
 
     def test_create_complex_recipe(self):
         """Test if creating complex recipe with valid data is successful."""
@@ -61,8 +62,9 @@ class RecipeModelTests(TestCase):
         recipe = models.Recipe.objects.create(
             user=self.user,
             name='Some recipe',
+            cuisine='european',
+            recipe_type='cold_beverage',
             time_minutes=60,
-            description='Some description.',
         )
         recipe_ingredients = [create_recipe_ingredient(
             recipe=recipe,

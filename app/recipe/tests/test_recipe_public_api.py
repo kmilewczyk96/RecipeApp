@@ -20,7 +20,6 @@ def create_recipe(user, **params):
         'user': user,
         'name': 'Some recipe',
         'time_minutes': 5,
-        'description': 'Some description.'
     }
     DEFAULTS.update(params)
     recipe = Recipe.objects.create(**DEFAULTS)
