@@ -4,8 +4,10 @@
   gap: 3.2rem;
   flex-direction: row;
   width: 120rem;
-  background-color: #f8f9fa;
-  border: 1px solid #adb5bd;
+  /*background-color: #f8f9fa;*/
+  /*border: 1px solid #adb5bd;*/
+  background-color: rgba(32, 32, 32, 0.5);
+  border: 1px solid #212529;
   border-radius: 5px;
 
   padding: 3.2rem 3.2rem 4.8rem 3.2rem;
@@ -13,7 +15,9 @@
 }
 
 .recipe-detail-layout > div {
+  display: flex;
   width: 50%;
+  overflow-y: scroll;
 }
 
 .recipe-detail-layout h2 {
@@ -22,19 +26,22 @@
   overflow: hidden;
 
   font-family: Creative, system-ui;
-  font-size: 4rem;
+  font-size: 3.6rem;
   font-weight: 400;
   text-align: center;
 
   padding: 2.4rem;
-  margin-bottom: 1.8rem;
+  margin: 1.8rem 0;
 }
 
 .recipe-detail-layout h3 {
   font-family: Creative, system-ui;
   font-size: 3.6rem;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
+  border-bottom: 2px solid #212529;
+  margin-bottom: 1.6rem;
 }
+
 
 .recipe-detail-layout > div {
   display: flex;
@@ -42,5 +49,6 @@
   min-height: 64rem;
   background-image: url("../../assets/backgrounds/menu_background.jpg");
   background-size: cover;
-  border: 1px solid #adb5bd;
+  /*border: 1px solid #adb5bd;*/
+  border: 1px solid #212529;
 }

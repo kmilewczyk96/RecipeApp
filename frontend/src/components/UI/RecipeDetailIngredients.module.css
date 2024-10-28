@@ -1,12 +1,5 @@
 .recipe-detail-ingredients {
-  display: flex;
   padding: 1.6rem 3.2rem;
-}
-
-.recipe-detail-ingredients > h3 {
-  border-bottom: 1px solid #212529;
-
-  margin-bottom: 1.6rem;
 }
 
 .ingredient-details {

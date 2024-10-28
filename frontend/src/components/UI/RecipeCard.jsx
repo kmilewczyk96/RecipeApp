@@ -33,11 +33,11 @@ export default function RecipeCard({recipe}) {
       <h2>{recipe.name}</h2>
       <div className={style["recipe-info"]}>
         <div className={style["recipe-info-line"]}>
-          <UserIcon hexColor={"#0b7285"}/>
+          <UserIcon/>
           <p><Link to={`/users/${recipe.user.id}`}>{recipe.user.name}</Link></p>
         </div>
         <div className={style["recipe-info-line"]}>
-          <PinIcon hexColor={"#c92a2a"}/>
+          <PinIcon/>
           <p>European</p>
         </div>
         <div className={style["recipe-info-line"]}>
@@ -45,11 +45,11 @@ export default function RecipeCard({recipe}) {
           <p>{timeRequired}</p>
         </div>
         <div className={style["recipe-info-line"]}>
-          <EnergyIcon hexColor={"#fab005"}/>
+          <EnergyIcon/>
           <p>{recipe.kcal}kcal.</p>
         </div>
         <div className={style["recipe-info-line"]}>
-          <PlantIcon hexColor={"#2b8a3e"}/>
+          <PlantIcon/>
           <p>{veganTag}</p>
         </div>
       </div>
