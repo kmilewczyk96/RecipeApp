@@ -1,20 +1,19 @@
-.custom-input {
+.custom-tag {
   display: flex;
   flex-direction: column;
 }
 
-.custom-input label {
+.custom-tag label {
   font-size: 1.2rem;
-
   margin-bottom: 0.8rem;
 }
 
-.custom-input input,
-.custom-input textarea {
-  resize: vertical;
+.custom-tag input,
+.custom-tag select {
   font-family: inherit;
   letter-spacing: 0.075rem;
   line-height: 1.3;
+  background-color: #fff;
   border: 1px solid #ced4da;
   border-radius: 5px;
   min-width: 32rem;
@@ -24,8 +23,8 @@
   margin-bottom: 1.6rem;
 }
 
-.custom-input input:focus,
-.custom-input textarea:focus {
+.custom-tag input:focus,
+.custom-tag select:focus {
   outline: none !important;
   box-shadow: inset 0 0 0 2px #15aabf;
 }

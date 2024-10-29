@@ -1,9 +1,9 @@
-import style from "./CustomInput.module.css";
+import style from "./CustomTag.module.css";
 
 
 export default function CustomInput({label, id, textArea, ...props}) {
   return (
-    <div className={style["custom-input"]}>
+    <div className={style["custom-tag"]}>
       <label htmlFor={id}>{label}</label>
       {
         textArea ? (
