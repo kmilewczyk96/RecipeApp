@@ -1,26 +1,68 @@
 import style from "./Form.module.css";
 
-import {Form, Link} from "react-router-dom";
+import {Formik, Form} from "formik";
+import {Link, useSubmit} from "react-router-dom";
+import * as Yup from "yup";
 
 import Button from "../UI/Button.jsx";
 import CustomInput from "../UI/CustomInput.jsx";
 
 
 export default function RegisterForm() {
+  const submit = useSubmit();
+
   return (
-    <div className={style["form-wrapper"]}>
-      <Form method="post">
-        <div className={style["inputs"]}>
-          <CustomInput id="name" type="text" label="Username:" required/>
-          <CustomInput id="email" type="email" label="Email:" required/>
-          <CustomInput id="password1" type="password" label="Password:" required/>
-          <CustomInput id="password2" type="password" label="Confirm Password:" required/>
-        </div>
-        <div className={style["actions"]}>
-          <Link to="/auth/login">Login</Link>
-          <Button cta>Submit</Button>
+    <Formik
+      initialValues={{name: "", email: "", password1: "", password2: ""}}
+      validationSchema={Yup.object({
+        name: Yup.string()
+          .max(32, "Name is too long! Allowed 32 characters or less.")
+          .required("This field is required."),
+        email: Yup.string()
+          .max(64, "Email is too long! Allowed 64 characters or less.")
+          .email("This is not proper email format.")
+          .required("This field is required."),
+        password1: Yup.string()
+          .min(8, "Password must contain at least 8 characters.")
+          .required("This field is required."),
+        password2: Yup.string()
+          .oneOf([Yup.ref("password1"), null], "Password doesn't match!")
+          .required("This field is required."),
+      })}
+      onSubmit={async (values) => {
+        submit(values, {method: "post"});
+      }}
+    >
+      <Form>
+        <div className={style["form-wrapper"]}>
+          <div className={style["inputs"]}>
+            <CustomInput
+              label="Username:"
+              name="name"
+              type="text"
+            />
+            <CustomInput
+              label="Email:"
+              name="email"
+              type="email"
+            />
+            <CustomInput
+              label="Password:"
+              name="password1"
+              type="password"
+            />
+            <CustomInput
+              label="Confirm Password:"
+              name="password2"
+              type="password"
+            />
+          </div>
+          <div className={style["actions"]}>
+            <Link to="/auth/login">Login</Link>
+            <Button cta type="submit">Submit</Button>
+          </div>
         </div>
       </Form>
-    </div>
+    </Formik>
   );
 };
