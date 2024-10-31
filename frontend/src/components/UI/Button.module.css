@@ -12,10 +12,16 @@
 }
 
 @media (hover: hover) {
-  .cta:hover {
+  .cta:hover:not(.button:disabled) {
     box-shadow: 0 0 10px rgba(32, 32, 32, 0.3);
   }
-  .cta:active {
+  .cta:active:not(.button:disabled) {
     box-shadow: 0 0 5px rgba(32, 32, 32, 0.3);
   }
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  background-color: #868e96;
+  color: #adb5bd;
 }

@@ -1,8 +1,8 @@
 import style from "./Form.module.css";
 
 import {Formik, Form} from "formik";
-import {useContext, useEffect} from "react";
-import {useFetcher, useSubmit} from "react-router-dom";
+import {useContext, useEffect, useState} from "react";
+import {useFetcher} from "react-router-dom";
 import * as Yup from "yup";
 
 import Button from "../UI/Button.jsx";
@@ -13,7 +13,6 @@ import {ModalContext} from "../../store/ModalContext.jsx";
 
 
 export default function CreateRecipeForm() {
-  const submit = useSubmit();
   const fetcher = useFetcher();
   const {data, state} = fetcher;
   const {mode, hide} = useContext(ModalContext);
@@ -41,6 +40,7 @@ export default function CreateRecipeForm() {
             type: "other",
             "time-required": "",
           }}
+          validateOnMount={true}
           validationSchema={Yup.object({
             name: Yup.string()
               .max(32, "Name is too long! Allowed 32 character or less.")
@@ -48,16 +48,17 @@ export default function CreateRecipeForm() {
             "time-required": Yup.number()
               .min(1, "Time must be greater than 0!")
               .max(2880, "Preparation should not exceed 2 days.")
+              .integer("This value must be an integer.")
               .required("This field is required.")
           })}
           onSubmit={async (values) => {
-            submit(values, {method: "post", action: "/recipes"});
+            fetcher.submit(values, {method: "post", action: "/recipes"});
           }}
-        >
+        >{props => (
           <Form>
             <div className={style["inputs"]}>
               <CustomInput label="Name:" name="name" type="text"/>
-              <CustomSelect label="Cuisine:" name="cuisine" defaultValue="other">
+              <CustomSelect label="Cuisine:" name="cuisine">
                 <option value="american">American</option>
                 <option value="chinese">Chinese</option>
                 <option value="french">French</option>
@@ -72,7 +73,7 @@ export default function CreateRecipeForm() {
                 <option value="vietnamese">Vietnamese</option>
                 <option value="other">Other</option>
               </CustomSelect>
-              <CustomSelect label="Type:" name="type" defaultValue="other">
+              <CustomSelect label="Type:" name="type">
                 <option value="cold_beverage">Cold beverage</option>
                 <option value="dessert">Dessert</option>
                 <option value="hot_beverage">Hot beverage</option>
@@ -84,9 +85,10 @@ export default function CreateRecipeForm() {
               <CustomInput label="Time required:" name="time-required" type="number" min={1} max={2880}/>
             </div>
             <div className={style["actions"]}>
-              <Button cta>Submit</Button>
+              <Button cta disabled={!props.isValid}>Submit</Button>
             </div>
           </Form>
+        )}
         </Formik>
       </div>
     </Modal>
