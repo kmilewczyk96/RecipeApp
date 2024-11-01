@@ -17,9 +17,11 @@
   background-color: #fff;
   border: 1px solid #ced4da;
   border-radius: 5px;
-  min-width: 32rem;
-  font-size: 1.6rem;
+}
 
+.custom-tag input,
+.custom-tag select {
+  font-size: 1.6rem;
   padding: 0.8rem;
   margin-bottom: 1.6rem;
 }

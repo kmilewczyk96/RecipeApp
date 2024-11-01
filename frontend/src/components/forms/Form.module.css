@@ -63,3 +63,31 @@ dialog .form-wrapper {
 .error-message span {
   font-size: 1.2rem;
 }
+
+.form-ingredient-box {
+  width: 32rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+.form-ingredient-box-actions {
+  display: flex;
+}
+
+.form-ingredient-box-actions input {
+  width: 50%;
+  text-align: right;
+}
+
+.form-ingredient-box-actions button {
+  align-self: center;
+  font-size: 2.4rem;
+}
+
+.ingredient-list {
+  max-height: 80rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}

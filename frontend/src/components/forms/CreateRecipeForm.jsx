@@ -1,21 +1,25 @@
 import style from "./Form.module.css";
 
-import {Formik, Form} from "formik";
-import {useContext, useEffect, useState} from "react";
+import {Formik, Form, validateYupSchema, yupToFormErrors} from "formik";
+import {useContext, useEffect} from "react";
 import {useFetcher} from "react-router-dom";
 import * as Yup from "yup";
 
 import Button from "../UI/Button.jsx";
-import CustomInput from "../UI/CustomInput.jsx";
-import CustomSelect from "../UI/CustomSelect.jsx";
 import Modal from "../UI/Modal.jsx";
 import {ModalContext} from "../../store/ModalContext.jsx";
+import useRecipeMultiForm from "../../hooks/useRecipeMultiForm.jsx";
+import RecipeAboutForm from "./RecipeAboutForm.jsx";
+import RecipeIngredientsForm from "./RecipeIngredientsForm.jsx";
+import RecipeStepsForm from "./RecipeStepsForm.jsx";
 
 
 export default function CreateRecipeForm() {
   const fetcher = useFetcher();
   const {data, state} = fetcher;
   const {mode, hide} = useContext(ModalContext);
+  const formCtx = useRecipeMultiForm();
+  const finalStep = formCtx.step === 2;
   let errorMessage;
 
   useEffect(() => {
@@ -39,53 +43,60 @@ export default function CreateRecipeForm() {
             cuisine: "other",
             type: "other",
             "time-required": "",
+            ingredients: [
+              {
+                ingredient: "",
+                quantity: 0,
+              }
+            ],
+            steps: "",
           }}
-          validateOnMount={true}
-          validationSchema={Yup.object({
-            name: Yup.string()
-              .max(32, "Name is too long! Allowed 32 character or less.")
-              .required("This field is required."),
-            "time-required": Yup.number()
-              .min(1, "Time must be greater than 0!")
-              .max(2880, "Preparation should not exceed 2 days.")
-              .integer("This value must be an integer.")
-              .required("This field is required.")
-          })}
-          onSubmit={async (values) => {
-            fetcher.submit(values, {method: "post", action: "/recipes"});
+          validate={(values) => {
+            try {
+              validateYupSchema(values, Yup.object({
+                name: Yup.string()
+                  .max(32, "Name is too long! Allowed 32 character or less.")
+                  .required("This field is required."),
+                "time-required": Yup.number()
+                  .min(1, "Time must be greater than 0!")
+                  .max(2880, "Preparation should not exceed 2 days.")
+                  .integer("This value must be an integer.")
+                  .required("This field is required."),
+                ingredients: Yup.array().when('$step', {
+                  is: 1,
+                  then: (schema) => schema.required(
+                    "This field is required."
+                  )
+                }),
+                steps: Yup.string().when('$step', {
+                  is: 2,
+                  then: (schema) => schema.required(
+                    "This field is required."
+                  )
+                }),
+
+          }), true, {step: formCtx.step})
+            } catch (error) {
+              return yupToFormErrors(error);
+            }
+            return {};
           }}
+          onSubmit={async (values, helpers) => {
+            if (finalStep) {
+              fetcher.submit(values, {method: "post", action: "/recipes"});
+              return;
+            }
+            formCtx.nextStep();
+          }
+        }
         >{props => (
           <Form>
-            <div className={style["inputs"]}>
-              <CustomInput label="Name:" name="name" type="text"/>
-              <CustomSelect label="Cuisine:" name="cuisine">
-                <option value="american">American</option>
-                <option value="chinese">Chinese</option>
-                <option value="french">French</option>
-                <option value="greek">Greek</option>
-                <option value="indian">Indian</option>
-                <option value="italian">Italian</option>
-                <option value="japanese">Japanese</option>
-                <option value="lebanese">Lebanese</option>
-                <option value="mexican">Mexican</option>
-                <option value="thai">Thai</option>
-                <option value="turkish">Turkish</option>
-                <option value="vietnamese">Vietnamese</option>
-                <option value="other">Other</option>
-              </CustomSelect>
-              <CustomSelect label="Type:" name="type">
-                <option value="cold_beverage">Cold beverage</option>
-                <option value="dessert">Dessert</option>
-                <option value="hot_beverage">Hot beverage</option>
-                <option value="main">Main</option>
-                <option value="snack">Snack</option>
-                <option value="soup">Soup</option>
-                <option value="other">Other</option>
-              </CustomSelect>
-              <CustomInput label="Time required:" name="time-required" type="number" min={1} max={2880}/>
-            </div>
+            {formCtx.step === 0 && <RecipeAboutForm/>}
+            {formCtx.step === 1 && <RecipeIngredientsForm values={props.values}/>}
+            {formCtx.step === 2 && <RecipeStepsForm/>}
             <div className={style["actions"]}>
-              <Button cta disabled={!props.isValid}>Submit</Button>
+              {formCtx.step !== 0 && <Button type="button" onClick={formCtx.prevStep}>Back</Button>}
+              <Button type="submit" cta={finalStep}>{finalStep ? "Submit" : "Next"}</Button>
             </div>
           </Form>
         )}

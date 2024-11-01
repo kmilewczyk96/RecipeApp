@@ -60,3 +60,9 @@ ol {
 svg {
   flex-shrink: 0;
 }
+
+input[type=number] {
+  -webkit-appearance: none;
+  margin: 0;
+  -moz-appearance: textfield;
+}
