@@ -1,4 +1,4 @@
-import style from "./Form.module.css";
+import style from "./CreateRecipeForm.module.css";
 
 import {Formik, Form, validateYupSchema, yupToFormErrors} from "formik";
 import {useContext, useEffect} from "react";
@@ -30,7 +30,7 @@ export default function CreateRecipeForm() {
 
   return (
     <Modal isOpen={mode === "create-recipe-form"} onClose={hide}>
-      <div className={style["form-wrapper"]}>
+      <div className={style["modal-form-wrapper"]}>
         {errorMessage && (
           <div className={style["error-message"]}>
             <p>{errorMessage.title}</p>
@@ -90,13 +90,22 @@ export default function CreateRecipeForm() {
           }
         }
         >{props => (
-          <Form>
+          <Form key={formCtx.step} className={style["create-recipe-form"]}>
             {formCtx.step === 0 && <RecipeAboutForm/>}
             {formCtx.step === 1 && <RecipeIngredientsForm values={props.values}/>}
             {formCtx.step === 2 && <RecipeStepsForm/>}
             <div className={style["actions"]}>
-              {formCtx.step !== 0 && <Button type="button" onClick={formCtx.prevStep}>Back</Button>}
-              <Button type="submit" cta={finalStep}>{finalStep ? "Submit" : "Next"}</Button>
+              {
+                formCtx.step !== 0 &&
+                <Button
+                  type="button"
+                  onClick={formCtx.prevStep}
+                >Back</Button>
+              }
+              <Button
+                type="submit"
+                cta={finalStep}
+              >{finalStep ? "Submit" : "Next"}</Button>
             </div>
           </Form>
         )}

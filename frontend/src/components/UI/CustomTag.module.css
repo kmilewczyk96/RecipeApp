@@ -2,6 +2,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  margin-bottom: 1.6rem;
 }
 
 .custom-tag label {
@@ -23,7 +24,6 @@
 .custom-tag select {
   font-size: 1.6rem;
   padding: 0.8rem;
-  margin-bottom: 1.6rem;
 }
 
 .custom-tag input:focus,
@@ -45,6 +45,6 @@
 
 .error-message {
   position: absolute;
-  bottom: 0;
+  top: 100%;
   right: 0;
 }

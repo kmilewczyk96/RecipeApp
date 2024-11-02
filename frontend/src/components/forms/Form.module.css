@@ -9,11 +9,22 @@
   margin: 32rem auto 0;
 }
 
-dialog .form-wrapper {
+.modal-form-wrapper {
+  background-image: linear-gradient(#f8f9fa, #f1f3f5);
+  width: 60rem;
   box-shadow: none;
-  border: none;
+  border: 1px solid #adb5bd;
   border-radius: 0;
+
+  padding: 6rem 12rem;
   margin: 0;
+}
+
+.modal-form-wrapper form {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .inputs {
@@ -62,32 +73,4 @@ dialog .form-wrapper {
 
 .error-message span {
   font-size: 1.2rem;
-}
-
-.form-ingredient-box {
-  width: 32rem;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1.2rem;
-}
-
-.form-ingredient-box-actions {
-  display: flex;
-}
-
-.form-ingredient-box-actions input {
-  width: 50%;
-  text-align: right;
-}
-
-.form-ingredient-box-actions button {
-  align-self: center;
-  font-size: 2.4rem;
-}
-
-.ingredient-list {
-  max-height: 80rem;
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
 }

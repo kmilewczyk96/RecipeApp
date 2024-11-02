@@ -1,0 +1,29 @@
+.modal-form-wrapper {
+  background-image: linear-gradient(#f8f9fa, #f1f3f5);
+  padding: 2rem 4rem;
+}
+
+.create-recipe-form {
+  display: flex;
+  flex-direction: column;
+  width: 50rem;
+  /*background-image: url("../../assets/backgrounds/menu_background.jpg");*/
+  /*background-size: cover;*/
+  /*border: 2px solid #adb5bd;*/
+  padding: 4rem 6rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
+
+.actions button[type="button"] {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.actions button[type="submit"] {
+  margin-left: auto;
+  margin-right: 0;
+}
