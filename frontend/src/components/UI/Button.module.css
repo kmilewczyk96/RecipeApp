@@ -16,7 +16,7 @@
 
 @media (hover: hover) {
   .button:hover {
-    background-color: #212529;
+    background-color: #343a40;
     color: #f8f9fa;
     box-shadow: 0 0 2px rgba(32, 32, 32, 0.7);
   }

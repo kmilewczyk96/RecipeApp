@@ -46,7 +46,7 @@ export default function CreateRecipeForm() {
             ingredients: [
               {
                 ingredient: "",
-                quantity: 0,
+                quantity: "",
               }
             ],
             steps: "",

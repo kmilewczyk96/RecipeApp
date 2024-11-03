@@ -6,7 +6,7 @@
 .create-recipe-form {
   display: flex;
   flex-direction: column;
-  width: 50rem;
+  width: 48rem;
   /*background-image: url("../../assets/backgrounds/menu_background.jpg");*/
   /*background-size: cover;*/
   /*border: 2px solid #adb5bd;*/
@@ -26,4 +26,36 @@
 .actions button[type="submit"] {
   margin-left: auto;
   margin-right: 0;
+}
+
+.ingredient-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto 2.4rem;
+}
+
+.ingredient-list {
+  overflow-y: scroll;
+  background-color: #fff;
+  border: 1px solid #868e96;
+  height: 60rem;
+  padding: 2.4rem;
+  margin-bottom: 2.4rem;
+}
+
+.form-ingredient-box {
+  border-bottom: 1px solid #868e96;
+  margin-bottom: 2.4rem;
+}
+
+.form-ingredient-top {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.form-ingredient-bottom {
+  display: flex;
+  align-items: center;
 }
