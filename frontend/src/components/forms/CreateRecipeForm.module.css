@@ -37,6 +37,8 @@
 
 .ingredient-list {
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
   background-color: #fff;
   border: 1px solid #868e96;
   height: 60rem;
@@ -45,7 +47,7 @@
 }
 
 .form-ingredient-box {
-  border-bottom: 1px solid #868e96;
+  border-bottom: 1px solid #ced4da;
   margin-bottom: 2.4rem;
 }
 
@@ -58,4 +60,11 @@
 .form-ingredient-bottom {
   display: flex;
   align-items: center;
+}
+
+.no-data {
+  text-align: center;
+  font-size: 1.6rem;
+  color: #868e96;
+  margin: auto;
 }

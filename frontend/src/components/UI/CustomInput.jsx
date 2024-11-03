@@ -11,7 +11,12 @@ export default function CustomInput({label, placeholder, ...props}) {
   return (
     <div className={styles}>
       {label && <label htmlFor={props.name || props.id} className={hasError ? style["error"] : null}>{label}</label>}
-      <input placeholder={placeholder && placeholder} className={hasError ? style["error"] : null} {...field} {...props}/>
+      <input
+        placeholder={placeholder && placeholder}
+        className={hasError ? style["error"] : null}
+        {...field}
+        {...props}
+      />
       {hasError && <span className={style["error-message"]}>{meta.error}</span>}
     </div>
   );

@@ -2,6 +2,7 @@ import style from "./Form.module.css";
 
 import CustomInput from "../UI/CustomInput.jsx";
 import CustomSelect from "../UI/CustomSelect.jsx";
+import CustomUnitBox from "../UI/CustomUnitBox.jsx";
 
 
 export default function RecipeAboutForm() {
@@ -32,7 +33,7 @@ export default function RecipeAboutForm() {
         <option value="soup">Soup</option>
         <option value="other">Other</option>
       </CustomSelect>
-      <CustomInput label="Time required:" name="time-required" type="number" min={1} max={2880}/>
+      <CustomUnitBox label="Time required:" units={"min."} name="time-required" type="number" min={1} max={2880}/>
     </div>
   );
 };

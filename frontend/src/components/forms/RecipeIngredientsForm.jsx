@@ -24,7 +24,7 @@ export default function RecipeIngredientsForm({values}) {
         <div className={style["ingredient-list-wrapper"]}>
           <ol ref={listRef} className={style["ingredient-list"]}>
           {
-            values.ingredients.length > 0 && values.ingredients.map((ingredient, index) => (
+            values.ingredients.length > 0 ? values.ingredients.map((ingredient, index) => (
               <li key={index} className={style["form-ingredient-box"]}>
                 <div className={style["form-ingredient-top"]}>
                   <CustomSelect name={`ingredients.${index}.name`}>
@@ -36,7 +36,7 @@ export default function RecipeIngredientsForm({values}) {
                   <CustomInput placeholder={"Quantity"} name={`ingredients.${index}.quantity`} type="number"/>
                 </div>
               </li>
-            ))
+            )) : <p className={style["no-data"]}>Please add at least one ingredient.</p>
           }
           </ol>
           <Button

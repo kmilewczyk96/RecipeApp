@@ -1,17 +1,39 @@
-.custom-tag {
+.custom-unit-box {
   position: relative;
   display: flex;
   flex-direction: column;
   margin-bottom: 1.6rem;
 }
 
-.custom-tag label {
+.custom-unit-box label {
   font-size: 1.2rem;
   margin-bottom: 0.8rem;
 }
 
-.custom-tag input,
-.custom-tag select {
+.custom-unit-box input,
+.custom-unit-box select {
+  border-right: 1px solid #ced4da;
+  border-radius: 5px 0 0 5px;
+}
+
+.custom-unit-box input,
+.custom-unit-box select,
+.custom-unit-box p {
+  font-size: 1.6rem;
+  padding: 0.8rem;
+}
+
+.custom-unit-box p {
+  display: inline-block;
+}
+
+.custom-unit-box input:focus,
+.custom-unit-box select:focus {
+  outline: none !important;
+  box-shadow: inset 0 0 0 2px #15aabf;
+}
+
+.unit-box-wrapper {
   font-family: inherit;
   letter-spacing: 0.075rem;
   line-height: 1.3;
@@ -20,22 +42,8 @@
   border-radius: 5px;
 }
 
-.custom-tag input,
-.custom-tag select {
-  font-size: 1.6rem;
-  padding: 0.8rem;
-}
-
-.custom-tag input:focus,
-.custom-tag select:focus {
-  outline: none !important;
-  box-shadow: inset 0 0 0 2px #15aabf;
-}
-
-.custom-unit-box {
-  display: flex;
-  border: 1px solid #ced4da;
-  border-radius: 5px;
+.custom-unit-box input {
+  text-align: right;
 }
 
 .error,
