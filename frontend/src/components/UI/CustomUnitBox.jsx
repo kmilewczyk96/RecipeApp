@@ -3,7 +3,7 @@ import style from "./CustomUnitBox.module.css";
 import {useField} from "formik";
 
 
-export default function CustomUnitBox({label, units, placeholder, ...props}) {
+export default function CustomUnitBox({label, placeholder, units={base: "g"}, ...props}) {
   const [field, meta] = useField(props);
   const hasError = meta.error && meta.touched;
 
@@ -17,7 +17,16 @@ export default function CustomUnitBox({label, units, placeholder, ...props}) {
           {...field}
           {...props}
         />
-        <p>{units}</p>
+        <div className={style["unit-select"]}>
+          {units.alt ? (
+            <select>
+              <option>g</option>
+              <option>pcs</option>
+            </select>
+          ) : (
+            <p>{units.base}</p>
+          )}
+        </div>
         {hasError && <span className={style["error-message"]}>{meta.error}</span>}
       </div>
     </div>

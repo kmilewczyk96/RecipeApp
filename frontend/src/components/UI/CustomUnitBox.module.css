@@ -1,19 +1,23 @@
 .custom-unit-box {
   position: relative;
   display: flex;
+  max-width: fit-content;
   flex-direction: column;
   margin-bottom: 1.6rem;
 }
 
 .custom-unit-box label {
   font-size: 1.2rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.4rem;
 }
 
-.custom-unit-box input,
-.custom-unit-box select {
+.custom-unit-box input {
   border-right: 1px solid #ced4da;
   border-radius: 5px 0 0 5px;
+}
+
+.custom-unit-box select {
+  border-radius: 0 5px 5px 0;
 }
 
 .custom-unit-box input,
@@ -34,12 +38,24 @@
 }
 
 .unit-box-wrapper {
+  display: flex;
+  flex-direction: row;
   font-family: inherit;
   letter-spacing: 0.075rem;
   line-height: 1.3;
   background-color: #fff;
   border: 1px solid #ced4da;
   border-radius: 5px;
+}
+
+.unit-select {
+  display: flex;
+}
+
+.unit-select select {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .custom-unit-box input {
