@@ -1,5 +1,7 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
+import {QueryClientProvider} from "@tanstack/react-query";
+
 import {authLoader, tokenLoader} from "./util/auth-token.js";
 
 import HomePage from "./pages/HomePage.jsx";
@@ -8,6 +10,7 @@ import {logoutAction} from "./pages/Logout.js";
 import MyProfilePage, {myProfileLoader, myProfileRecipesLoader} from "./pages/MyProfilePage.jsx";
 import RecipeDetailPage, {recipeDetailLoader} from "./pages/RecipeDetailPage.jsx";
 import {addRecipeAction} from "./pages/RecipesPage.jsx";
+import queryClient from "./util/http.js";
 import RegisterPage, {registerAction} from "./pages/RegisterPage.jsx";
 import RootPage from "./pages/RootPage.jsx";
 import UserDetailPage, {userDetailLoader} from "./pages/UserDetailPage.jsx";
@@ -64,7 +67,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router}/>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router}/>
+    </QueryClientProvider>
+  );
 }
 
 export default App;
