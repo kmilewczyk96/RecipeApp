@@ -70,6 +70,7 @@ class RecipePrivateAPITests(TestCase):
             'r_ingredients': [
                 {'ingredient': {'id': ingredient.id}, 'quantity': 5},
             ],
+            'steps': ['step one', 'step two']
         }, format='json')
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         recipe = Recipe.objects.get(id=res.data['id'])
@@ -81,6 +82,7 @@ class RecipePrivateAPITests(TestCase):
             'name': 'Some dish',
             'time_minutes': 25,
             'r_ingredients': [],
+            'steps': ['step one', 'step two'],
         }, format='json')
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 

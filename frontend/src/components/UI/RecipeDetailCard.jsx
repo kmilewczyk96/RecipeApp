@@ -7,7 +7,6 @@ import {Link} from "react-router-dom";
 import PinIcon from "../icons/PinIcon.jsx";
 import TimerIcon from "../icons/TimerIcon.jsx";
 import EnergyIcon from "../icons/EnergyIcon.jsx";
-import PlantIcon from "../icons/PlantIcon.jsx";
 
 
 export default function RecipeDetailCard({recipe}) {
@@ -41,7 +40,9 @@ export default function RecipeDetailCard({recipe}) {
       </ul>
       <h3>Steps</h3>
       <ol className={style["steps"]}>
-        <li>TBC</li>
+        {recipe.steps.map((step, index) => (
+          <li key={index}>{step}</li>
+        ))}
       </ol>
     </div>
   );

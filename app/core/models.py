@@ -53,6 +53,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Recipe(models.Model):
     """Recipe model."""
+    CSV_SEPARATOR = "|"
+
     CUISINES = [
         ('american', 'American'),
         ('chinese', 'Chinese'),
@@ -87,8 +89,25 @@ class Recipe(models.Model):
     cuisine = models.CharField(max_length=32, choices=CUISINES, default='other', blank=False, null=False)
     recipe_type = models.CharField(max_length=32, choices=TYPES, default='other', blank=False, null=False)
     time_minutes = models.IntegerField()
+    _steps = models.TextField(blank=False, null=False)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+
+    @property
+    def steps(self):
+        """Retrieve steps from model's steps_csv field."""
+        return self._steps.split(self.CSV_SEPARATOR)
+
+    @steps.setter
+    def steps(self, steps_list: list[str]):
+        """Joins list of text values with csv separator and saves result as steps_csv field."""
+        for step in steps_list:
+            if not step.strip():
+                raise ValueError('One of the steps is an empty string!')
+            if self.CSV_SEPARATOR in step:
+                raise ValueError('One of the steps contains CSV separator!')
+
+        self._steps = self.CSV_SEPARATOR.join(steps_list)
 
     @property
     def tags(self):

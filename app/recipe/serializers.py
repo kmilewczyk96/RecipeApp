@@ -57,9 +57,10 @@ class RecipeSerializer(serializers.ModelSerializer):
 class RecipeDetailSerializer(RecipeSerializer):
     """Serializer for Recipe details."""
     r_ingredients = RecipeIngredientSerializer(many=True, required=True)
+    steps = serializers.ListSerializer(child=serializers.CharField(), read_only=False)
 
     class Meta(RecipeSerializer.Meta):
-        fields = RecipeSerializer.Meta.fields + ['r_ingredients']
+        fields = RecipeSerializer.Meta.fields + ['r_ingredients', 'steps']
 
     def create(self, validated_data):
         r_ingredients = validated_data.pop('r_ingredients', [])
