@@ -10,6 +10,8 @@ from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from core.models import (
     Ingredient,
@@ -77,3 +79,22 @@ class IngredientListView(ListAPIView):
     queryset = Ingredient.objects.all()
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+
+
+class RecipeFormHelpers(APIView):
+    """Get choice fields for RecipeForm."""
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        responses=serializers.RecipeFormHelperSerializer,
+    )
+    def get(self, request):
+        helpers = {
+            'cuisine_choices': {key: value for key, value in Recipe.CUISINES},
+            'type_choices': {key: value for key, value in Recipe.TYPES},
+            'ingredients': serializers.IngredientSerializer(Ingredient.objects.all(), many=True).data,
+            'csv_separator': Recipe.CSV_SEPARATOR,
+        }
+
+        return Response(helpers)

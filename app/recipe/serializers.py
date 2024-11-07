@@ -81,3 +81,15 @@ class RecipeDetailSerializer(RecipeSerializer):
             )
 
         return recipe
+
+
+class RecipeFormHelperSerializer(serializers.Serializer):
+    """Serializer for RecipeFormHelper."""
+    cuisine_choices = serializers.DictField()
+    type_choices = serializers.DictField()
+    ingredients = IngredientSerializer(many=True)
+    csv_separator = serializers.CharField()
+
+    class Meta:
+        fields = ['cuisine_choices', 'type_choices', 'ingredients', 'csv_separator']
+        read_only_fields = fields
