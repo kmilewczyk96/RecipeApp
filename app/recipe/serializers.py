@@ -23,6 +23,15 @@ class IngredientSerializer(serializers.ModelSerializer):
         }
 
 
+class SmallIngredientSerializer(serializers.ModelSerializer):
+    """Smaller version of Ingredient serializer for RecipeFormHelpers."""
+
+    class Meta:
+        model = Ingredient
+        fields = ['name', 'unit', 'alt_unit', 'alt_to_unit_conversion']
+        read_only_fields = fields
+
+
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     """Serializer for Recipe Ingredients."""
     ingredient = IngredientSerializer()
@@ -87,7 +96,7 @@ class RecipeFormHelperSerializer(serializers.Serializer):
     """Serializer for RecipeFormHelper."""
     cuisine_choices = serializers.DictField()
     type_choices = serializers.DictField()
-    ingredients = IngredientSerializer(many=True)
+    ingredients = serializers.DictField(child=SmallIngredientSerializer())
     csv_separator = serializers.CharField()
 
     class Meta:

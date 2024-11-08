@@ -93,7 +93,10 @@ class RecipeFormHelpers(APIView):
         helpers = {
             'cuisine_choices': {key: value for key, value in Recipe.CUISINES},
             'type_choices': {key: value for key, value in Recipe.TYPES},
-            'ingredients': serializers.IngredientSerializer(Ingredient.objects.all(), many=True).data,
+            'ingredients': {
+                str(ingredient.id): serializers.SmallIngredientSerializer(ingredient).data
+                for ingredient in Ingredient.objects.all()
+            },
             'csv_separator': Recipe.CSV_SEPARATOR,
         }
 

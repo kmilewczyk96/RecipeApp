@@ -20,8 +20,8 @@ export default function CustomUnitBox({label, placeholder, units={base: "g"}, ..
         <div className={style["unit-select"]}>
           {units.alt ? (
             <select>
-              <option>g</option>
-              <option>pcs</option>
+              <option>{units.base}</option>
+              <option>{units.alt}</option>
             </select>
           ) : (
             <p>{units.base}</p>

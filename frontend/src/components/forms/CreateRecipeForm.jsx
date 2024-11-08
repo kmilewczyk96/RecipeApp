@@ -3,6 +3,7 @@ import style from "./CreateRecipeForm.module.css";
 import {Formik, Form, validateYupSchema, yupToFormErrors} from "formik";
 import {useContext, useEffect} from "react";
 import {useFetcher} from "react-router-dom";
+import {useQuery} from "@tanstack/react-query";
 import * as Yup from "yup";
 
 import Button from "../UI/Button.jsx";
@@ -12,9 +13,15 @@ import useRecipeMultiForm from "../../hooks/useRecipeMultiForm.jsx";
 import RecipeAboutForm from "./RecipeAboutForm.jsx";
 import RecipeIngredientsForm from "./RecipeIngredientsForm.jsx";
 import RecipeStepsForm from "./RecipeStepsForm.jsx";
+import {fetchRecipeFormHelpers} from "../../util/http.js";
 
 
 export default function CreateRecipeForm() {
+  const {data: formHelpers, isLoading} = useQuery({
+    queryKey: ["formHelpers"],
+    queryFn: fetchRecipeFormHelpers,
+  });
+
   const fetcher = useFetcher();
   const {data, state} = fetcher;
   const {mode, hide} = useContext(ModalContext);
@@ -30,7 +37,7 @@ export default function CreateRecipeForm() {
 
   return (
     <Modal isOpen={mode === "create-recipe-form"} onClose={hide}>
-      <div className={style["modal-form-wrapper"]}>
+      {formHelpers && <div className={style["modal-form-wrapper"]}>
         {errorMessage && (
           <div className={style["error-message"]}>
             <p>{errorMessage.title}</p>
@@ -45,7 +52,9 @@ export default function CreateRecipeForm() {
             "time-required": "",
             ingredients: [
               {
-                ingredient: "",
+                ingredient: {
+                  id: "",
+                },
                 quantity: "",
               }
             ],
@@ -75,7 +84,7 @@ export default function CreateRecipeForm() {
                   )
                 }),
 
-          }), true, {step: formCtx.step})
+              }), true, {step: formCtx.step})
             } catch (error) {
               return yupToFormErrors(error);
             }
@@ -88,11 +97,16 @@ export default function CreateRecipeForm() {
             }
             formCtx.nextStep();
           }
-        }
-        >{props => (
+          }
+        >
           <Form key={formCtx.step} className={style["create-recipe-form"]}>
-            {formCtx.step === 0 && <RecipeAboutForm/>}
-            {formCtx.step === 1 && <RecipeIngredientsForm values={props.values}/>}
+            {formCtx.step === 0 && <RecipeAboutForm
+              cuisineChoices={formHelpers.cuisine_choices}
+              typeChoices={formHelpers.type_choices}
+            />}
+            {formCtx.step === 1 && <RecipeIngredientsForm
+              ingredients={formHelpers.ingredients}
+            />}
             {formCtx.step === 2 && <RecipeStepsForm/>}
             <div className={style["actions"]}>
               {
@@ -108,9 +122,8 @@ export default function CreateRecipeForm() {
               >{finalStep ? "Submit" : "Next"}</Button>
             </div>
           </Form>
-        )}
         </Formik>
-      </div>
+      </div>}
     </Modal>
   );
 };
