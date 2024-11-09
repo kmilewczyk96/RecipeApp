@@ -10,6 +10,7 @@ import CustomUnitBox from "../UI/CustomUnitBox.jsx";
 
 
 let scroll;
+let usedIngredients = [];
 export default function RecipeIngredientsForm({ingredients}) {
   const listRef = useRef();
   const {handleChange, values} = useFormikContext();
@@ -18,6 +19,11 @@ export default function RecipeIngredientsForm({ingredients}) {
     scroll ? listRef.current?.lastElementChild?.scrollIntoView({behavior: "smooth", block: "center"}) : null;
     scroll = false;
   }, [scroll]);
+
+  useEffect(() => {
+    usedIngredients = [];
+    values.ingredients.filter(i => i.ingredient.id !== "").map(i => usedIngredients.push(i.ingredient.id));
+  }, [values.ingredients]);
 
   return (
     <FieldArray name="ingredients">
@@ -39,6 +45,7 @@ export default function RecipeIngredientsForm({ingredients}) {
                   >
                     <option className={style["select-placeholder"]} value="" hidden>Select an ingredient</option>
                     {Object.entries(ingredients).map(([key, data]) => (
+                      (!usedIngredients.includes(key) || values.ingredients[index].ingredient.id === key) &&
                       <option
                         key={key}
                         value={key}
@@ -60,7 +67,7 @@ export default function RecipeIngredientsForm({ingredients}) {
                         label={"Quantity:"}
                         units={{
                           base: ingredients[values.ingredients[index].ingredient.id].unit,
-                          alt: "pcs"
+                          alt: ingredients[values.ingredients[index].ingredient.id].alt_unit
                       }}
                         name={`ingredients.${index}.quantity`}
                         type="number"
