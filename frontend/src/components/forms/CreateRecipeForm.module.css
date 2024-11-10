@@ -29,14 +29,14 @@
   margin-right: 0;
 }
 
-.ingredient-list-wrapper {
+.list-wrapper {
   display: flex;
   flex-direction: column;
   width: 100%;
   margin: 0 auto 2.4rem;
 }
 
-.ingredient-list {
+.scrollable-list {
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
@@ -47,23 +47,23 @@
   margin-bottom: 2.4rem;
 }
 
-.form-ingredient-box {
+.form-box {
   border-bottom: 1px solid #ced4da;
   margin-bottom: 2.4rem;
 }
 
-.form-ingredient-top {
+.form-box-top {
   position: relative;
   display: flex;
   gap: 1.2rem;
   align-items: center;
 }
 
-.form-ingredient-top > div{
+.form-box-top > div{
   flex: 1;
 }
 
-.form-ingredient-bottom {
+.form-box-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -78,7 +78,6 @@
   font-family: inherit;
   font-size: 1.2rem;
   border: 1px solid transparent;
-  transition: border 0.3s, background-color 0.3s, color 0.3s;
   padding: 0 0.4rem;
 }
 

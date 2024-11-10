@@ -16,24 +16,20 @@ export default function RecipeIngredientsForm({ingredients}) {
   const {handleChange, values} = useFormikContext();
 
   useEffect(() => {
-    scroll ? listRef.current?.lastElementChild?.scrollIntoView({behavior: "smooth", block: "center"}) : null;
-    scroll = false;
-  }, [scroll]);
-
-  useEffect(() => {
     usedIngredients = [];
     values.ingredients.filter(i => i.ingredient.id !== "").map(i => usedIngredients.push(i.ingredient.id));
+    scroll ? listRef.current?.lastElementChild?.scrollIntoView({behavior: "smooth", block: "center"}) : null;
   }, [values.ingredients]);
 
   return (
     <FieldArray name="ingredients">
       {({insert, remove, push}) => (
-        <div className={style["ingredient-list-wrapper"]}>
-          <ol ref={listRef} className={style["ingredient-list"]}>
+        <div className={style["list-wrapper"]}>
+          <ol ref={listRef} className={style["scrollable-list"]}>
           {
             values.ingredients.length > 0 ? values.ingredients.map((ingredient, index) => (
-              <li key={index} className={style["form-ingredient-box"]}>
-                <div className={style["form-ingredient-top"]}>
+              <li key={index} className={style["form-box"]}>
+                <div className={style["form-box-top"]}>
                   <CustomSelect
                     label={"Ingredient:"}
                     name={`ingredients.${index}.ingredient.id`}
@@ -62,7 +58,7 @@ export default function RecipeIngredientsForm({ingredients}) {
                 </div>
                 {
                   values.ingredients[index].ingredient.id && (
-                    <div className={style["form-ingredient-bottom"]}>
+                    <div className={style["form-box-bottom"]}>
                       <CustomUnitBox
                         label={"Quantity:"}
                         units={{

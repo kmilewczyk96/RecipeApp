@@ -58,7 +58,9 @@ export default function CreateRecipeForm() {
                 quantity: "",
               }
             ],
-            steps: "",
+            steps: [
+              "",
+            ],
           }}
           validate={(values) => {
             try {
@@ -77,13 +79,6 @@ export default function CreateRecipeForm() {
                     "This field is required."
                   )
                 }),
-                steps: Yup.string().when('$step', {
-                  is: 2,
-                  then: (schema) => schema.required(
-                    "This field is required."
-                  )
-                }),
-
               }), true, {step: formCtx.step})
             } catch (error) {
               return yupToFormErrors(error);
