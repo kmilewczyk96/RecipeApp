@@ -9,7 +9,6 @@ import LoginPage, {loginAction} from "./pages/LoginPage.jsx";
 import {logoutAction} from "./pages/Logout.js";
 import MyProfilePage, {myProfileLoader, myProfileRecipesLoader} from "./pages/MyProfilePage.jsx";
 import RecipeDetailPage, {recipeDetailLoader} from "./pages/RecipeDetailPage.jsx";
-import {addRecipeAction} from "./pages/RecipesPage.jsx";
 import queryClient from "./util/http.js";
 import RegisterPage, {registerAction} from "./pages/RegisterPage.jsx";
 import RootPage from "./pages/RootPage.jsx";
@@ -56,7 +55,6 @@ const router = createBrowserRouter([
       },
       {
         path: "recipes",
-        action: addRecipeAction,
         children: [
           {index: true},
           {path: ":recipeID", element: <RecipeDetailPage/>, loader: recipeDetailLoader},

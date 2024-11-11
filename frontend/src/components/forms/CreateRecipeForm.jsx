@@ -2,7 +2,6 @@ import style from "./CreateRecipeForm.module.css";
 
 import {Formik, Form, validateYupSchema, yupToFormErrors} from "formik";
 import {useContext, useEffect} from "react";
-import {useFetcher} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
 import * as Yup from "yup";
 
@@ -13,7 +12,7 @@ import useRecipeMultiForm from "../../hooks/useRecipeMultiForm.jsx";
 import RecipeAboutForm from "./RecipeAboutForm.jsx";
 import RecipeIngredientsForm from "./RecipeIngredientsForm.jsx";
 import RecipeStepsForm from "./RecipeStepsForm.jsx";
-import {fetchRecipeFormHelpers} from "../../util/http.js";
+import {fetchRecipeFormHelpers, sendRecipeFormData} from "../../util/http.js";
 
 
 export default function CreateRecipeForm() {
@@ -22,18 +21,10 @@ export default function CreateRecipeForm() {
     queryFn: fetchRecipeFormHelpers,
   });
 
-  const fetcher = useFetcher();
-  const {data, state} = fetcher;
   const {mode, hide} = useContext(ModalContext);
   const formCtx = useRecipeMultiForm();
   const finalStep = formCtx.step === 2;
   let errorMessage;
-
-  useEffect(() => {
-    if (state === "idle" && data) {
-      hide();
-    }
-  }, [data, state]);
 
   return (
     <Modal isOpen={mode === "create-recipe-form"} onClose={hide}>
@@ -87,14 +78,22 @@ export default function CreateRecipeForm() {
           }}
           onSubmit={async (values, helpers) => {
             if (finalStep) {
-              fetcher.submit(values, {method: "post", action: "/recipes"});
+              const data = {
+                name: values["name"],
+                cuisine: values["cuisine"],
+                recipe_type: values["type"],
+                time_minutes: values["time-required"],
+                r_ingredients: values["ingredients"],
+                steps: values["steps"],
+              }
+              await sendRecipeFormData(data)
               return;
             }
             formCtx.nextStep();
           }
           }
         >
-          <Form key={formCtx.step} className={style["create-recipe-form"]}>
+          <Form action={"/recipes"} key={formCtx.step} className={style["create-recipe-form"]}>
             {formCtx.step === 0 && <RecipeAboutForm
               cuisineChoices={formHelpers.cuisine_choices}
               typeChoices={formHelpers.type_choices}

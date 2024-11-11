@@ -22,3 +22,20 @@ export async function fetchRecipeFormHelpers({signal}) {
   }
   return await response.json();
 }
+
+export async function sendRecipeFormData(formValues){
+  const response = await fetch("http://localhost:8000/api/recipe/recipes/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Token " + getToken(),
+    },
+    body: JSON.stringify(formValues),
+  });
+  if (!response.ok) {
+    const error = new Error("An error occurred while trying to send form data.");
+    error.code = response.status;
+    throw error;
+  }
+  return await response.json();
+}

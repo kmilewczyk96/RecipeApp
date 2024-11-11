@@ -1,6 +1,6 @@
 import style from "./CreateRecipeForm.module.css";
 
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 
 import {FieldArray, useFormikContext} from "formik";
 
@@ -13,11 +13,15 @@ export default function RecipeStepsForm() {
   const listRef = useRef();
   const {values} = useFormikContext();
 
+  useEffect(() => {
+    scroll ? listRef.current?.lastElementChild?.scrollIntoView({behavior: "smooth", block: "center"}) : null;
+  }, [values.steps]);
+
   return (
     <FieldArray name={"steps"}>
       {({remove, push}) => (
         <div className={style["list-wrapper"]}>
-          <ol className={style["scrollable-list"]}>
+          <ol ref={listRef} className={style["scrollable-list"]}>
             {
               values.steps.length > 0 && values.steps.map((step, index) => (
                 <li key={index} className={style["form-box"]}>
@@ -38,7 +42,6 @@ export default function RecipeStepsForm() {
           </ol>
           <Button
             type="button"
-            cta
             onClick={() => {
               push("");
             }}

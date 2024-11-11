@@ -1,6 +1,6 @@
 import style from "./CreateRecipeForm.module.css";
 
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 
 import {FieldArray, useFormikContext} from "formik";
 
@@ -23,7 +23,7 @@ export default function RecipeIngredientsForm({ingredients}) {
 
   return (
     <FieldArray name="ingredients">
-      {({insert, remove, push}) => (
+      {({remove, push}) => (
         <div className={style["list-wrapper"]}>
           <ol ref={listRef} className={style["scrollable-list"]}>
           {
@@ -79,7 +79,6 @@ export default function RecipeIngredientsForm({ingredients}) {
           </ol>
           <Button
             type="button"
-            cta
             onClick={() => {
               push({
                 ingredient: {
