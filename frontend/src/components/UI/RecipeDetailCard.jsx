@@ -1,12 +1,13 @@
 import style from "./RecipeDetailCard.module.css";
 
-import UserIcon from "../icons/UserIcon.jsx";
-
-import {convertToHoursString} from "../../util/converters.js";
 import {Link} from "react-router-dom";
+
+import CutleryIcon from "../icons/CutleryIcon.jsx";
+import EnergyIcon from "../icons/EnergyIcon.jsx";
 import PinIcon from "../icons/PinIcon.jsx";
 import TimerIcon from "../icons/TimerIcon.jsx";
-import EnergyIcon from "../icons/EnergyIcon.jsx";
+import UserIcon from "../icons/UserIcon.jsx";
+import {convertToHoursString} from "../../util/converters.js";
 
 
 export default function RecipeDetailCard({recipe}) {
@@ -22,7 +23,11 @@ export default function RecipeDetailCard({recipe}) {
         </li>
         <li className={style["recipe-info-line"]}>
           <PinIcon/>
-          <p>European</p>
+          <p>{recipe.cuisine}</p>
+        </li>
+        <li className={style["recipe-info-line"]}>
+          <CutleryIcon/>
+          <p>{recipe.recipe_type}</p>
         </li>
         <li className={style["recipe-info-line"]}>
           <TimerIcon/>

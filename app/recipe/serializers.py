@@ -54,9 +54,11 @@ class TagSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     """Serializer for Recipes."""
     user = UserStrictSerializer(read_only=True)
+    is_owner = serializers.SerializerMethodField('_is_owner')
+    cuisine = serializers.ChoiceField(choices=Recipe.CUISINES, default=Recipe.CUISINES[-1])
+    recipe_type = serializers.ChoiceField(choices=Recipe.TYPES, default=Recipe.TYPES[-1])
     tag_names = serializers.ListSerializer(child=serializers.CharField(), read_only=True)
     kcal = serializers.FloatField(read_only=True)
-    is_owner = serializers.SerializerMethodField('_is_owner')
 
     def _is_owner(self, obj) -> bool:
         if self.context.get('request', None):
@@ -64,6 +66,12 @@ class RecipeSerializer(serializers.ModelSerializer):
             return request.user.id == obj.user.id
 
         return False
+
+    def to_representation(self, instance):
+        rep = super().to_representation(instance)
+        rep['cuisine'] = instance.get_cuisine_display()
+        rep['recipe_type'] = instance.get_recipe_type_display()
+        return rep
 
     class Meta:
         model = Recipe

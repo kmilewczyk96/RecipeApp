@@ -3,13 +3,14 @@ import style from "./RecipeCard.module.css";
 import {Link, useNavigate} from "react-router-dom";
 
 import Button from "./Button.jsx";
+import CutleryIcon from "../icons/CutleryIcon.jsx";
 import EnergyIcon from "../icons/EnergyIcon.jsx";
 import PinIcon from "../icons/PinIcon.jsx";
 import FollowDiv from "./FollowDiv.jsx";
 import PlantIcon from "../icons/PlantIcon.jsx";
 import TimerIcon from "../icons/TimerIcon.jsx";
-import UserIcon from "../icons/UserIcon.jsx";
 
+import UserIcon from "../icons/UserIcon.jsx";
 import {convertToHoursString} from "../../util/converters.js";
 
 
@@ -38,7 +39,11 @@ export default function RecipeCard({recipe}) {
         </div>
         <div className={style["recipe-info-line"]}>
           <PinIcon/>
-          <p>European</p>
+          <p>{recipe.cuisine}</p>
+        </div>
+        <div className={style["recipe-info-line"]}>
+          <CutleryIcon/>
+          <p>{recipe.recipe_type}</p>
         </div>
         <div className={style["recipe-info-line"]}>
           <TimerIcon/>

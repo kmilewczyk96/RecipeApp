@@ -66,6 +66,8 @@ class RecipePrivateAPITests(TestCase):
         )
         res = self.client.post(RECIPES_URL, data={
             'name': 'Some dish',
+            'cuisine': 'other',
+            'recipe_type': 'other',
             'time_minutes': 25,
             'r_ingredients': [
                 {'ingredient': {'id': ingredient.id}, 'quantity': 5},
@@ -80,6 +82,8 @@ class RecipePrivateAPITests(TestCase):
         """Test if attempting to create Recipe without Ingredients fails."""
         res = self.client.post(RECIPES_URL, data={
             'name': 'Some dish',
+            'cuisine': 'other',
+            'recipe_type': 'other',
             'time_minutes': 25,
             'r_ingredients': [],
             'steps': ['step one', 'step two'],
