@@ -100,3 +100,14 @@ class RecipePrivateAPITests(TestCase):
         self.assertNotIn(recipe1.data, res.data)
         self.assertIn(recipe2.data, res.data)
         self.assertEqual(len(res.data), 1)
+
+    def test_recipe_owner_boolean(self):
+        """Test if owner field returns valid data."""
+        create_recipe(user=self.user)
+        create_recipe(user=self.other_user)
+
+        res = self.client.get(RECIPES_URL)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data[0].get('is_owner'), False)
+        self.assertEqual(res.data[1].get('is_owner'), True)

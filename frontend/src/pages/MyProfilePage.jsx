@@ -5,6 +5,7 @@ import ProfilePageLayout from "../components/layout/ProfilePageLayout.jsx";
 import RecipeGrid from "../components/layout/RecipeGrid.jsx";
 
 import {getToken} from "../util/auth-token.js";
+import queryClient, {fetchProfileRecipes} from "../util/http.js";
 
 
 export default function MyProfilePage() {
@@ -38,19 +39,10 @@ export async function myProfileLoader(){
 }
 
 export async function myProfileRecipesLoader(){
-  const response = await fetch("http://localhost:8000/api/recipe/recipes/?users=me", {
-    method: "GET",
-    headers: {
-      "Authorization": "Token " + getToken()
-    }
-  });
+  const userSuffix = "me";
 
-  if (!response.ok) {
-    throw json({message: "Something went wrong."}, {
-      status: 404,
-      statusText: "Bad request, check URL or login."
-    });
-  }
-
-  return response.json();
+  return queryClient.fetchQuery({
+    queryKey: ["recipes", {userID: "me"}],
+    queryFn: ({signal}) => fetchProfileRecipes({signal, userSuffix}),
+  })
 }

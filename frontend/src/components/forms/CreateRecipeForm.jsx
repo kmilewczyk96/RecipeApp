@@ -1,8 +1,9 @@
 import style from "./CreateRecipeForm.module.css";
 
-import {Formik, Form, validateYupSchema, yupToFormErrors} from "formik";
-import {useContext, useEffect} from "react";
-import {useQuery} from "@tanstack/react-query";
+import {Formik, Form, validateYupSchema, yupToFormErrors, useFormikContext} from "formik";
+import {useContext} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import * as Yup from "yup";
 
 import Button from "../UI/Button.jsx";
@@ -12,10 +13,12 @@ import useRecipeMultiForm from "../../hooks/useRecipeMultiForm.jsx";
 import RecipeAboutForm from "./RecipeAboutForm.jsx";
 import RecipeIngredientsForm from "./RecipeIngredientsForm.jsx";
 import RecipeStepsForm from "./RecipeStepsForm.jsx";
-import {fetchRecipeFormHelpers, sendRecipeFormData} from "../../util/http.js";
+import queryClient, {fetchRecipeFormHelpers, sendRecipeFormData} from "../../util/http.js";
 
 
 export default function CreateRecipeForm() {
+  const location = useLocation();
+  const navi = useNavigate();
   const {data: formHelpers, isLoading} = useQuery({
     queryKey: ["formHelpers"],
     queryFn: fetchRecipeFormHelpers,
@@ -24,8 +27,22 @@ export default function CreateRecipeForm() {
   const {mode, hide} = useContext(ModalContext);
   const formCtx = useRecipeMultiForm();
   const finalStep = formCtx.step === 2;
-  let errorMessage;
 
+  const {mutate, isPending, isError, error} = useMutation({
+    mutationFn: sendRecipeFormData,
+    onSuccess: () => {
+      navi(location);
+      formCtx.goToIndex(0);
+      hide();
+    }
+  });
+
+  async function handleSubmit(formValues) {
+    mutate(formValues);
+    await queryClient.invalidateQueries({queryKey: ["recipes", {userID: "me"}]});
+  }
+
+  let errorMessage;
   return (
     <Modal isOpen={mode === "create-recipe-form"} onClose={hide}>
       {formHelpers && <div className={style["modal-form-wrapper"]}>
@@ -86,7 +103,8 @@ export default function CreateRecipeForm() {
                 r_ingredients: values["ingredients"],
                 steps: values["steps"],
               }
-              await sendRecipeFormData(data)
+              await handleSubmit(data);
+              helpers.resetForm();
               return;
             }
             formCtx.nextStep();

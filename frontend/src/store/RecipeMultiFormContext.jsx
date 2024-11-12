@@ -3,12 +3,17 @@ import {createContext, useState} from "react";
 
 export const RecipeMultiFormContext = createContext({
   step: 0,
+  goToIndex: () => {},
   prevStep: () => {},
   nextStep: () => {},
 });
 
 export default function RecipeMultiFormProvider({children}) {
   const [step, setStep] = useState(0);
+
+  function goToIndex(index) {
+    setStep(index);
+  }
 
   function prevStep() {
     setStep(prevState => prevState - 1);
@@ -20,6 +25,7 @@ export default function RecipeMultiFormProvider({children}) {
 
   const ctxItems = {
     step,
+    goToIndex,
     prevStep,
     nextStep,
   };

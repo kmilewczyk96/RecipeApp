@@ -56,11 +56,19 @@ class RecipeSerializer(serializers.ModelSerializer):
     user = UserStrictSerializer(read_only=True)
     tag_names = serializers.ListSerializer(child=serializers.CharField(), read_only=True)
     kcal = serializers.FloatField(read_only=True)
+    is_owner = serializers.SerializerMethodField('_is_owner')
+
+    def _is_owner(self, obj) -> bool:
+        if self.context.get('request', None):
+            request = self.context.get('request')
+            return request.user.id == obj.user.id
+
+        return False
 
     class Meta:
         model = Recipe
-        fields = ['id', 'user', 'name', 'cuisine', 'recipe_type', 'time_minutes', 'tag_names', 'kcal', 'created', 'modified']
-        read_only_fields = ['id', 'user', 'tag_names', 'kcal', 'created', 'modified']
+        fields = ['id', 'user', 'is_owner', 'name', 'cuisine', 'recipe_type', 'time_minutes', 'tag_names', 'kcal', 'created', 'modified']
+        read_only_fields = ['id', 'user', 'is_owner', 'tag_names', 'kcal', 'created', 'modified']
 
 
 class RecipeDetailSerializer(RecipeSerializer):
