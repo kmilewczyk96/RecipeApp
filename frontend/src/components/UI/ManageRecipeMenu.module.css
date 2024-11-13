@@ -1,0 +1,6 @@
+.manage-recipe {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 2.4rem;
+}

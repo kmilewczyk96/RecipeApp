@@ -10,7 +10,7 @@ export async function fetchProfileRecipes({signal, userSuffix}){
   let url = "http://localhost:8000/api/recipe/recipes/";
 
   if (userSuffix) {
-    url += "?user=" + userSuffix;
+    url += "?users=" + userSuffix;
   }
 
   const response = await fetch(url, {
