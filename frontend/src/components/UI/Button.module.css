@@ -1,30 +1,51 @@
+/* BASE */
 .button {
-  font-size: 1.6rem;
-  background-color: #f8f9fa;
   transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
   border: 1px solid #212529;
   border-radius: 5px;
+}
+
+/* SIZES */
+.small {
+
+}
+
+.medium {
+  font-size: 1.6rem;
   padding: 0.8rem 1.6rem;
 }
 
-.cta {
+.large {
+
+}
+
+/* COLORS */
+.regular {
+  background-color: #f8f9fa;
+}
+
+.submit {
   color: #e6fcf5;
-  background-color: #087f5b;
+  background-color: #099268;
   border: 1px solid rgba(0, 0, 0, 0);
 }
 
+.delete {
+  background-color: #ffc9c9;
+  color: #c92a2a;
+}
 
 @media (hover: hover) {
-  .button:hover {
+  .regular:hover {
     background-color: #343a40;
     color: #f8f9fa;
-    box-shadow: 0 0 2px rgba(32, 32, 32, 0.7);
   }
-  .button:active {
-    box-shadow: none;
-  }
-  .cta:hover {
+  .submit:hover {
     background-color: #087f5b;
+  }
+  .delete:hover {
+    background-color: #c92a2a;
+    color: #fff5f5;
   }
 }
 

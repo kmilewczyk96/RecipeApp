@@ -61,7 +61,7 @@ export default function RecipeCard({recipe}) {
       <div className={style["actions"]}>
         <Button
           onClick={clickHandler}
-          className={style["recipe-button"] + " " + style["recipe-button--left"]}
+          className={style["recipe-button"]}
         >Open
         </Button>
         <FollowDiv/>

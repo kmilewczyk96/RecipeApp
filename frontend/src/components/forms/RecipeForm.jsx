@@ -1,4 +1,4 @@
-import style from "./CreateRecipeForm.module.css";
+import style from "./RecipeForm.module.css";
 
 import {Formik, Form, validateYupSchema, yupToFormErrors, useFormikContext} from "formik";
 import {useContext} from "react";
@@ -6,7 +6,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import * as Yup from "yup";
 
-import Button from "../UI/Button.jsx";
+import Button, {buttonTypeClasses} from "../UI/Button.jsx";
 import Modal from "../UI/Modal.jsx";
 import {ModalContext} from "../../store/ModalContext.jsx";
 import useRecipeMultiForm from "../../hooks/useRecipeMultiForm.jsx";
@@ -16,7 +16,7 @@ import RecipeStepsForm from "./RecipeStepsForm.jsx";
 import queryClient, {fetchRecipeFormHelpers, sendRecipeFormData} from "../../util/http.js";
 
 
-export default function CreateRecipeForm() {
+export default function RecipeForm(initialData) {
   const location = useLocation();
   const navi = useNavigate();
   const {data: formHelpers, isLoading} = useQuery({
@@ -44,7 +44,7 @@ export default function CreateRecipeForm() {
 
   let errorMessage;
   return (
-    <Modal isOpen={mode === "create-recipe-form"} onClose={hide}>
+    <Modal isOpen={mode === "recipe-form"} onClose={hide}>
       {formHelpers && <div className={style["modal-form-wrapper"]}>
         {errorMessage && (
           <div className={style["error-message"]}>
@@ -54,11 +54,11 @@ export default function CreateRecipeForm() {
         )}
         <Formik
           initialValues={{
-            name: "",
-            cuisine: "other",
-            type: "other",
-            "time-required": "",
-            ingredients: [
+            name: initialData?.name || "",
+            cuisine: initialData?.cuisine || "other",
+            type: initialData?.recipe_type || "other",
+            "time-required": initialData?.time_minutes || "",
+            ingredients: initialData?.ingredients || [
               {
                 ingredient: {
                   id: "",
@@ -66,7 +66,7 @@ export default function CreateRecipeForm() {
                 quantity: "",
               }
             ],
-            steps: [
+            steps: initialData?.steps || [
               "",
             ],
           }}
@@ -130,7 +130,7 @@ export default function CreateRecipeForm() {
               }
               <Button
                 type="submit"
-                cta={finalStep}
+                typeClass={finalStep ? buttonTypeClasses.submit : buttonTypeClasses.regular}
               >{finalStep ? "Submit" : "Next"}</Button>
             </div>
           </Form>

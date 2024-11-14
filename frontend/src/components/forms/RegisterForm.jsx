@@ -4,7 +4,7 @@ import {Formik, Form} from "formik";
 import {Link, useSubmit} from "react-router-dom";
 import * as Yup from "yup";
 
-import Button from "../UI/Button.jsx";
+import Button, {buttonTypeClasses} from "../UI/Button.jsx";
 import CustomInput from "../UI/CustomInput.jsx";
 
 
@@ -59,7 +59,7 @@ export default function RegisterForm() {
           </div>
           <div className={style["actions"]}>
             <Link to="/auth/login">Login</Link>
-            <Button cta type="submit">Submit</Button>
+            <Button typeClass={buttonTypeClasses.submit} type="submit">Submit</Button>
           </div>
         </div>
       </Form>

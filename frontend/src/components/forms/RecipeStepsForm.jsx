@@ -1,4 +1,4 @@
-import style from "./CreateRecipeForm.module.css";
+import style from "./RecipeForm.module.css";
 
 import {useEffect, useRef} from "react";
 

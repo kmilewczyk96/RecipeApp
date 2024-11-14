@@ -3,7 +3,7 @@ import style from "./Form.module.css";
 import {Formik, Form} from "formik";
 import {Link, useActionData, useSubmit} from "react-router-dom";
 
-import Button from "../UI/Button.jsx";
+import Button, {buttonTypeClasses} from "../UI/Button.jsx";
 import CustomInput from "../UI/CustomInput.jsx";
 
 
@@ -40,7 +40,7 @@ export default function LoginForm() {
           </div>
           <div className={style["actions"]}>
             <Link to="/auth/register">Register</Link>
-            <Button cta type="submit">Submit</Button>
+            <Button typeClass={buttonTypeClasses.submit} type="submit">Submit</Button>
           </div>
         </Form>
       </div>

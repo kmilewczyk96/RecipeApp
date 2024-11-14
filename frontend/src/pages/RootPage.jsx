@@ -1,6 +1,6 @@
 import {Outlet, useLoaderData} from "react-router-dom";
 
-import CreateRecipeForm from "../components/forms/CreateRecipeForm.jsx";
+import RecipeForm from "../components/forms/RecipeForm.jsx";
 import MainNavigationBar from "../components/layout/MainNavigationBar.jsx";
 import ModalContextProvider from "../store/ModalContext.jsx";
 import RecipeMultiFormProvider from "../store/RecipeMultiFormContext.jsx";
@@ -12,7 +12,7 @@ export default function RootPage() {
       <MainNavigationBar/>
       <main>
         <RecipeMultiFormProvider>
-          <CreateRecipeForm/>
+          <RecipeForm/>
         </RecipeMultiFormProvider>
         <Outlet/>
       </main>
