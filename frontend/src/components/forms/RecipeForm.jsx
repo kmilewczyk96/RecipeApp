@@ -1,6 +1,6 @@
 import style from "./RecipeForm.module.css";
 
-import {Formik, Form, validateYupSchema, yupToFormErrors, useFormikContext} from "formik";
+import {Formik, Form, validateYupSchema, yupToFormErrors} from "formik";
 import {useContext} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useMutation, useQuery} from "@tanstack/react-query";
@@ -14,6 +14,7 @@ import RecipeAboutForm from "./RecipeAboutForm.jsx";
 import RecipeIngredientsForm from "./RecipeIngredientsForm.jsx";
 import RecipeStepsForm from "./RecipeStepsForm.jsx";
 import queryClient, {fetchRecipeFormHelpers, sendRecipeFormData} from "../../util/http.js";
+import {recipeValidationSchema} from "../../util/validationSchemas.js";
 
 
 export default function RecipeForm(initialData) {
@@ -72,22 +73,7 @@ export default function RecipeForm(initialData) {
           }}
           validate={(values) => {
             try {
-              validateYupSchema(values, Yup.object({
-                name: Yup.string()
-                  .max(32, "Name is too long! Allowed 32 character or less.")
-                  .required("This field is required."),
-                "time-required": Yup.number()
-                  .min(1, "Time must be greater than 0!")
-                  .max(2880, "Preparation should not exceed 2 days.")
-                  .integer("This value must be an integer.")
-                  .required("This field is required."),
-                ingredients: Yup.array().when('$step', {
-                  is: 1,
-                  then: (schema) => schema.required(
-                    "This field is required."
-                  )
-                }),
-              }), true, {step: formCtx.step})
+              validateYupSchema(values, recipeValidationSchema, true, {step: formCtx.step})
             } catch (error) {
               return yupToFormErrors(error);
             }
