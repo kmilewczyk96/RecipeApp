@@ -88,7 +88,7 @@ export default function RecipeIngredientsForm({ingredients}) {
               })
               scroll = true;
             }}
-          >Add +</Button>
+          >Add Ingredient</Button>
         </div>
       )}
     </FieldArray>

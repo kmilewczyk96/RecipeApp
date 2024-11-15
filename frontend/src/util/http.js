@@ -5,6 +5,22 @@ import {getToken} from "./auth-token.js";
 const queryClient = new QueryClient();
 export default queryClient;
 
+export async function deleteRecipe(recipeID){
+  const url = "http://localhost:8000/api/recipe/recipes/" + recipeID;
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Token " + getToken(),
+    }
+  });
+
+  if (!response.ok) {
+    const error = new Error("An error occurred while trying to delete recipe.");
+    error.code = response.status;
+    throw error;
+  }
+}
 
 export async function fetchProfileRecipes({signal, userSuffix}){
   let url = "http://localhost:8000/api/recipe/recipes/";

@@ -9,7 +9,7 @@ export default function RecipeDetailPageLayout({recipe}) {
   return (
     <div className={style["recipe-detail-layout"]}>
       <div className={style["recipe-detail-manager-wrapper"]}>
-        {recipe.is_owner && <ManageRecipeMenu/>}
+        {recipe.is_owner && <ManageRecipeMenu recipe={recipe}/>}
       </div>
       <div className={style["recipe-details"]}>
         <div>

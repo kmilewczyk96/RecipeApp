@@ -45,7 +45,7 @@ export default function RecipeStepsForm() {
             onClick={() => {
               push("");
             }}
-          >Add +</Button>
+          >Add Step</Button>
         </div>
       )}
     </FieldArray>
