@@ -1,0 +1,29 @@
+.step-name {
+  text-align: center;
+  background-color: #212529;
+  color: #e6fcf5;
+  font-family: "Creative", system-ui;
+  font-size: 2.4rem;
+
+  padding: 1.2rem;
+  margin-bottom: 1.6rem;
+}
+
+.form-progress-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-bottom: 3.2rem;
+}
+
+.form-progress-wrapper li {
+  width: 100%;
+  height: 1.6rem;
+  background-color: #f8f9fa;
+  border: 1px solid #212529;
+}
+
+.current {
+  background-color: #212529!important;
+}

@@ -15,6 +15,7 @@ import RecipeIngredientsForm from "./RecipeIngredientsForm.jsx";
 import RecipeStepsForm from "./RecipeStepsForm.jsx";
 import queryClient, {fetchRecipeFormHelpers, sendRecipeFormData} from "../../util/http.js";
 import {recipeValidationSchema} from "../../util/validationSchemas.js";
+import FormProgress from "../UI/FormProgress.jsx";
 
 
 export default function RecipeForm(initialData) {
@@ -98,6 +99,10 @@ export default function RecipeForm(initialData) {
           }
         >
           <Form action={"/recipes"} key={formCtx.step} className={style["create-recipe-form"]}>
+            <FormProgress
+              currentStep={formCtx.step}
+              steps={["About", "Ingredients", "Steps"]}
+            />
             {formCtx.step === 0 && <RecipeAboutForm
               cuisineChoices={formHelpers.cuisine_choices}
               typeChoices={formHelpers.type_choices}

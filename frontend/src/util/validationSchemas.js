@@ -11,14 +11,25 @@ export const recipeValidationSchema = Yup.object().shape({
     .required("This field is required."),
   ingredients: Yup.array().when('$step', {
     is: 1,
-    then: (schema) => schema
-      .min(1, "At least one ingredient required.").of(
-        Yup.object().shape({
-          ingredient: Yup.object().shape({
-            id: Yup.string().required("Please select ingredient or delete this entry.")
-          }),
-          quantity: Yup.number().integer("This value must be an integer.").required()
+    then: schema => schema
+      .min(1, "At least one ingredient required.")
+      .of(Yup.object().shape({
+        ingredient: Yup.object().shape({
+          id: Yup.string().required("Please select ingredient or delete this entry.")
+        }),
+        quantity: Yup.number()
+          .integer("This value must be an integer.")
+          .required("Quantity value can not be blank.")
         })
+      )
+  }),
+  steps: Yup.array().when('$step', {
+    is: 2,
+    then: schema => schema
+      .min(1, "At least one step required.")
+      .of(Yup.string()
+        .min(1, "Step can not be blank.")
+        .required("Step can not be blank.")
       )
   })
 });
