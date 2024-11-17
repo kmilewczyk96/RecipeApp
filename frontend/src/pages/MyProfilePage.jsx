@@ -5,7 +5,7 @@ import ProfilePageLayout from "../components/layout/ProfilePageLayout.jsx";
 import RecipeGrid from "../components/layout/RecipeGrid.jsx";
 
 import {getToken} from "../util/auth-token.js";
-import queryClient, {fetchProfileRecipes} from "../util/http.js";
+import queryClient, {fetchRecipes} from "../util/http.js";
 
 
 export default function MyProfilePage() {
@@ -43,6 +43,6 @@ export async function myProfileRecipesLoader(){
 
   return queryClient.fetchQuery({
     queryKey: ["recipes", {userID: "me"}],
-    queryFn: ({signal}) => fetchProfileRecipes({signal, userSuffix}),
+    queryFn: ({signal}) => fetchRecipes({signal, userSuffix}),
   })
 }

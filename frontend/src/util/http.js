@@ -22,7 +22,7 @@ export async function deleteRecipe(recipeID){
   }
 }
 
-export async function fetchProfileRecipes({signal, userSuffix}){
+export async function fetchRecipes({signal, userSuffix}){
   let url = "http://localhost:8000/api/recipe/recipes/";
 
   if (userSuffix) {

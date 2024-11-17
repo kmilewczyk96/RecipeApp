@@ -26,7 +26,7 @@ export async function registerAction({request}){
 
   if (!response.ok) {
     console.log(response);
-    return redirect("/");
+    return redirect("/auth/login");
   }
 
   return response;

@@ -5,7 +5,7 @@
   border: 2px solid #adb5bd;
   transition: transform 0.5s, box-shadow 0.5s;
   background-image: url("../../assets/backgrounds/menu_background.jpg");
-  background-size: auto;
+  background-size: cover;
 
   padding: 3.2rem 0;
 }

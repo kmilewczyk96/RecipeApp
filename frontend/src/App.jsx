@@ -13,6 +13,7 @@ import queryClient from "./util/http.js";
 import RegisterPage, {registerAction} from "./pages/RegisterPage.jsx";
 import RootPage from "./pages/RootPage.jsx";
 import UserDetailPage, {userDetailLoader} from "./pages/UserDetailPage.jsx";
+import RecipesPage, {recipesLoader} from "./pages/RecipesPage.jsx";
 
 
 
@@ -56,7 +57,7 @@ const router = createBrowserRouter([
       {
         path: "recipes",
         children: [
-          {index: true},
+          {index: true, element: <RecipesPage/>, loader: recipesLoader},
           {path: ":recipeID", element: <RecipeDetailPage/>, loader: recipeDetailLoader},
         ]
       }

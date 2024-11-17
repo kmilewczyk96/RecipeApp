@@ -1,5 +1,28 @@
+import style from "../components/layout/RecipesLayout.module.css";
+
+import {useQuery} from "@tanstack/react-query";
+
+import RecipeGrid from "../components/layout/RecipeGrid.jsx";
+import queryClient, {fetchRecipes} from "../util/http.js";
+
+
 export default function RecipesPage() {
+  const {data, isLoading, isError, error} = useQuery({
+    queryKey: ["recipes"],
+    queryFn: ({signal}) => fetchRecipes({signal})
+  });
+
   return (
-    <></>
+    <div className={style["recipes-layout"]}>
+      {(data && !isLoading) && <RecipeGrid recipes={data}/>}
+    </div>
   );
 };
+
+
+export async function recipesLoader() {
+  return queryClient.fetchQuery({
+    queryKey: ["recipes"],
+    queryFn: ({signal}) => fetchRecipes({signal})
+  });
+}

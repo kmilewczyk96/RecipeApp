@@ -6,7 +6,7 @@
   font-size: 2.4rem;
 
   padding: 1.2rem;
-  margin-bottom: 1.6rem;
+  margin-bottom: 0.8rem;
 }
 
 .form-progress-wrapper {
@@ -19,7 +19,7 @@
 
 .form-progress-wrapper li {
   width: 100%;
-  height: 1.6rem;
+  height: 0.8rem;
   background-color: #f8f9fa;
   border: 1px solid #212529;
 }

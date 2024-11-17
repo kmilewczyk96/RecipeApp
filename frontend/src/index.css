@@ -20,6 +20,7 @@ html {
 
   color: #212529;
   background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("assets/backgrounds/light_mode_main.svg");
+  background-attachment: fixed;
   min-height: 100vh;
   background-size: 300px;
 

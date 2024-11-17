@@ -35,5 +35,5 @@ export async function loginAction({request}){
   localStorage.setItem("token", resData.token);
   localStorage.setItem("userID", resData.userID);
 
-  return redirect("/");
+  return redirect("/my-profile");
 }
