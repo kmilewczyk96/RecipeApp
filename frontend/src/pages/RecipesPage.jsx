@@ -1,4 +1,4 @@
-import style from "../components/layout/RecipesLayout.module.css";
+import style from "./layouts/RecipesLayout.module.css";
 
 import {useQuery} from "@tanstack/react-query";
 

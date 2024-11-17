@@ -1,14 +1,15 @@
+import style from "./layouts/AuthLayout.module.css";
+
 import {redirect} from "react-router-dom";
 
-import AuthLayout from "./layouts/AuthLayout.jsx";
 import RegisterForm from "../components/forms/auth/RegisterForm.jsx";
 
 
 export default function RegisterPage() {
   return (
-    <AuthLayout>
+    <div className={style["auth-layout"]}>
       <RegisterForm/>
-    </AuthLayout>
+    </div>
   );
 };
 

@@ -9,7 +9,7 @@ import MyProfilePage, {myProfileLoader, myProfileRecipesLoader} from "./pages/My
 import RecipeDetailPage, {recipeDetailLoader} from "./pages/RecipeDetailPage.jsx";
 import queryClient from "./util/http.js";
 import RegisterPage, {registerAction} from "./pages/RegisterPage.jsx";
-import RootPage, {authLoader} from "./pages/RootPage.jsx";
+import RootPage, {authLoader, strictLoader} from "./pages/RootPage.jsx";
 import UserDetailPage, {userDetailLoader} from "./pages/UserDetailPage.jsx";
 import RecipesPage, {recipesLoader} from "./pages/RecipesPage.jsx";
 
@@ -39,22 +39,22 @@ const router = createBrowserRouter([
       {
         path: "users",
         children: [
-          {path: ":userID", element: <UserDetailPage/>, loader: userDetailLoader},
+          {path: ":userID", element: <UserDetailPage/>, loader: strictLoader(userDetailLoader)},
         ]
       },
       {
         path: "my-profile",
         id: "my-profile",
-        loader: myProfileLoader,
+        loader: strictLoader(myProfileLoader),
         children: [
-          {index: true, element: <MyProfilePage/>, loader: myProfileRecipesLoader}
+          {index: true, element: <MyProfilePage/>, loader: strictLoader(myProfileRecipesLoader)}
         ]
       },
       {
         path: "recipes",
         children: [
-          {index: true, element: <RecipesPage/>, loader: recipesLoader},
-          {path: ":recipeID", element: <RecipeDetailPage/>, loader: recipeDetailLoader},
+          {index: true, element: <RecipesPage/>, loader: strictLoader(recipesLoader)},
+          {path: ":recipeID", element: <RecipeDetailPage/>, loader: strictLoader(recipeDetailLoader)},
         ]
       }
     ]

@@ -1,7 +1,8 @@
+import style from "./layouts/UserDetailLayout.module.css";
+
 import {json, useLoaderData, useRouteLoaderData} from "react-router-dom";
 
 import ProfileDetail from "../components/layout/ProfileDetail.jsx";
-import ProfilePageLayout from "../components/layout/ProfilePageLayout.jsx";
 import RecipeGrid from "../components/layout/RecipeGrid.jsx";
 
 import {getToken} from "../util/auth-token.js";
@@ -13,10 +14,10 @@ export default function MyProfilePage() {
   const recipes = useLoaderData();
 
   return (
-    <ProfilePageLayout>
+    <div className={style["user-detail-layout"]}>
       <ProfileDetail user={user} isOwner/>
       <RecipeGrid recipes={recipes}/>
-    </ProfilePageLayout>
+    </div>
   );
 };
 

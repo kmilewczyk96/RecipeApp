@@ -1,14 +1,15 @@
+import style from "./layouts/AuthLayout.module.css";
+
 import {redirect} from "react-router-dom";
 
-import AuthLayout from "./layouts/AuthLayout.jsx";
 import LoginForm from "../components/forms/auth/LoginForm.jsx";
 
 
 export default function LoginPage() {
   return (
-    <AuthLayout>
+    <div className={style["auth-layout"]}>
       <LoginForm/>
-    </AuthLayout>
+    </div>
   );
 };
 export async function loginAction({request}){

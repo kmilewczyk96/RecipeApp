@@ -1,6 +1,6 @@
 import style from "./layouts/MainLayout.module.css";
 
-import {Navigate, Outlet, redirect, useLoaderData, useLocation, useNavigate} from "react-router-dom";
+import {Navigate, Outlet, redirect, useLoaderData, useLocation} from "react-router-dom";
 
 import RecipeForm from "../components/forms/RecipeForm.jsx";
 import MainNavigationBar from "../components/layout/MainNavigationBar.jsx";
@@ -18,13 +18,13 @@ export default function RootPage() {
   }
 
   if (token && location.startsWith("/auth")) {
-    return <Navigate to={"/my-profile"}/>
+    return <Navigate to={"/my-profile"}/>;
   }
 
   return (
     <ModalContextProvider>
       <MainNavigationBar/>
-      <main className={style["main"]}>
+      <main className={style["main-layout"]}>
         <RecipeMultiFormProvider>
           <RecipeForm/>
         </RecipeMultiFormProvider>
@@ -36,4 +36,14 @@ export default function RootPage() {
 
 export function authLoader() {
   return getToken();
+}
+
+export function strictLoader(loader) {
+  return async (...args) => {
+    const token = getToken();
+    if (token) {
+      return loader(...args);
+    }
+    return null;
+  }
 }
