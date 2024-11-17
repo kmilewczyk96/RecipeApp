@@ -1,11 +1,14 @@
 import {redirect} from "react-router-dom";
 
-import LoginForm from "../components/forms/LoginForm.jsx";
+import AuthLayout from "./layouts/AuthLayout.jsx";
+import LoginForm from "../components/forms/auth/LoginForm.jsx";
 
 
 export default function LoginPage() {
   return (
-    <LoginForm/>
+    <AuthLayout>
+      <LoginForm/>
+    </AuthLayout>
   );
 };
 export async function loginAction({request}){
@@ -33,7 +36,6 @@ export async function loginAction({request}){
 
   const resData = await response.json();
   localStorage.setItem("token", resData.token);
-  localStorage.setItem("userID", resData.userID);
 
   return redirect("/my-profile");
 }

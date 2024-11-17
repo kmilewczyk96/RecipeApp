@@ -3,8 +3,8 @@ import style from "./Form.module.css";
 import {Formik, Form} from "formik";
 import {Link, useActionData, useSubmit} from "react-router-dom";
 
-import Button, {buttonTypeClasses} from "../UI/Button.jsx";
-import CustomInput from "../UI/CustomInput.jsx";
+import Button, {buttonTypeClasses} from "../../UI/Button.jsx";
+import CustomInput from "../../UI/CustomInput.jsx";
 
 
 export default function LoginForm() {

@@ -2,29 +2,11 @@
   max-width: 60rem;
   background-image: linear-gradient(#f8f9fa, #f1f3f5);
 
-  box-shadow: 1px 1px 10px rgba(32, 32, 32, 0.1);
-  border: 1px solid #adb5bd;
-  border-radius: 12px;
+  box-shadow: 1px 1px 10px rgba(32, 32, 32, 0.7);
+  border: 1px solid #212529;
+  border-radius: 9px;
   padding: 6rem 12rem;
-  margin: 32rem auto 0;
-}
-
-.modal-form-wrapper {
-  background-image: linear-gradient(#f8f9fa, #f1f3f5);
-  width: 60rem;
-  box-shadow: none;
-  border: 1px solid #adb5bd;
-  border-radius: 0;
-
-  padding: 6rem 12rem;
-  margin: 0;
-}
-
-.modal-form-wrapper form {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
+  margin: 0 auto;
 }
 
 .inputs {

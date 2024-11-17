@@ -4,8 +4,8 @@ import {Formik, Form} from "formik";
 import {Link, useSubmit} from "react-router-dom";
 import * as Yup from "yup";
 
-import Button, {buttonTypeClasses} from "../UI/Button.jsx";
-import CustomInput from "../UI/CustomInput.jsx";
+import Button, {buttonTypeClasses} from "../../UI/Button.jsx";
+import CustomInput from "../../UI/CustomInput.jsx";
 
 
 export default function RegisterForm() {

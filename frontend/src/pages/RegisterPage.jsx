@@ -1,15 +1,19 @@
-import RegisterForm from "../components/forms/RegisterForm.jsx";
 import {redirect} from "react-router-dom";
+
+import AuthLayout from "./layouts/AuthLayout.jsx";
+import RegisterForm from "../components/forms/auth/RegisterForm.jsx";
 
 
 export default function RegisterPage() {
   return (
-    <RegisterForm/>
+    <AuthLayout>
+      <RegisterForm/>
+    </AuthLayout>
   );
 };
+
 export async function registerAction({request}){
   const data = await request.formData();
-  console.log(data);
   const requestBody = {
     email: data.get("email"),
     password: data.get("password1"),
@@ -25,7 +29,6 @@ export async function registerAction({request}){
   });
 
   if (!response.ok) {
-    console.log(response);
     return redirect("/auth/login");
   }
 

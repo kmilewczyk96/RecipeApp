@@ -2,7 +2,6 @@ import style from "./MainNavigationBar.module.css";
 
 import {Form, NavLink, useRouteLoaderData} from "react-router-dom";
 
-
 export default function MainNavigationBar() {
   const token = useRouteLoaderData("root");
 

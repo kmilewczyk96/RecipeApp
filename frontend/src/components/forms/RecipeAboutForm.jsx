@@ -1,4 +1,4 @@
-import style from "./Form.module.css";
+import style from "./RecipeForm.module.css";
 
 import CustomInput from "../UI/CustomInput.jsx";
 import CustomSelect from "../UI/CustomSelect.jsx";
