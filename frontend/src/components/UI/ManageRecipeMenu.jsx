@@ -1,12 +1,16 @@
 import style from "./ManageRecipeMenu.module.css";
 
+import {useMutation} from "@tanstack/react-query";
+
 import Button, {buttonTypeClasses} from "./Button.jsx";
 import queryClient, {deleteRecipe} from "../../util/http.js";
-import {useMutation} from "@tanstack/react-query";
+import RecipeForm from "../forms/RecipeForm.jsx";
 import {useNavigate} from "react-router-dom";
+import useModal from "../../hooks/useModal.jsx";
 
 
 export default function ManageRecipeMenu({recipe}) {
+  const {setModalChildren} = useModal();
   const navi = useNavigate();
   const {mutate} = useMutation({
     mutationFn: () => deleteRecipe(recipe.id),
@@ -18,7 +22,11 @@ export default function ManageRecipeMenu({recipe}) {
 
   return (
     <menu className={style["manage-recipe"]}>
-      <li><Button>Edit</Button></li>
+      <li>
+        <Button
+          onClick={() => setModalChildren(<RecipeForm initialData={recipe}/>)}
+        >Edit
+        </Button></li>
       <li>
         <Button
           typeClass={buttonTypeClasses.delete}

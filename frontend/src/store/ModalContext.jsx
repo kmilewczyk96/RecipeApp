@@ -2,27 +2,27 @@ import {createContext, useState} from "react";
 
 
 export const ModalContext = createContext({
-  mode: "",
-  showRecipeForm: () => {},
-  hide: () => {},
+  content: <></>,
+  setModalChildren: () => {},
+  clear: () => {},
 });
 
 
 export default function ModalContextProvider({children}) {
-  const [mode, setMode] = useState("");
+  const [content, setContent] = useState(null);
 
-  function showRecipeForm() {
-    setMode("recipe-form");
+  function setModalChildren(reactNode) {
+    setContent(reactNode);
   }
 
-  function hide() {
-    setMode("");
+  function clear() {
+    setContent(null);
   }
 
   const ctxItems = {
-    mode,
-    showRecipeForm,
-    hide,
+    content,
+    setModalChildren,
+    clear,
   };
 
   return (

@@ -1,15 +1,11 @@
 import style from "./RecipeForm.module.css";
 
 import {Formik, Form, validateYupSchema, yupToFormErrors} from "formik";
-import {useContext} from "react";
+import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useMutation, useQuery} from "@tanstack/react-query";
-import * as Yup from "yup";
 
 import Button, {buttonTypeClasses} from "../UI/Button.jsx";
-import Modal from "../UI/Modal.jsx";
-import {ModalContext} from "../../store/ModalContext.jsx";
-import useRecipeMultiForm from "../../hooks/useRecipeMultiForm.jsx";
 import RecipeAboutForm from "./RecipeAboutForm.jsx";
 import RecipeIngredientsForm from "./RecipeIngredientsForm.jsx";
 import RecipeStepsForm from "./RecipeStepsForm.jsx";
@@ -18,7 +14,8 @@ import {recipeValidationSchema} from "../../util/validationSchemas.js";
 import FormProgress from "../UI/FormProgress.jsx";
 
 
-export default function RecipeForm(initialData) {
+export default function RecipeForm({initialData=null}) {
+  const [step, setStep] = useState(0);
   const location = useLocation();
   const navi = useNavigate();
   const {data: formHelpers, isLoading} = useQuery({
@@ -26,15 +23,10 @@ export default function RecipeForm(initialData) {
     queryFn: fetchRecipeFormHelpers,
   });
 
-  const {mode, hide} = useContext(ModalContext);
-  const formCtx = useRecipeMultiForm();
-  const finalStep = formCtx.step === 2;
-
   const {mutate, isPending, isError, error} = useMutation({
     mutationFn: sendRecipeFormData,
     onSuccess: () => {
       navi(location);
-      formCtx.goToIndex(0);
       hide();
     }
   });
@@ -46,7 +38,7 @@ export default function RecipeForm(initialData) {
 
   let errorMessage;
   return (
-    <Modal isOpen={mode === "recipe-form"} onClose={hide}>
+    <>
       {formHelpers && <div className={style["modal-form-wrapper"]}>
         {errorMessage && (
           <div className={style["error-message"]}>
@@ -60,7 +52,7 @@ export default function RecipeForm(initialData) {
             cuisine: initialData?.cuisine || "other",
             type: initialData?.recipe_type || "other",
             "time-required": initialData?.time_minutes || "",
-            ingredients: initialData?.ingredients || [
+            ingredients: initialData?.r_ingredients || [
               {
                 ingredient: {
                   id: "",
@@ -74,14 +66,14 @@ export default function RecipeForm(initialData) {
           }}
           validate={(values) => {
             try {
-              validateYupSchema(values, recipeValidationSchema, true, {step: formCtx.step})
+              validateYupSchema(values, recipeValidationSchema, true, {step})
             } catch (error) {
               return yupToFormErrors(error);
             }
             return {};
           }}
           onSubmit={async (values, helpers) => {
-            if (finalStep) {
+            if (step === 2) {
               const data = {
                 name: values["name"],
                 cuisine: values["cuisine"],
@@ -94,39 +86,39 @@ export default function RecipeForm(initialData) {
               helpers.resetForm();
               return;
             }
-            formCtx.nextStep();
+            setStep(prevState => prevState + 1);
           }
           }
         >
-          <Form action={"/recipes"} key={formCtx.step} className={style["create-recipe-form"]}>
+          <Form action={"/recipes"} key={step} className={style["create-recipe-form"]}>
             <FormProgress
-              currentStep={formCtx.step}
+              currentStep={step}
               steps={["About", "Ingredients", "Steps"]}
             />
-            {formCtx.step === 0 && <RecipeAboutForm
+            {step === 0 && <RecipeAboutForm
               cuisineChoices={formHelpers.cuisine_choices}
               typeChoices={formHelpers.type_choices}
             />}
-            {formCtx.step === 1 && <RecipeIngredientsForm
+            {step === 1 && <RecipeIngredientsForm
               ingredients={formHelpers.ingredients}
             />}
-            {formCtx.step === 2 && <RecipeStepsForm/>}
+            {step === 2 && <RecipeStepsForm/>}
             <div className={style["actions"]}>
               {
-                formCtx.step !== 0 &&
+                step !== 0 &&
                 <Button
                   type="button"
-                  onClick={formCtx.prevStep}
+                  onClick={() => setStep(prevState => prevState - 1)}
                 >Back</Button>
               }
               <Button
                 type="submit"
-                typeClass={finalStep ? buttonTypeClasses.submit : buttonTypeClasses.regular}
-              >{finalStep ? "Submit" : "Next"}</Button>
+                typeClass={step === 2 ? buttonTypeClasses.submit : buttonTypeClasses.regular}
+              >{step === 2 ? "Submit" : "Next"}</Button>
             </div>
           </Form>
         </Formik>
       </div>}
-    </Modal>
+    </>
   );
 };
