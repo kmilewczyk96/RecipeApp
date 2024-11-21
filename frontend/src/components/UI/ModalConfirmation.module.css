@@ -1,0 +1,25 @@
+.confirmation-dialog-wrapper {
+
+}
+
+.confirmation-title {
+  font-size: 2.4rem;
+  background-color: #212529;
+  color: #f8f9fa;
+  padding: 0.8rem 1.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.confirmation-text {
+  font-size: 1.6rem;
+  padding: 0.8rem 1.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.confirmation-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.6rem;
+  padding: 0.8rem 1.6rem;
+  margin-bottom: 1.6rem;
+}
