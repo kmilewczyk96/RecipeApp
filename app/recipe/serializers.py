@@ -1,4 +1,6 @@
 """Serializers for recipe API."""
+from django.db.models import Q
+
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
@@ -105,6 +107,31 @@ class RecipeDetailSerializer(RecipeSerializer):
             )
 
         return recipe
+
+    def update(self, instance, validated_data):
+        r_ingredients = validated_data.pop('r_ingredients', [])
+        if not r_ingredients:
+            raise ValidationError('Recipe must have at least one ingredient!')
+
+        # Create or Update existing instances:
+        ingredients = []
+        for ri in r_ingredients:
+            ingredient_id = ri['ingredient']['id']
+            ingredient = Ingredient.objects.get(id=ingredient_id)
+            ingredients.append(ingredient)
+            quantity = ri['quantity']
+            RecipeIngredient.objects.filter(
+                Q(recipe=instance) & Q(ingredient=ingredient)
+            ).update_or_create(defaults={'quantity': quantity}, recipe=instance, ingredient=ingredient)
+
+        # Clear dangling Recipe Ingredients:
+        RecipeIngredient.objects.filter(recipe=instance).exclude(ingredient__in=ingredients).delete()
+
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+
+        instance.save()
+        return instance
 
 
 class RecipeFormHelperSerializer(serializers.Serializer):

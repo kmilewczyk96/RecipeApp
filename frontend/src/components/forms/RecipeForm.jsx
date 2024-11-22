@@ -9,12 +9,14 @@ import Button, {buttonTypeClasses} from "../UI/Button.jsx";
 import RecipeAboutForm from "./RecipeAboutForm.jsx";
 import RecipeIngredientsForm from "./RecipeIngredientsForm.jsx";
 import RecipeStepsForm from "./RecipeStepsForm.jsx";
-import queryClient, {fetchRecipeFormHelpers, sendRecipeFormData} from "../../util/http.js";
+import queryClient, {fetchRecipeFormHelpers, sendRecipeFormData, sendRecipeUpdateFormData} from "../../util/http.js";
 import {recipeValidationSchema} from "../../util/validationSchemas.js";
 import FormProgress from "../UI/FormProgress.jsx";
+import useModal from "../../hooks/useModal.jsx";
 
 
 export default function RecipeForm({initialData=null}) {
+  const {clear} = useModal();
   const [step, setStep] = useState(0);
   const location = useLocation();
   const navi = useNavigate();
@@ -24,15 +26,19 @@ export default function RecipeForm({initialData=null}) {
   });
 
   const {mutate, isPending, isError, error} = useMutation({
-    mutationFn: sendRecipeFormData,
+    mutationFn: initialData ? sendRecipeUpdateFormData : sendRecipeFormData,
     onSuccess: () => {
       navi(location);
-      hide();
+      clear();
     }
   });
 
   async function handleSubmit(formValues) {
-    mutate(formValues);
+    if (initialData) {
+      mutate({formValues, recipeID: initialData.id});
+    } else {
+      mutate(formValues);
+    }
     await queryClient.invalidateQueries({queryKey: ["recipes", {userID: "me"}]});
   }
 
