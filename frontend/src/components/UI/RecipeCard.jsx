@@ -39,11 +39,11 @@ export default function RecipeCard({recipe}) {
         </div>
         <div className={style["recipe-info-line"]}>
           <PinIcon/>
-          <p>{recipe.cuisine}</p>
+          <p>{recipe.cuisine_display}</p>
         </div>
         <div className={style["recipe-info-line"]}>
           <CutleryIcon/>
-          <p>{recipe.recipe_type}</p>
+          <p>{recipe.recipe_type_display}</p>
         </div>
         <div className={style["recipe-info-line"]}>
           <TimerIcon/>

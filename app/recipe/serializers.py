@@ -56,7 +56,9 @@ class RecipeSerializer(serializers.ModelSerializer):
     user = UserStrictSerializer(read_only=True)
     is_owner = serializers.SerializerMethodField('_is_owner')
     cuisine = serializers.ChoiceField(choices=Recipe.CUISINES, default=Recipe.CUISINES[-1])
+    cuisine_display = serializers.CharField(source='get_cuisine_display', read_only=True)
     recipe_type = serializers.ChoiceField(choices=Recipe.TYPES, default=Recipe.TYPES[-1])
+    recipe_type_display = serializers.CharField(source='get_recipe_type_display', read_only=True)
     tag_names = serializers.ListSerializer(child=serializers.CharField(), read_only=True)
     kcal = serializers.FloatField(read_only=True)
 
@@ -67,15 +69,12 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         return False
 
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['cuisine'] = instance.get_cuisine_display()
-        rep['recipe_type'] = instance.get_recipe_type_display()
-        return rep
-
     class Meta:
         model = Recipe
-        fields = ['id', 'user', 'is_owner', 'name', 'cuisine', 'recipe_type', 'time_minutes', 'tag_names', 'kcal', 'created', 'modified']
+        fields = [
+            'id', 'user', 'is_owner', 'name', 'cuisine', 'cuisine_display', 'recipe_type', 'recipe_type_display',
+            'time_minutes', 'tag_names', 'kcal', 'created', 'modified'
+        ]
         read_only_fields = ['id', 'user', 'is_owner', 'tag_names', 'kcal', 'created', 'modified']
 
 

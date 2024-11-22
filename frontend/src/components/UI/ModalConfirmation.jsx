@@ -18,7 +18,7 @@ export default function ModalConfirmation(
   const navi = useNavigate();
 
   const {mutate} = useMutation({
-    mutationFn: () => onSubmitFn,
+    mutationFn: onSubmitFn,
     onSuccess: async () => {
       await queryClient.invalidateQueries({queryKey: ["recipes"], refetchType: "none"});
       clear();
