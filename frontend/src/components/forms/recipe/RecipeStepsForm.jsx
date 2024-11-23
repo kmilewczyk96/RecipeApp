@@ -4,9 +4,8 @@ import {useEffect, useRef} from "react";
 
 import {FieldArray, useFormikContext} from "formik";
 
-import Button from "../UI/Button.jsx";
-import CustomInput from "../UI/CustomInput.jsx";
-import CustomSelect from "../UI/CustomSelect.jsx";
+import Button from "/src/components/UI/Button.jsx";
+import CustomInput from "/src/components/UI/CustomInput.jsx";
 
 
 export default function RecipeStepsForm() {

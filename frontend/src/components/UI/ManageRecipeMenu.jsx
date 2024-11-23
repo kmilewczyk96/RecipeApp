@@ -4,8 +4,8 @@ import {useMutation} from "@tanstack/react-query";
 
 import Button, {buttonTypeClasses} from "./Button.jsx";
 import {deleteRecipe} from "../../util/http.js";
-import ModalConfirmation from "./ModalConfirmation.jsx";
-import RecipeForm from "../forms/RecipeForm.jsx";
+import ModalConfirmation from "./modal/ModalConfirmation.jsx";
+import RecipeForm from "../forms/recipe/RecipeForm.jsx";
 import useModal from "../../hooks/useModal.jsx";
 
 

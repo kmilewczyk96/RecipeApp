@@ -5,14 +5,14 @@ import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useMutation, useQuery} from "@tanstack/react-query";
 
-import Button, {buttonTypeClasses} from "../UI/Button.jsx";
+import Button, {buttonTypeClasses} from "/src/components/UI/Button.jsx";
 import RecipeAboutForm from "./RecipeAboutForm.jsx";
 import RecipeIngredientsForm from "./RecipeIngredientsForm.jsx";
 import RecipeStepsForm from "./RecipeStepsForm.jsx";
-import queryClient, {fetchRecipeFormHelpers, sendRecipeFormData, sendRecipeUpdateFormData} from "../../util/http.js";
-import {recipeValidationSchema} from "../../util/validationSchemas.js";
-import FormProgress from "../UI/FormProgress.jsx";
-import useModal from "../../hooks/useModal.jsx";
+import queryClient, {fetchRecipeFormHelpers, sendRecipeFormData, sendRecipeUpdateFormData} from "/src/util/http.js";
+import {recipeValidationSchema} from "/src/util/validationSchemas.js";
+import FormProgress from "/src/components/UI/FormProgress.jsx";
+import useModal from "/src/hooks/useModal.jsx";
 
 
 export default function RecipeForm({initialData=null}) {

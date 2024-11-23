@@ -1,7 +1,7 @@
 import style from "./ProfileDetail.module.css";
 
 import Button, {buttonTypeClasses} from "../UI/Button.jsx";
-import RecipeForm from "../forms/RecipeForm.jsx";
+import RecipeForm from "/src/components/forms/recipe/RecipeForm.jsx";
 import useModal from "../../hooks/useModal.jsx";
 
 

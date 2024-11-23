@@ -3,9 +3,9 @@ import style from "./ModalConfirmation.module.css";
 import {useNavigate} from "react-router-dom";
 import {useMutation} from "@tanstack/react-query";
 
-import Button, {buttonTypeClasses} from "./Button.jsx";
-import useModal from "../../hooks/useModal.jsx";
-import queryClient from "../../util/http.js";
+import Button, {buttonTypeClasses} from "../Button.jsx";
+import useModal from "../../../hooks/useModal.jsx";
+import queryClient from "../../../util/http.js";
 
 
 export default function ModalConfirmation(

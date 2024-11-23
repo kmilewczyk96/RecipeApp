@@ -4,9 +4,9 @@ import {useEffect, useRef} from "react";
 
 import {FieldArray, useFormikContext} from "formik";
 
-import Button, {buttonTypeClasses} from "../UI/Button.jsx";
-import CustomSelect from "../UI/CustomSelect.jsx";
-import CustomUnitBox from "../UI/CustomUnitBox.jsx";
+import Button from "/src/components/UI/Button.jsx";
+import CustomSelect from "/src/components/UI/CustomSelect.jsx";
+import CustomUnitBox from "/src/components/UI/CustomUnitBox.jsx";
 
 
 let scroll;

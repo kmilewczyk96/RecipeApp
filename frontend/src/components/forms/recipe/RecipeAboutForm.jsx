@@ -1,8 +1,8 @@
 import style from "./RecipeForm.module.css";
 
-import CustomInput from "../UI/CustomInput.jsx";
-import CustomSelect from "../UI/CustomSelect.jsx";
-import CustomUnitBox from "../UI/CustomUnitBox.jsx";
+import CustomInput from "/src/components/UI/CustomInput.jsx";
+import CustomSelect from "/src/components/UI/CustomSelect.jsx";
+import CustomUnitBox from "/src/components/UI/CustomUnitBox.jsx";
 
 
 export default function RecipeAboutForm({cuisineChoices, typeChoices}) {

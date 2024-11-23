@@ -2,7 +2,7 @@ import style from "./Modal.module.css";
 
 import {useEffect, useRef} from "react";
 import {createPortal} from "react-dom";
-import useModal from "../../hooks/useModal.jsx";
+import useModal from "../../../hooks/useModal.jsx";
 
 
 export default function Modal() {
