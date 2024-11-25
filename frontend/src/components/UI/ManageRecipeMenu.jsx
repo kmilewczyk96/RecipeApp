@@ -2,7 +2,7 @@ import style from "./ManageRecipeMenu.module.css";
 
 import {useMutation} from "@tanstack/react-query";
 
-import Button, {buttonTypeClasses} from "./Button.jsx";
+import Button, {buttonSizeClasses, buttonTypeClasses} from "./Button.jsx";
 import {deleteRecipe} from "../../util/http.js";
 import ModalConfirmation from "./modal/ModalConfirmation.jsx";
 import RecipeForm from "../forms/recipe/RecipeForm.jsx";
@@ -31,11 +31,13 @@ export default function ManageRecipeMenu({recipe}) {
       <li>
         <Button
           onClick={handleEdit}
+          sizeClass={buttonSizeClasses.s}
         >Edit
         </Button></li>
       <li>
         <Button
           typeClass={buttonTypeClasses.delete}
+          sizeClass={buttonSizeClasses.s}
           onClick={handleDelete}
         >Delete
         </Button>

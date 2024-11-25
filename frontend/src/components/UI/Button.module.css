@@ -2,17 +2,19 @@
 .button {
   transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
   border: 1px solid #212529;
-  border-radius: 5px;
 }
 
 /* SIZES */
 .small {
-
+  font-size: 1.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 3px;
 }
 
 .medium {
   font-size: 1.6rem;
   padding: 0.8rem 1.6rem;
+  border-radius: 5px;
 }
 
 .large {
