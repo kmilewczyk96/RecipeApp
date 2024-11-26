@@ -2,12 +2,9 @@ import style from "./RecipeDetailCard.module.css";
 
 import {Link} from "react-router-dom";
 
-import CutleryIcon from "../icons/CutleryIcon.jsx";
-import EnergyIcon from "../icons/EnergyIcon.jsx";
-import PinIcon from "../icons/PinIcon.jsx";
-import TimerIcon from "../icons/TimerIcon.jsx";
-import UserIcon from "../icons/UserIcon.jsx";
 import {convertToHoursString} from "../../util/converters.js";
+import {CutleryRPath, EnergyRPath, PinRPath, TimerRPath, UserRPath} from "../icons/svg-paths/Regular.jsx";
+import IconStatic from "../icons/wrappers/IconStatic.jsx";
 
 
 export default function RecipeDetailCard({recipe}) {
@@ -18,23 +15,23 @@ export default function RecipeDetailCard({recipe}) {
       <h3>About</h3>
       <ul className={style["recipe-info"]}>
         <li className={style["recipe-info-line"]}>
-          <UserIcon/>
+          <IconStatic><UserRPath/></IconStatic>
           <p><Link to={`/users/${recipe.user.id}`}>{recipe.user.name}</Link></p>
         </li>
         <li className={style["recipe-info-line"]}>
-          <PinIcon/>
+          <IconStatic><PinRPath/></IconStatic>
           <p>{recipe.cuisine_display}</p>
         </li>
         <li className={style["recipe-info-line"]}>
-          <CutleryIcon/>
+          <IconStatic><CutleryRPath/></IconStatic>
           <p>{recipe.recipe_type_display}</p>
         </li>
         <li className={style["recipe-info-line"]}>
-          <TimerIcon/>
+          <IconStatic><TimerRPath/></IconStatic>
           <p>{timeRequired}</p>
         </li>
         <li className={style["recipe-info-line"]}>
-          <EnergyIcon/>
+          <IconStatic><EnergyRPath/></IconStatic>
           <p>{recipe.kcal}kcal.</p>
         </li>
       </ul>

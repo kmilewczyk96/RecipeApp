@@ -30,20 +30,6 @@
   border: 1px solid #212529;
 }
 
-.recipe-details h2 {
-  background-color: #212529;
-  color: #e6fcf5;
-  overflow: hidden;
-
-  font-family: Creative, system-ui;
-  font-size: 3.6rem;
-  font-weight: 400;
-  text-align: center;
-
-  padding: 2.4rem;
-  margin: 1.8rem 0;
-}
-
 .recipe-details h3 {
   font-family: Creative, system-ui;
   font-size: 3.6rem;

@@ -1,0 +1,26 @@
+.recipe-title-bar {
+  position: relative;
+  margin: 1.8rem 0;
+}
+
+.recipe-title {
+  background-color: #212529;
+  color: #e6fcf5;
+  overflow: hidden;
+
+  font-family: Creative, system-ui;
+  font-size: 3.6rem;
+  font-weight: 400;
+  text-align: center;
+
+  padding: 3.2rem;
+}
+
+.recipe-options {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  top: 0.6rem;
+  right: 1.2rem;
+  gap: 0.6rem;
+}

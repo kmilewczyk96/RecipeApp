@@ -22,15 +22,12 @@ export default function ManageRecipeMenu({recipe}) {
     )
   }
 
-  function handleEdit() {
-    setModalChildren(<RecipeForm initialData={recipe}/>)
-  }
 
   return (
     <menu className={style["manage-recipe"]}>
       <li>
         <Button
-          onClick={handleEdit}
+          // onClick={handleEdit}
           sizeClass={buttonSizeClasses.s}
         >Edit
         </Button></li>
