@@ -1,0 +1,13 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  background-image: url("/src/assets/backgrounds/menu_background.jpg");
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-color: #adb5bd;
+  gap: 4.8rem;
+  padding: 1.2rem 2.4rem;
+  margin-bottom: 4.8rem;
+}

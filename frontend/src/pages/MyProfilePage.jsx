@@ -16,7 +16,7 @@ export default function MyProfilePage() {
   return (
     <div className={style["user-detail-layout"]}>
       <ProfileDetail user={user} isOwner/>
-      <RecipeGrid recipes={recipes}/>
+      <RecipeGrid addRecipe={true} recipes={recipes}/>
     </div>
   );
 };
