@@ -42,6 +42,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         """Retrieve all recipes."""
         users = self.request.query_params.get('users')
+        name = self.request.query_params.get('name')
         queryset = self.queryset
 
         if users and users == 'me':
@@ -50,6 +51,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
         elif users:
             users = users.split(',')
             queryset = queryset.filter(user_id__in=users)
+
+        if name:
+            queryset = queryset.filter(name__icontains=name)
 
         return queryset.distinct().order_by('-created')
 

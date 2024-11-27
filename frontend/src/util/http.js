@@ -22,12 +22,17 @@ export async function deleteRecipe(recipeID){
   }
 }
 
-export async function fetchRecipes({signal, userSuffix}){
+export async function fetchRecipes({signal, userSuffix, name}){
   let url = "http://localhost:8000/api/recipe/recipes/";
 
+  const searchParams = [];
   if (userSuffix) {
-    url += "?users=" + userSuffix;
+    searchParams.push("users=" + userSuffix);
   }
+  if (name) {
+    searchParams.push("name=" + name);
+  }
+  url += (searchParams.length === 0 ? "" : "?") + searchParams.join("&");
 
   const response = await fetch(url, {
     signal,

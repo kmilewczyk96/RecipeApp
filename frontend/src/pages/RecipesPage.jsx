@@ -4,12 +4,16 @@ import {useQuery} from "@tanstack/react-query";
 
 import RecipeGrid from "/src/components/recipe/RecipeGrid.jsx";
 import queryClient, {fetchRecipes} from "/src/util/http.js";
+import {useSearchParams} from "react-router-dom";
 
 
 export default function RecipesPage() {
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get("name");
+
   const {data, isLoading, isError, error} = useQuery({
-    queryKey: ["recipes"],
-    queryFn: ({signal}) => fetchRecipes({signal})
+    queryKey: ["recipes", {name: name}],
+    queryFn: ({signal}) => fetchRecipes({signal, name})
   });
 
   return (
@@ -20,9 +24,13 @@ export default function RecipesPage() {
 };
 
 
-export async function recipesLoader() {
+export async function recipesLoader({request}) {
+  const url = new URL(request.url);
+  const params = new URLSearchParams(url.search);
+  const name = params.get("name");
+
   return queryClient.fetchQuery({
-    queryKey: ["recipes"],
-    queryFn: ({signal}) => fetchRecipes({signal})
+    queryKey: ["recipes", {name: name}],
+    queryFn: ({signal}) => fetchRecipes({signal, name})
   });
 }
