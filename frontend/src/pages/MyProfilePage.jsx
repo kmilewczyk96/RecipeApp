@@ -2,11 +2,11 @@ import style from "./layouts/UserDetailLayout.module.css";
 
 import {json, useLoaderData, useRouteLoaderData} from "react-router-dom";
 
-import ProfileDetail from "../components/layout/ProfileDetail.jsx";
-import RecipeGrid from "../components/layout/RecipeGrid.jsx";
+import ProfileDetail from "/src/components/user/ProfileDetail.jsx";
+import RecipeGrid from "/src/components/recipe/RecipeGrid.jsx";
 
-import {getToken} from "../util/auth-token.js";
-import queryClient, {fetchRecipes} from "../util/http.js";
+import {getToken} from "/src/util/auth-token.js";
+import queryClient, {fetchRecipes} from "/src/util/http.js";
 
 
 export default function MyProfilePage() {

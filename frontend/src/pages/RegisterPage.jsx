@@ -2,7 +2,7 @@ import style from "./layouts/AuthLayout.module.css";
 
 import {redirect} from "react-router-dom";
 
-import RegisterForm from "../components/forms/auth/RegisterForm.jsx";
+import RegisterForm from "/src/components/forms/auth/RegisterForm.jsx";
 
 
 export default function RegisterPage() {

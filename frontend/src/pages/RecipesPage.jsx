@@ -2,8 +2,8 @@ import style from "./layouts/RecipesLayout.module.css";
 
 import {useQuery} from "@tanstack/react-query";
 
-import RecipeGrid from "../components/layout/RecipeGrid.jsx";
-import queryClient, {fetchRecipes} from "../util/http.js";
+import RecipeGrid from "/src/components/recipe/RecipeGrid.jsx";
+import queryClient, {fetchRecipes} from "/src/util/http.js";
 
 
 export default function RecipesPage() {

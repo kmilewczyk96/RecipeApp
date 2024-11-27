@@ -2,10 +2,9 @@ import style from "./RecipeCard.module.css";
 
 import {Link, useNavigate} from "react-router-dom";
 
-import Button from "./Button.jsx";
-import FollowDiv from "./FollowDiv.jsx";
+import Button from "../UI/Button.jsx";
 
-import {convertToHoursString} from "../../util/converters.js";
+import {convertToHoursString} from "/src/util/converters.js";
 import {CutleryRPath, EnergyRPath, PinRPath, PlantRPath, TimerRPath, UserRPath} from "../icons/svg-paths/Regular.jsx";
 import IconStatic from "../icons/wrappers/IconStatic.jsx";
 
@@ -60,7 +59,6 @@ export default function RecipeCard({recipe}) {
           className={style["recipe-button"]}
         >Open
         </Button>
-        <FollowDiv/>
       </div>
     </article>
   );

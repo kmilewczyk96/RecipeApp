@@ -2,7 +2,7 @@ import style from "./layouts/AuthLayout.module.css";
 
 import {redirect} from "react-router-dom";
 
-import LoginForm from "../components/forms/auth/LoginForm.jsx";
+import LoginForm from "/src/components/forms/auth/LoginForm.jsx";
 
 
 export default function LoginPage() {

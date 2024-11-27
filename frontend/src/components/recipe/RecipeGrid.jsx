@@ -1,6 +1,6 @@
 import style from "./RecipeGrid.module.css";
 
-import RecipeCard from "../UI/RecipeCard.jsx";
+import RecipeCard from "./RecipeCard.jsx";
 
 
 export default function RecipeGrid({recipes}) {

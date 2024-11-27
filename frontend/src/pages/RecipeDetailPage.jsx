@@ -2,10 +2,10 @@ import style from "./layouts/RecipeDetailLayout.module.css";
 
 import {json, useLoaderData} from "react-router-dom";
 
-import RecipeDetailCard from "../components/UI/RecipeDetailCard.jsx";
-import RecipeDetailIngredients from "../components/UI/RecipeDetailIngredients.jsx";
-import {getToken} from "../util/auth-token.js";
-import RecipeTitleBar from "../components/UI/recipe/RecipeTitleBar.jsx";
+import RecipeDetailCard from "/src/components/recipe/RecipeDetailCard.jsx";
+import RecipeDetailIngredients from "/src/components/recipe/RecipeDetailIngredients.jsx";
+import {getToken} from "/src/util/auth-token.js";
+import RecipeTitleBar from "/src/components/recipe/RecipeTitleBar.jsx";
 
 
 export default function RecipeDetailPage() {

@@ -1,6 +1,6 @@
 import {json} from "react-router-dom";
 
-import {getToken} from "../util/auth-token.js";
+import {getToken} from "/src/util/auth-token.js";
 
 
 export default function UserDetailPage() {

@@ -1,6 +1,6 @@
 import {useContext} from "react";
 
-import {ModalContext} from "../store/ModalContext.jsx";
+import {ModalContext} from "/src/store/ModalContext.jsx";
 
 
 export default function useModal() {

@@ -1,6 +1,6 @@
 import style from "./RecipeDetailIngredients.module.css";
 
-import unitConverter from "../../util/unit-converter.js";
+import unitConverter from "/src/util/unit-converter.js";
 
 
 export default function RecipeDetailIngredients({recipeIngredients}) {

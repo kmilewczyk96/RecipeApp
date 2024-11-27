@@ -2,10 +2,10 @@ import style from "./layouts/MainLayout.module.css";
 
 import {Navigate, Outlet, useLoaderData, useLocation} from "react-router-dom";
 
-import MainNavigationBar from "../components/layout/MainNavigationBar.jsx";
-import Modal from "../components/UI/modal/Modal.jsx";
-import ModalContextProvider from "../store/ModalContext.jsx";
-import {getToken} from "../util/auth-token.js";
+import MainNavigationBar from "/src/components/UI/header/MainNavigationBar.jsx";
+import Modal from "/src/components/UI/modal/Modal.jsx";
+import ModalContextProvider from "/src/store/ModalContext.jsx";
+import {getToken} from "/src/util/auth-token.js";
 
 
 export default function RootPage() {

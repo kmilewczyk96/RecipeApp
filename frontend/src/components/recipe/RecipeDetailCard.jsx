@@ -2,7 +2,7 @@ import style from "./RecipeDetailCard.module.css";
 
 import {Link} from "react-router-dom";
 
-import {convertToHoursString} from "../../util/converters.js";
+import {convertToHoursString} from "/src/util/converters.js";
 import {CutleryRPath, EnergyRPath, PinRPath, TimerRPath, UserRPath} from "../icons/svg-paths/Regular.jsx";
 import IconStatic from "../icons/wrappers/IconStatic.jsx";
 
