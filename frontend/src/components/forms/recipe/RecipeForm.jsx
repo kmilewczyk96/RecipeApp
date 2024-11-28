@@ -13,10 +13,12 @@ import queryClient, {fetchRecipeFormHelpers, sendRecipeFormData, sendRecipeUpdat
 import {recipeValidationSchema} from "/src/util/validationSchemas.js";
 import FormProgress from "/src/components/UI/FormProgress.jsx";
 import useModal from "/src/hooks/useModal.jsx";
+import useNotification from "/src/hooks/useNotification.jsx";
 
 
 export default function RecipeForm({initialData=null}) {
   const {clear} = useModal();
+  const {showNotification} = useNotification();
   const [step, setStep] = useState(0);
   const location = useLocation();
   const navi = useNavigate();
@@ -31,6 +33,10 @@ export default function RecipeForm({initialData=null}) {
       await queryClient.invalidateQueries({queryKey: ["recipes"]});
       navi(location);
       clear();
+      showNotification(
+        "success",
+        initialData ? "Your recipe has been updated successfully" : "Your recipe has been created successfully!"
+      );
     }
   });
 

@@ -11,7 +11,6 @@ export default function Modal() {
   const {content, clear} = useModal();
 
   useEffect(() => {
-    console.log("triggered");
     const modal = dialog.current;
 
     if (content) {

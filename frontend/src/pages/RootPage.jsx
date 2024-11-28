@@ -3,8 +3,10 @@ import style from "./layouts/MainLayout.module.css";
 import {Navigate, Outlet, useLoaderData, useLocation} from "react-router-dom";
 
 import MainNavigationBar from "/src/components/UI/header/MainNavigationBar.jsx";
+import NotificationBar from "/src/components/UI/header/NotificationBar.jsx";
 import Modal from "/src/components/UI/modal/Modal.jsx";
 import ModalContextProvider from "/src/store/ModalContext.jsx";
+import NotificationContextProvider from "/src/store/NotificationContext.jsx";
 import {getToken} from "/src/util/auth-token.js";
 
 
@@ -21,15 +23,18 @@ export default function RootPage() {
   }
 
   return (
-    <ModalContextProvider>
-      <MainNavigationBar/>
-      <main className={style["main-layout"]}>
-        <Modal/>
-        <Outlet/>
-      </main>
-    </ModalContextProvider>
+    <NotificationContextProvider>
+      <ModalContextProvider>
+        <MainNavigationBar/>
+        <NotificationBar/>
+        <main className={style["main-layout"]}>
+          <Modal/>
+          <Outlet/>
+        </main>
+      </ModalContextProvider>
+    </NotificationContextProvider>
   );
-}
+};
 
 export function authLoader() {
   return getToken();

@@ -1,0 +1,39 @@
+.notification-bar {
+  position: fixed;
+  width: 100vw;
+  top: 5.6rem;
+  left: 0;
+  z-index: 99;
+}
+
+.notification-content {
+  display: flex;
+  max-width: 130rem;
+  justify-content: space-between;
+  font-size: 1.6rem;
+
+  padding: 0.6rem 0;
+  margin: 0 auto;
+}
+
+.notification-content em {
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-right: 0.4rem;
+}
+
+.success {
+  background-color: #38d9a9;
+  color: #087f5b;
+}
+
+.error {
+  background-color: #ff8787;
+  color: #c92a2a;
+}
+
+@media (hover:hover) {
+  .close-button:hover {
+    text-shadow: 0 0 12px rgba(0.32, 0.32, 0.32, 0.7);
+  }
+}
