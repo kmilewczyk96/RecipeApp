@@ -27,19 +27,19 @@ export default function RecipeForm({initialData=null}) {
 
   const {mutate, isPending, isError, error} = useMutation({
     mutationFn: initialData ? sendRecipeUpdateFormData : sendRecipeFormData,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({queryKey: ["recipes"]});
       navi(location);
       clear();
     }
   });
 
-  async function handleSubmit(formValues) {
+  function handleSubmit(formValues) {
     if (initialData) {
       mutate({formValues, recipeID: initialData.id});
     } else {
       mutate(formValues);
     }
-    await queryClient.invalidateQueries({queryKey: ["recipes", {userID: "me"}]});
   }
 
   let errorMessage;
