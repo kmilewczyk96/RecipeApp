@@ -48,11 +48,11 @@ class IngredientModelTests(TestCase):
         tag2 = Tag.objects.create(name='gluten free')
         tag3 = Tag.objects.create(name='lactose free')
 
-        ingredient = create_ingredient(alt_unit='spoon', alt_to_unit_conversion=20)
+        ingredient = create_ingredient(alt_unit='tsp', alt_to_unit_conversion=20)
         ingredient.excluded_tags.add(tag1, tag2)
         ingredient.refresh_from_db()
 
-        self.assertEqual(ingredient.alt_unit, 'spoon')
+        self.assertEqual(ingredient.alt_unit, 'tsp')
         self.assertEqual(ingredient.alt_to_unit_conversion, 20)
         self.assertIn(tag1, ingredient.excluded_tags.all())
         self.assertIn(tag2, ingredient.excluded_tags.all())

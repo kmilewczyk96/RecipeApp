@@ -177,10 +177,10 @@ class Ingredient(models.Model):
     excluded_tags = models.ManyToManyField(Tag, blank=True)
 
     def clean(self):
-        if self.alt_unit is not None and self.alt_to_unit_conversion is None:
+        if self.alt_unit and self.alt_to_unit_conversion is None:
             raise ValidationError('Alt to unit conversion is missing! Remove alt unit or fill conversion rate field.')
 
-        if self.alt_to_unit_conversion is not None and self.alt_unit is None:
+        if self.alt_to_unit_conversion is not None and not self.alt_unit:
             raise ValidationError('Alt to unit conversion is provided but you forgot to fill alt unit field.')
 
         if self.alt_to_unit_conversion is not None and self.alt_to_unit_conversion <= 0:
