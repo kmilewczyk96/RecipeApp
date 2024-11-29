@@ -9,3 +9,11 @@ export function convertToHoursString(timeInMinutes) {
     return `${minutes}min.`
   }
 }
+
+export function convertToAltUnits(value, ratio) {
+  return Math.max(Math.floor(value / ratio * 10) / 10, 0.1);
+}
+
+export function convertToBaseUnits(altValue, ratio) {
+  return Math.max(Math.floor(altValue * ratio), 1);
+}

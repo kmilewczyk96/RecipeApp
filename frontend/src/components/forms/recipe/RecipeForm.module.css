@@ -14,6 +14,11 @@
   padding: 4rem 6rem;
 }
 
+.inputs {
+  display: flex;
+  flex-direction: column;
+}
+
 .actions {
   display: flex;
   align-items: center;

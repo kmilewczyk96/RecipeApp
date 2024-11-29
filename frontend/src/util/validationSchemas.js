@@ -19,8 +19,10 @@ export const recipeValidationSchema = Yup.object().shape({
         }),
         quantity: Yup.number()
           .integer("This value must be an integer.")
-          .required("Quantity value can not be blank.")
-        })
+          .required("Quantity value can not be blank."),
+        quantityAlt: Yup.number()
+          .min(0.1, "Alt quantity value must be greater than 0.1!")
+        }),
       )
   }),
   steps: Yup.array().when('$step', {

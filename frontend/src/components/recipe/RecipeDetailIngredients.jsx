@@ -1,6 +1,6 @@
 import style from "./RecipeDetailIngredients.module.css";
 
-import unitConverter from "/src/util/unit-converter.js";
+import {convertToAltUnits} from "/src/util/converters.js";
 
 
 export default function RecipeDetailIngredients({recipeIngredients}) {
@@ -15,12 +15,11 @@ export default function RecipeDetailIngredients({recipeIngredients}) {
               <p>{ingredient.quantity} {ingredient.ingredient.unit}</p>
             </div>
             <div className={style["ingredient-details"]}>
-              <span>{ingredient.ingredient.alt_unit ?
-                unitConverter(
-                  ingredient.quantity,
-                  ingredient.ingredient.alt_to_unit_conversion,
-                  ingredient.ingredient.alt_unit,
-                ) : "-"}
+              <span>{ingredient.ingredient.alt_unit ? (
+                `~${convertToAltUnits(ingredient.quantity, ingredient.ingredient.alt_to_unit_conversion)}${ingredient.ingredient.alt_unit}`
+              ): (
+                "n/a"
+              )}
               </span>
               <span>{ingredient.kcal} kcal</span>
             </div>

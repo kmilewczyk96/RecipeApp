@@ -24,8 +24,6 @@ export default function RecipeAboutForm({cuisineChoices, typeChoices}) {
         units={{base: "min"}}
         name="time-required"
         type="number"
-        min={1}
-        max={2880}
       />
     </div>
   );

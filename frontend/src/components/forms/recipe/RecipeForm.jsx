@@ -70,15 +70,16 @@ export default function RecipeForm({initialData=null}) {
                   id: "",
                 },
                 quantity: "",
+                quantityAlt: "",
               }
             ],
             steps: initialData?.steps || [
               "",
             ],
           }}
-          validate={(values) => {
+          validate={async (values) => {
             try {
-              validateYupSchema(values, recipeValidationSchema, true, {step})
+              await validateYupSchema(values, recipeValidationSchema, true, {step})
             } catch (error) {
               return yupToFormErrors(error);
             }

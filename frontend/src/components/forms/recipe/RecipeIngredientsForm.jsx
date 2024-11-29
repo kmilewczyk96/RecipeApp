@@ -13,13 +13,20 @@ let scroll;
 let usedIngredients = [];
 export default function RecipeIngredientsForm({ingredients}) {
   const listRef = useRef();
-  const {handleChange, values} = useFormikContext();
+  const {handleChange, values, setFieldValue, setFieldTouched} = useFormikContext();
 
   useEffect(() => {
     usedIngredients = [];
     values.ingredients.filter(i => i.ingredient.id !== "").map(i => usedIngredients.push(i.ingredient.id));
     scroll ? listRef.current?.lastElementChild?.scrollIntoView({behavior: "smooth", block: "center"}) : null;
   }, [values.ingredients]);
+
+  async function handleIngredientChange(e, index) {
+    handleChange(e);
+    await setFieldTouched(`ingredients.${index}.quantity`, false)
+    await setFieldValue(`ingredients.${index}.quantity`, "", false);
+    scroll = true;
+  }
 
   return (
     <FieldArray name="ingredients">
@@ -34,10 +41,7 @@ export default function RecipeIngredientsForm({ingredients}) {
                     label={"Ingredient:"}
                     name={`ingredients.${index}.ingredient.id`}
                     required
-                    onChange={(e) => {
-                      handleChange(e);
-                      scroll = true;
-                    }}
+                    onChange={(e) => handleIngredientChange(e, index)}
                   >
                     <option className={style["select-placeholder"]} value="" hidden>Select an ingredient</option>
                     {Object.entries(ingredients).map(([key, data]) => (
@@ -60,15 +64,15 @@ export default function RecipeIngredientsForm({ingredients}) {
                   values.ingredients[index].ingredient.id && (
                     <div className={style["form-box-bottom"]}>
                       <CustomUnitBox
+                        key={values.ingredients[index].ingredient.id}
                         label={"Quantity:"}
                         units={{
                           base: ingredients[values.ingredients[index].ingredient.id].unit,
-                          alt: ingredients[values.ingredients[index].ingredient.id].alt_unit
+                          alt: ingredients[values.ingredients[index].ingredient.id].alt_unit,
+                          ratio: ingredients[values.ingredients[index].ingredient.id].alt_to_unit_conversion,
                       }}
                         name={`ingredients.${index}.quantity`}
                         type="number"
-                        min={1}
-                        max={99999}
                       />
                     </div>
                   )

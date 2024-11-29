@@ -158,20 +158,20 @@ class Ingredient(models.Model):
         ('others', 'Others'),
     ]
     UNITS = [
-        ('g', 'grams'),
-        ('ml', 'millilitres'),
+        ('g', 'gram'),
+        ('ml', 'milliliter'),
     ]
     ALT_UNITS = [
-        ('piece', 'pieces'),
-        ('spoon', 'spoons'),
-        ('pinch', 'pinches'),
+        ('pc', 'piece'),
+        ('tsp', 'teaspoon'),
+        ('p', 'pinch'),
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, unique=True)
     category = models.CharField(max_length=32, choices=CATEGORIES, default='others', blank=False, null=False)
     unit = models.CharField(max_length=8, choices=UNITS, default='g', blank=False, null=False)
-    alt_unit = models.CharField(max_length=8, choices=ALT_UNITS, blank=True, null=True)
+    alt_unit = models.CharField(max_length=8, choices=ALT_UNITS, blank=True, null=False)
     alt_to_unit_conversion = models.PositiveIntegerField(blank=True, null=True)
     kcal_per_100_units = models.PositiveIntegerField()
     excluded_tags = models.ManyToManyField(Tag, blank=True)
