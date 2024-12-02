@@ -24,7 +24,13 @@ export default function MyProfilePage() {
   return (
     <div className={style["user-detail-layout"]}>
       <ProfileDetail user={user} isOwner/>
-      {(data && !isLoading) && <RecipeGrid addRecipe={true} recipes={data}/>}
+      {(data && !isLoading) && (
+        <RecipeGrid
+          addRecipe={true}
+          noRecipeMessage={"You don't have any recipes yet."}
+          recipes={data}
+        />
+      )}
     </div>
   );
 };

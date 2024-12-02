@@ -8,7 +8,7 @@ import CustomUnitBox from "/src/components/UI/CustomUnitBox.jsx";
 export default function RecipeAboutForm({cuisineChoices, typeChoices}) {
   return (
     <div className={style["inputs"]}>
-      <CustomInput label="Name:" name="name" type="text"/>
+      <CustomInput label="Name:" name="name" type="text" autoFocus/>
       <CustomSelect label="Cuisine:" name="cuisine">
         {Object.entries(cuisineChoices).map(([value, name]) => (
           <option key={value} value={value}>{name}</option>

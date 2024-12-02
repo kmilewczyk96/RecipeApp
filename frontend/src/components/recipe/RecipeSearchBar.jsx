@@ -17,7 +17,12 @@ export default function RecipeSearchBar({add=false}) {
   }
 
   function handleSubmit(name) {
-    setSearchParams(`?name=${name}`);
+    if (name === "") {
+      setSearchParams("");
+    } else {
+      setSearchParams(`?name=${name}`);
+    }
+
   }
 
   return (

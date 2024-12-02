@@ -22,3 +22,12 @@
 .recipe-grid .recipes li {
   align-self: flex-end;
 }
+
+.no-recipes {
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  font-size: 1.6rem;
+  color: #868e96;
+  padding: 0 24rem;
+}

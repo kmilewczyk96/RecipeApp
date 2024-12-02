@@ -73,6 +73,7 @@ export default function RecipeIngredientsForm({ingredients}) {
                       }}
                         name={`ingredients.${index}.quantity`}
                         type="number"
+                        autoFocus
                       />
                     </div>
                   )
@@ -89,6 +90,7 @@ export default function RecipeIngredientsForm({ingredients}) {
                   id: "",
                 },
                 quantity: "",
+                quantityAlt: "",
               })
               scroll = true;
             }}

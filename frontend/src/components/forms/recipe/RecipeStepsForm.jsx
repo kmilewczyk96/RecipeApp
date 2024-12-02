@@ -25,7 +25,7 @@ export default function RecipeStepsForm() {
               values.steps.length > 0 && values.steps.map((step, index) => (
                 <li key={index} className={style["form-box"]}>
                   <div className={style["form-box-top"]}>
-                    <CustomInput label={`Step ${index + 1}:`} name={`steps.${index}`} type="text"/>
+                    <CustomInput label={`Step ${index + 1}:`} name={`steps.${index}`} type="text" autoFocus/>
                     <button
                       className={style["trash"]}
                       type="button"

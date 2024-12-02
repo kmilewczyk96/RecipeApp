@@ -18,7 +18,13 @@ export default function RecipesPage() {
 
   return (
     <div className={style["recipes-layout"]}>
-      {(data && !isLoading) && <RecipeGrid addRecipe={true} recipes={data}/>}
+      {(data && !isLoading) && (
+        <RecipeGrid
+          addRecipe={true}
+          noRecipeMessage={"No recipes. Be the first user to add recipe!"}
+          recipes={data}
+        />
+      )}
     </div>
   );
 };
