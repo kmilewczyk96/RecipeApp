@@ -1,6 +1,6 @@
 import style from "./RecipeForm.module.css";
 
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 
 import {FieldArray, useFormikContext} from "formik";
 
@@ -9,23 +9,24 @@ import CustomInput from "/src/components/UI/CustomInput.jsx";
 
 
 export default function RecipeStepsForm() {
-  const listRef = useRef();
   const {values} = useFormikContext();
+  const [scrollTo, setScrollTo] = useState(null);
 
-  // useEffect(() => {
-  //   scroll ? listRef.current?.lastElementChild?.scrollIntoView({behavior: "smooth", block: "center"}) : null;
-  // }, [values.steps]);
 
   return (
     <FieldArray name={"steps"}>
       {({remove, push}) => (
         <div className={style["list-wrapper"]}>
-          <ol ref={listRef} className={style["scrollable-list"]}>
+          <ol className={style["scrollable-list"]}>
             {
               values.steps.length > 0 && values.steps.map((step, index) => (
                 <li key={index} className={style["form-box"]}>
                   <div className={style["form-box-top"]}>
-                    <CustomInput label={`Step ${index + 1}:`} name={`steps.${index}`} type="text" autoFocus/>
+                    <CustomInput
+                      label={`Step ${index + 1}:`}
+                      name={`steps.${index}`}
+                      type="text"
+                    />
                     <button
                       className={style["trash"]}
                       type="button"

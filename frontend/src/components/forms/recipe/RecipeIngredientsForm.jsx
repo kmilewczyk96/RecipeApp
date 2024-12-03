@@ -1,6 +1,6 @@
 import style from "./RecipeForm.module.css";
 
-import {useEffect, useRef} from "react";
+import {useEffect, useState} from "react";
 
 import {FieldArray, useFormikContext} from "formik";
 
@@ -9,31 +9,52 @@ import CustomSelect from "/src/components/UI/CustomSelect.jsx";
 import CustomUnitBox from "/src/components/UI/CustomUnitBox.jsx";
 
 
-let scroll;
-let usedIngredients = [];
 export default function RecipeIngredientsForm({ingredients}) {
-  const listRef = useRef();
   const {handleChange, values, setFieldValue, setFieldTouched, errors} = useFormikContext();
+  const [scrollTo, setScrollTo] = useState(null);
+  const [usedIngredients, setUsedIngredients] = useState(() => {
+    return values.ingredients.filter(i => i.ingredient.id !== "").map(i => usedIngredients.push(i.ingredient.id));
+  });
 
-  // useEffect(() => {
-  //   usedIngredients = [];
-  //   values.ingredients.filter(i => i.ingredient.id !== "").map(i => usedIngredients.push(i.ingredient.id));
-  //   scroll ? listRef.current?.lastElementChild?.scrollIntoView({behavior: "smooth", block: "center"}) : null;
-  // }, [values.ingredients]);
+  useEffect(() => {
+    if (scrollTo) {
+      const target = document.getElementById(scrollTo.trim());
+      target.scrollIntoView({behavior: "smooth", block: "center"});
+      target.focus({preventScroll: true});
+    }
+  }, [scrollTo]);
+
+  function handleAddIngredient() {
+    setScrollTo(`ingredients.${values.ingredients.length}.ingredient.id`)
+  }
 
   async function handleIngredientChange(e, index) {
+    const ingredientToReplace = values.ingredients[index].ingredient.id;
+    if (ingredientToReplace === "") {
+      setUsedIngredients(prevState => [...prevState, e.target.value]);
+    } else {
+      setUsedIngredients(prevState => {
+        return [...prevState.filter(i => i !== ingredientToReplace), e.target.value];
+      })
+    }
     handleChange(e);
     await setFieldTouched(`ingredients.${index}.quantity`, false)
     await setFieldValue(`ingredients.${index}.quantity`, "", false);
-    scroll = true;
+    if (scrollTo === `ingredients.${index}.quantity`) {
+      // Special use case to trigger UseEffect when User changes same Ingredient select field twice.
+      setScrollTo(`ingredients.${index}.quantity `);
+    } else {
+      setScrollTo(`ingredients.${index}.quantity`);
+    }
   }
 
   return (
-    <FieldArray name="ingredients">
-      {({remove, push}) => (
+    <FieldArray
+      name="ingredients"
+      render={
+        ({remove, push}) => (
         <div className={style["list-wrapper"]}>
           <ol
-            ref={listRef}
             className={typeof errors["ingredients"] === "string" ? (
               [style["scrollable-list"], "error"].join(" ")
             ) : (
@@ -46,8 +67,8 @@ export default function RecipeIngredientsForm({ingredients}) {
                 <div className={style["form-box-top"]}>
                   <CustomSelect
                     label={"Ingredient:"}
+                    id={`ingredients.${index}.ingredient.id`}
                     name={`ingredients.${index}.ingredient.id`}
-                    required
                     onChange={(e) => handleIngredientChange(e, index)}
                   >
                     <option className={style["select-placeholder"]} value="" hidden>Select an ingredient</option>
@@ -78,9 +99,9 @@ export default function RecipeIngredientsForm({ingredients}) {
                           alt: ingredients[values.ingredients[index].ingredient.id].alt_unit,
                           ratio: ingredients[values.ingredients[index].ingredient.id].alt_to_unit_conversion,
                       }}
+                        id={`ingredients.${index}.quantity`}
                         name={`ingredients.${index}.quantity`}
                         type="number"
-                        autoFocus
                       />
                     </div>
                   )
@@ -92,6 +113,7 @@ export default function RecipeIngredientsForm({ingredients}) {
           <Button
             type="button"
             onClick={() => {
+              handleAddIngredient();
               push({
                 ingredient: {
                   id: "",
@@ -99,11 +121,11 @@ export default function RecipeIngredientsForm({ingredients}) {
                 quantity: "",
                 quantityAlt: "",
               })
-              scroll = true;
             }}
           >Add Ingredient</Button>
         </div>
-      )}
-    </FieldArray>
+      )
+      }
+    />
   );
 };
