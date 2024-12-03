@@ -6,14 +6,14 @@ import {useField} from "formik";
 export default function CustomInput({label, placeholder, ...props}) {
   const [field, meta] = useField(props);
   const hasError = meta.error && meta.touched;
-  const styles = style["custom-tag"]
 
   return (
-    <div className={styles}>
-      {label && <label htmlFor={props.name || props.id} className={hasError ? style["error"] : null}>{label}</label>}
+    <div
+      className={hasError ? [style["custom-tag"], "error"].join(" ") : style["custom-tag"]}
+    >
+      {label && <label htmlFor={props.name || props.id}>{label}</label>}
       <input
         placeholder={placeholder && placeholder}
-        className={hasError ? style["error"] : null}
         {...field}
         {...props}
       />

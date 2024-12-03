@@ -12,9 +12,9 @@ export default function RecipeStepsForm() {
   const listRef = useRef();
   const {values} = useFormikContext();
 
-  useEffect(() => {
-    scroll ? listRef.current?.lastElementChild?.scrollIntoView({behavior: "smooth", block: "center"}) : null;
-  }, [values.steps]);
+  // useEffect(() => {
+  //   scroll ? listRef.current?.lastElementChild?.scrollIntoView({behavior: "smooth", block: "center"}) : null;
+  // }, [values.steps]);
 
   return (
     <FieldArray name={"steps"}>

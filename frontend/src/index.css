@@ -75,3 +75,21 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.error,
+.error * {
+  color: #c92a2a;
+  border-color: #c92a2a;
+}
+
+.error input,
+.error select {
+  outline: none!important;
+  border-color: #c92a2a;
+  background-color: #fff5f5;
+}
+
+.error input:focus,
+.error select:focus {
+  box-shadow: inset 0 0 0 2px rgba(255, 0, 0, 0.5);
+}

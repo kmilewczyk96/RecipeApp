@@ -13,13 +13,13 @@ let scroll;
 let usedIngredients = [];
 export default function RecipeIngredientsForm({ingredients}) {
   const listRef = useRef();
-  const {handleChange, values, setFieldValue, setFieldTouched} = useFormikContext();
+  const {handleChange, values, setFieldValue, setFieldTouched, errors} = useFormikContext();
 
-  useEffect(() => {
-    usedIngredients = [];
-    values.ingredients.filter(i => i.ingredient.id !== "").map(i => usedIngredients.push(i.ingredient.id));
-    scroll ? listRef.current?.lastElementChild?.scrollIntoView({behavior: "smooth", block: "center"}) : null;
-  }, [values.ingredients]);
+  // useEffect(() => {
+  //   usedIngredients = [];
+  //   values.ingredients.filter(i => i.ingredient.id !== "").map(i => usedIngredients.push(i.ingredient.id));
+  //   scroll ? listRef.current?.lastElementChild?.scrollIntoView({behavior: "smooth", block: "center"}) : null;
+  // }, [values.ingredients]);
 
   async function handleIngredientChange(e, index) {
     handleChange(e);
@@ -32,7 +32,14 @@ export default function RecipeIngredientsForm({ingredients}) {
     <FieldArray name="ingredients">
       {({remove, push}) => (
         <div className={style["list-wrapper"]}>
-          <ol ref={listRef} className={style["scrollable-list"]}>
+          <ol
+            ref={listRef}
+            className={typeof errors["ingredients"] === "string" ? (
+              [style["scrollable-list"], "error"].join(" ")
+            ) : (
+              style["scrollable-list"]
+            )}
+          >
           {
             values.ingredients.length > 0 ? values.ingredients.map((ingredient, index) => (
               <li key={index} className={style["form-box"]}>

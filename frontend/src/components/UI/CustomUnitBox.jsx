@@ -1,6 +1,6 @@
 import style from "./CustomUnitBox.module.css";
 
-import {Field, useField, useFormikContext} from "formik";
+import {useField, useFormikContext} from "formik";
 import {useState} from "react";
 
 import {convertToAltUnits, convertToBaseUnits} from "/src/util/converters.js";
@@ -38,7 +38,9 @@ export default function CustomUnitBox({label, placeholder, units, ...props}) {
   }
 
   return (
-    <div className={style["custom-unit-box"]}>
+    <div className={
+      (hasError || altHasError) ? [style["custom-unit-box"], "error"].join(" ") : style["custom-unit-box"]
+    }>
       {label && <label htmlFor={props.name || props.id} className={hasError ? style["error"] : null}>{label}</label>}
       <div className={style["unit-box-wrapper"]}>
         {isAltUnit ? (
