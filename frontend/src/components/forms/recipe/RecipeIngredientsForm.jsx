@@ -13,7 +13,9 @@ export default function RecipeIngredientsForm({ingredients}) {
   const {handleChange, values, setFieldValue, setFieldTouched, errors} = useFormikContext();
   const [scrollTo, setScrollTo] = useState(null);
   const [usedIngredients, setUsedIngredients] = useState(() => {
-    return values.ingredients.filter(i => i.ingredient.id !== "").map(i => usedIngredients.push(i.ingredient.id));
+    const _usedIngredients = [];
+    values.ingredients.filter(i => i.ingredient.id !== "").map(i => _usedIngredients.push(i.ingredient.id));
+    return _usedIngredients;
   });
 
   useEffect(() => {
