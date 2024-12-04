@@ -1,45 +1,87 @@
 import style from "./RecipeForm.module.css";
 
-import {useEffect, useRef, useState} from "react";
+import {useState} from "react";
 
 import {FieldArray, useFormikContext} from "formik";
+import {Reorder, useDragControls, useMotionValue} from "framer-motion";
+import {v4 as uuid} from "uuid";
 
+import IconDraggable from "/src/components/icons/wrappers/IconDraggable.jsx";
+import {EnergyRPath} from "/src/components/icons/svg-paths/Regular.jsx";
 import Button from "/src/components/UI/Button.jsx";
 import CustomInput from "/src/components/UI/CustomInput.jsx";
+
+
+function RecipeStep({value, index, onRemove}) {
+  const y = useMotionValue(0);
+  const dragControls = useDragControls();
+
+  return (
+    <Reorder.Item
+      value={value}
+      style={{y}}
+      dragListener={false}
+      dragControls={dragControls}
+    >
+      <CustomInput
+        label={`Step ${index + 1}:`}
+        name={`steps.${index}`}
+        type="text"
+      />
+      <button
+        className={style["trash"]}
+        type="button"
+        onClick={onRemove}
+      >REMOVE
+      </button>
+      <IconDraggable dragControls={dragControls}>
+        <EnergyRPath/>
+      </IconDraggable>
+    </Reorder.Item>
+  )
+}
 
 
 export default function RecipeStepsForm() {
   const {values} = useFormikContext();
   const [scrollTo, setScrollTo] = useState(null);
 
+  function handleReorder(newOrder, swap) {
+    const diffIndex = values.steps.findIndex(
+      (step, index) => step !== newOrder[index],
+    );
+    if (diffIndex !== -1) {
+      const newIndex = newOrder.findIndex(
+        (step) => step === values.steps[diffIndex],
+      );
+      swap(diffIndex, newIndex);
+    }
+  }
+
 
   return (
     <FieldArray name={"steps"}>
-      {({remove, push}) => (
+      {({remove, push, swap}) => (
         <div className={style["list-wrapper"]}>
-          <ol className={style["scrollable-list"]}>
+          <Reorder.Group
+            as="ol"
+            axis="y"
+            onReorder={(newOrder) => handleReorder(newOrder, swap)}
+            values={values.steps}
+            className={style["scrollable-list"]}
+          >
             {
               values.steps.length > 0 && values.steps.map((step, index) => (
-                <li key={index} className={style["form-box"]}>
-                  <div className={style["form-box-top"]}>
-                    <CustomInput
-                      label={`Step ${index + 1}:`}
-                      name={`steps.${index}`}
-                      type="text"
-                    />
-                    <button
-                      className={style["trash"]}
-                      type="button"
-                      onClick={() => {
-                        remove(index);
-                      }}
-                    >REMOVE
-                    </button>
-                  </div>
-                </li>
+                <RecipeStep
+                  key={index}
+                  className={style["form-box"]}
+                  value={step}
+                  index={index}
+                  onRemove={() => remove(index)}
+                />
               ))
             }
-          </ol>
+          </Reorder.Group>
           <Button
             type="button"
             onClick={() => {
