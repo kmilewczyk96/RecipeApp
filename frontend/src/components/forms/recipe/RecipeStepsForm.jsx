@@ -4,7 +4,7 @@ import {useState} from "react";
 
 import {FieldArray, useFormikContext} from "formik";
 import {Reorder, useDragControls, useMotionValue} from "framer-motion";
-import {v4 as uuid} from "uuid";
+import {v4 as uuid4} from "uuid";
 
 import IconDraggable from "/src/components/icons/wrappers/IconDraggable.jsx";
 import {EnergyRPath} from "/src/components/icons/svg-paths/Regular.jsx";
@@ -25,7 +25,7 @@ function RecipeStep({value, index, onRemove}) {
     >
       <CustomInput
         label={`Step ${index + 1}:`}
-        name={`steps.${index}`}
+        name={`steps.${index}.value`}
         type="text"
       />
       <button
@@ -48,11 +48,11 @@ export default function RecipeStepsForm() {
 
   function handleReorder(newOrder, swap) {
     const diffIndex = values.steps.findIndex(
-      (step, index) => step !== newOrder[index],
+      (step, index) => step.id !== newOrder[index].id,
     );
     if (diffIndex !== -1) {
       const newIndex = newOrder.findIndex(
-        (step) => step === values.steps[diffIndex],
+        (step) => step.id === values.steps[diffIndex].id,
       );
       swap(diffIndex, newIndex);
     }
@@ -73,7 +73,7 @@ export default function RecipeStepsForm() {
             {
               values.steps.length > 0 && values.steps.map((step, index) => (
                 <RecipeStep
-                  key={index}
+                  key={step.id}
                   className={style["form-box"]}
                   value={step}
                   index={index}
@@ -85,7 +85,7 @@ export default function RecipeStepsForm() {
           <Button
             type="button"
             onClick={() => {
-              push("");
+              push({id: uuid4(), value: ""});
             }}
           >Add Step</Button>
         </div>

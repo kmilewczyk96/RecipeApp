@@ -1,3 +1,6 @@
+import {v4 as uuid4} from "uuid";
+
+
 export function convertToHoursString(timeInMinutes) {
   let minutes = +timeInMinutes;
   const hours = Math.floor(minutes / 60);
@@ -16,4 +19,23 @@ export function convertToAltUnits(value, ratio) {
 
 export function convertToBaseUnits(altValue, ratio) {
   return Math.max(Math.floor(altValue * ratio), 1);
+}
+
+export function generateKeys(iterableWithNoKeys=[]) {
+  const result = [];
+  for (const el of iterableWithNoKeys) {
+    result.push({
+      id: uuid4(),
+      value: el,
+    });
+  }
+  return result;
+}
+
+export function dropKeys(iterableWithKeys=[]) {
+  const result = [];
+  for (const el of iterableWithKeys) {
+    result.push(el["value"]);
+  }
+  return result;
 }

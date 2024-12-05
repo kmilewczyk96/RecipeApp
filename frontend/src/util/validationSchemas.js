@@ -29,9 +29,10 @@ export const recipeValidationSchema = Yup.object().shape({
     is: 2,
     then: schema => schema
       .min(1, "At least one step required.")
-      .of(Yup.string()
-        .min(1, "Step can not be blank.")
-        .required("Step can not be blank.")
-      )
+      .of(Yup.object().shape({
+        value: Yup.string()
+          .min(1, "Step can not be blank.")
+          .required("Step can not be blank.")
+      }))
   })
 });

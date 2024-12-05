@@ -4,11 +4,13 @@ import {Formik, Form, validateYupSchema, yupToFormErrors} from "formik";
 import {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useMutation, useQuery} from "@tanstack/react-query";
+import {v4 as uuid4} from "uuid";
 
 import Button, {buttonTypeClasses} from "/src/components/UI/Button.jsx";
 import RecipeAboutForm from "./RecipeAboutForm.jsx";
 import RecipeIngredientsForm from "./RecipeIngredientsForm.jsx";
 import RecipeStepsForm from "./RecipeStepsForm.jsx";
+import {dropKeys, generateKeys} from "/src/util/converters.js";
 import queryClient, {fetchRecipeFormHelpers, sendRecipeFormData, sendRecipeUpdateFormData} from "/src/util/http.js";
 import {recipeValidationSchema} from "/src/util/validationSchemas.js";
 import FormProgress from "/src/components/UI/FormProgress.jsx";
@@ -73,9 +75,7 @@ export default function RecipeForm({initialData=null}) {
                 quantityAlt: "",
               }
             ],
-            steps: initialData?.steps || [
-              "",
-            ],
+            steps: initialData?.steps ? generateKeys(initialData.steps) : [{id: uuid4(), value: ""}]
           }}
           validate={async (values) => {
             try {
@@ -93,7 +93,7 @@ export default function RecipeForm({initialData=null}) {
                 recipe_type: values["type"],
                 time_minutes: values["time-required"],
                 r_ingredients: values["ingredients"],
-                steps: values["steps"],
+                steps: dropKeys(values["steps"]),
               }
               await handleSubmit(data);
               helpers.resetForm();
