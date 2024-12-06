@@ -1,3 +1,6 @@
+import style from "./IconDraggable.module.css";
+
+
 export default function IconDraggable({size="16", hexColor="#212529", dragControls, children}) {
   return (
     <svg
@@ -5,7 +8,8 @@ export default function IconDraggable({size="16", hexColor="#212529", dragContro
       width={size}
       height={size}
       fill={hexColor}
-      onPointerDown={(event) => dragControls.start(event)}
+      onPointerDown={event => dragControls.start(event)}
+      className={style["icon"]}
     >
       {children}
     </svg>

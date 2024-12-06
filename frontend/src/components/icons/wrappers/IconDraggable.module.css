@@ -1,0 +1,8 @@
+.icon {
+  cursor: grab;
+}
+
+.icon:active {
+  cursor: grabbing;
+}
+

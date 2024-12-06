@@ -115,7 +115,7 @@ export default function RecipeForm({initialData=null}) {
             {step === 1 && <RecipeIngredientsForm
               ingredients={formHelpers.ingredients}
             />}
-            {step === 2 && <RecipeStepsForm/>}
+            {step === 2 && <RecipeStepsForm autoFocusFirst={initialData === null}/>}
             <div className={style["actions"]}>
               {
                 step !== 0 &&
