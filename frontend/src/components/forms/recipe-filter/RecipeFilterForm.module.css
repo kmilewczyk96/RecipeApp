@@ -1,0 +1,45 @@
+.recipe-filter-form {
+  display: flex;
+  flex-direction: column;
+  width: 48rem;
+  height: 64rem;
+  background-image: linear-gradient(#f8f9fa, #f1f3f5);
+  padding: 2rem 4rem;
+}
+
+.expandable-group-wrapper {
+  width: 100%;
+  font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.expandable-group-wrapper > input {
+  display: none;
+}
+
+.expandable-group-wrapper > label {
+  font-size: 1.6rem;
+  cursor: pointer;
+  border-bottom: 1px solid #212529;
+  padding: 0.2rem 0.4rem;
+}
+
+.fake-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+#expandable-origin-filter:checked ~ .expandable-div,
+#expandable-type-filter:checked ~ .expandable-div,
+#expandable-time-filter:checked ~ .expandable-div,
+#expandable-calories-filter:checked ~ .expandable-div,
+#expandable-tags-filter:checked ~ .expandable-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.expandable-div {
+  overflow: hidden;
+  display: none;
+}

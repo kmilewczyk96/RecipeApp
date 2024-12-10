@@ -2,6 +2,7 @@ import style from "./RecipeSearchBar.module.css";
 
 import {useSearchParams} from "react-router-dom";
 
+import RecipeFilterForm from "../forms/recipe-filter/RecipeFilterForm.jsx";
 import RecipeForm from "../forms/recipe/RecipeForm.jsx";
 import Button from "../UI/Button.jsx";
 import Search from "../UI/Search.jsx";
@@ -14,6 +15,10 @@ export default function RecipeSearchBar({add=false}) {
 
   function handleAddRecipe() {
     setModalChildren(<RecipeForm/>);
+  }
+
+  function handleShowFilters() {
+    setModalChildren(<RecipeFilterForm/>)
   }
 
   function handleSubmit(name) {
@@ -33,7 +38,9 @@ export default function RecipeSearchBar({add=false}) {
         >Add</Button>
       )}
       <Search fieldName={"name"} placeholder={"Recipe Name"} onSubmit={handleSubmit}/>
-      <Button>Filter</Button>
+      <Button
+        onClick={handleShowFilters}
+      >Filter</Button>
     </div>
   );
 };
