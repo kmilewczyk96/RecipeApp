@@ -96,7 +96,6 @@ export default function RecipeForm({initialData=null}) {
                 steps: dropKeys(values["steps"]),
               }
               await handleSubmit(data);
-              helpers.resetForm();
               return;
             }
             setStep(prevState => prevState + 1);

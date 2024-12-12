@@ -60,6 +60,14 @@ export default function RecipeFilterForm() {
               <p>Time</p><p>&#8595;</p>
             </div>
           </label>
+          <div>
+            <label>
+              <Field type="number" name="timeMin"/>Min
+            </label>
+            <label>
+              <Field type="number" name="timeMax"/>Max
+            </label>
+          </div>
         </div>
         <div className={style["expandable-group-wrapper"]}>
           <input type={"checkbox"} id={style["expandable-calories-filter"]} className={style["expandable"]}/>
