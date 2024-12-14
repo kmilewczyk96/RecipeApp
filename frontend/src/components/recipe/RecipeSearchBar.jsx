@@ -5,7 +5,7 @@ import {useSearchParams} from "react-router-dom";
 import RecipeFilterForm from "../forms/recipe-filter/RecipeFilterForm.jsx";
 import RecipeForm from "../forms/recipe/RecipeForm.jsx";
 import Button from "../UI/Button.jsx";
-import Search from "../UI/Search.jsx";
+import Search from "../core/Search.jsx";
 import useModal from "/src/hooks/useModal.jsx";
 
 
@@ -37,7 +37,7 @@ export default function RecipeSearchBar({add=false}) {
           onClick={handleAddRecipe}
         >Add</Button>
       )}
-      <Search fieldName={"name"} placeholder={"Recipe Name"} onSubmit={handleSubmit}/>
+      <Search name={"name"} placeholder={"Recipe Name"} onSubmit={handleSubmit}/>
       <Button
         onClick={handleShowFilters}
       >Filter</Button>

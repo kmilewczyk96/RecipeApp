@@ -37,6 +37,8 @@ html {
 input,
 textarea,
 button {
+  outline: none!important;
+  background-color: transparent;
   font: inherit;
   border-radius: 0;
   border: none;
