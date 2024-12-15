@@ -13,7 +13,7 @@ export default function Search({name, placeholder, onSubmit, iconSize = "24"}) {
       initialValues={{name: ""}}
       onSubmit={async (values) => onSubmit(values[name])}
     >
-      {({handleSubmit, handleReset}) => (
+      {({handleSubmit, handleReset, values}) => (
         <Form className={style.searchWrapper}>
           <FormikInput
             id={name}
@@ -21,16 +21,16 @@ export default function Search({name, placeholder, onSubmit, iconSize = "24"}) {
             placeholder={placeholder}
           />
           <div className={style.searchActions}>
-            <IconButton
+            {values["name"] !== "" && <IconButton
               size={iconSize}
               onClick={() => {
                 handleReset();
                 document.getElementById(name)?.focus();
               }
-            }
+              }
             >
               <RemoveRPath/>
-            </IconButton>
+            </IconButton>}
             <IconButton
               size={iconSize}
               onClick={handleSubmit}
