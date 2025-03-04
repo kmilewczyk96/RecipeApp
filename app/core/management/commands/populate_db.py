@@ -56,7 +56,6 @@ class Command(BaseCommand):
             name='gluten free',
         )
 
-
     def _create_users(self):
         """Creates fake users."""
         fake = Faker()
