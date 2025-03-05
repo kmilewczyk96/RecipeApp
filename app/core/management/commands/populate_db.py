@@ -1,6 +1,7 @@
 import random
 
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand
 from faker import Faker
 from faker_food import FoodProvider
@@ -9,6 +10,7 @@ from faker_food import FoodProvider
 from core.models import (
     Ingredient,
     Recipe,
+    RecipeIngredient,
     Tag,
 )
 
@@ -27,6 +29,25 @@ class Command(BaseCommand):
                 unit=random.choice(Ingredient.UNITS)[0],
                 kcal_per_100_units=random.randint(0, 1500),
             )
+
+    @staticmethod
+    def _create_recipe_ingredients():
+        """Creates a couple of fake Recipe Ingredients for fake recipes."""
+        fake_users = get_user_model().objects.filter(email__contains='fake_user')
+        fake_recipes = Recipe.objects.filter(user__in=fake_users)
+        ingredients = Ingredient.objects.all()
+
+        for recipe in fake_recipes:
+            ingredients_count = random.randint(4, 12)
+            for _ in range(ingredients_count):
+                try:
+                    RecipeIngredient.objects.create(
+                        recipe=recipe,
+                        ingredient=random.choice(ingredients),
+                        quantity=random.randint(5, 50),
+                    )
+                except ValidationError:
+                    pass
 
     @staticmethod
     def _create_recipes():
@@ -86,3 +107,6 @@ class Command(BaseCommand):
 
         self.stdout.write('Creating recipes...')
         self._create_recipes()
+
+        self.stdout.write('Creating recipes ingredients...')
+        self._create_recipe_ingredients()

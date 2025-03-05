@@ -89,6 +89,7 @@ class Recipe(models.Model):
     cuisine = models.CharField(max_length=32, choices=CUISINES, default='other', blank=False, null=False)
     recipe_type = models.CharField(max_length=32, choices=TYPES, default='other', blank=False, null=False)
     time_minutes = models.IntegerField()
+    ingredients = models.ManyToManyField('Ingredient', through='RecipeIngredient')
     _steps = models.TextField(blank=False, null=False)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
