@@ -1,4 +1,5 @@
 import uuid
+
 from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -127,7 +128,7 @@ class Recipe(models.Model):
     @property
     def kcal(self):
         r_ingredients_kcals = [ri.kcal for ri in self.r_ingredients.all()]
-        return sum(r_ingredients_kcals)
+        return round(sum(r_ingredients_kcals), 1)
 
     def __str__(self):
         return self.name
