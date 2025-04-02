@@ -13,3 +13,7 @@
   width: 36ch;
   padding: 0.25em 0.5em;
 }
+
+.wrapper input::placeholder {
+  color: var(--color-white-500);
+}

@@ -6,21 +6,18 @@ import {
 } from "formik";
 import type {ReactElement} from "react";
 
+import Button from "~/UI/Button";
 import FormField from "~/UI/FormField";
 
 
 export default function LoginForm(): ReactElement {
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.welcomeWrapper}>
-        <h2>Welcome to <em>Recipository</em></h2>
-        <p>Browse, create and share recipes with community today.</p>
-      </div>
-      <Formik
-        initialValues={{email: "", password: ""}}
-        onSubmit={() => {}}
-      >
-        <Form className={styles.formWrapper}>
+    <Formik
+      initialValues={{email: "", password: ""}}
+      onSubmit={() => {}}
+    >
+      <Form className={styles.formWrapper}>
+        <div className={styles.inputs}>
           <FormField
             label={"Email"}
             name={"email"}
@@ -31,17 +28,13 @@ export default function LoginForm(): ReactElement {
             label={"Password"}
             name={"password"}
             type={"password"}
-            placeholder={"********"}
+            placeholder={"************"}
           />
-          <button>Submit</button>
-        </Form>
-      </Formik>
-      <hr/>
-      <div className={styles.swapAuthWrapper}>
-        <p>Don't have an account? <a>Register</a></p>
-        <p>or</p>
-        <p><a>Skip</a> for now and use for browsing only.</p>
-      </div>
-    </div>
+        </div>
+        <div className={styles.actions}>
+          <Button buttonType={"primary"}>Log In</Button>
+        </div>
+      </Form>
+    </Formik>
   );
 }
