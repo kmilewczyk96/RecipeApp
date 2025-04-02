@@ -1,0 +1,26 @@
+.wrapper {
+  cursor: pointer;
+  display: block;
+  width: min-content;
+  text-wrap: nowrap;
+  font-style: inherit;
+  font-size: 0.75em;
+  border: 2px solid currentColor;
+  border-radius: 9px;
+  padding: 0.5em 1.5em;
+}
+
+.primary {
+  transition: background-color 0.5s, border 0.5s;
+  font-weight: 500;
+  background-color: var(--color-teal-800);
+  color: var(--color-teal-000);
+  border-color: var(--color-teal-700);
+}
+
+@media (hover:hover) {
+  .primary:hover:not(:active) {
+    background-color: var(--color-teal-900);
+    border-color: var(--color-teal-900);
+  }
+}

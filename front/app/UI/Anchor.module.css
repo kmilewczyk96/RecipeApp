@@ -1,0 +1,12 @@
+.base {
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.primary {
+  color: var(--color-teal-700);
+}
+
+.secondary {
+
+}

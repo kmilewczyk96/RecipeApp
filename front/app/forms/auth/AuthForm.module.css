@@ -22,7 +22,17 @@
 .formWrapper {
   display: flex;
   flex-direction: column;
+  gap: 1em;
+  margin-inline: auto;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
   gap: 0.5em;
+}
+
+.actions {
   margin-inline: auto;
 }
 
