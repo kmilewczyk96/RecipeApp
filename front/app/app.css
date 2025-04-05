@@ -77,10 +77,18 @@ svg {
 }
 
 /* Base HTML elements styling ////////////////////////////////////////////////////////////////////////////////////////*/
+@supports (-moz-appearance: none) {
+  input[type="password"] {
+    /* Prevent super huge dots in password type input fields on Firefox browser. */
+    font-family: "Creative", system-ui;
+  }
+}
+
 input,
 select,
 textarea {
   font-style: inherit;
+  font-size: inherit;
   outline: none!important;
   border: 1px solid var(--color-white-500);
   border-radius: 9px;

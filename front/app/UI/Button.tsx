@@ -10,7 +10,6 @@ interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export default function Button({buttonType, monochrome=false, children, ...props}: IProps): ReactElement {
-  // TODO: Button implementation and styling.
   return (
     <button
       className={[styles.wrapper, styles[buttonType], monochrome ? styles.monochrome : undefined].join(" ")}
