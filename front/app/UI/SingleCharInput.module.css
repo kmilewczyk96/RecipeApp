@@ -1,0 +1,10 @@
+.base {
+  width: 2ch;
+  font-family: "Righteous", "sans-serif";
+  font-size: 1.5em;
+  color: transparent;
+  text-shadow: 0 0 0 var(--color-white-700);
+  text-align: center;
+  border: 1px solid var(--color-white-500);
+  border-radius: 9px;
+}

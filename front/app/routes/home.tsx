@@ -1,5 +1,6 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "~/welcome/welcome";
+import TwoStepAuthCode from "~/forms/auth/TwoStepAuthCode";
+
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +10,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Welcome />;
+  return (
+    <div className={"flex justify-center items-center h-dvh"}>
+      <TwoStepAuthCode/>
+    </div>
+  );
 }
