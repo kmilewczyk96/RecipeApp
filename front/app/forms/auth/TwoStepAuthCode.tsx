@@ -1,12 +1,11 @@
 import styles from "./TwoStepAuthCode.module.css";
 
 import {
-  type ChangeEvent,
   type KeyboardEvent,
   type ReactElement,
   useRef,
 } from "react";
-import {Form, Formik} from "formik";
+import {Form, Formik, type FormikErrors} from "formik";
 
 import SingleCharInput from "~/UI/SingleCharInput";
 import Button from "~/UI/Button";
@@ -29,27 +28,29 @@ export default function TwoStepAuthCode(
   );
   const codeRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  function handleInputChange(e: ChangeEvent<HTMLInputElement>): void {
-    const {value} = e.target;
-    const index = Number(e.target.name.split("--")[1]);
-
-    if (value.length === 1) {
+  async function handleKeydown(
+    e: KeyboardEvent<HTMLInputElement>,
+    index: number,
+    setFieldValue: (
+      field: string,
+      value: any,
+      shouldValidate?: boolean | undefined
+    ) => Promise<void | FormikErrors<{[k: string]: string}>>
+  ): Promise<void> {
+    if (!codeRefs.current[index]?.name) {
+      return;
+    }
+    if (e.key === "Backspace" && index > 0 && codeRefs.current[index]?.value === "") {
+      e.preventDefault();
+      codeRefs.current[index - 1]?.focus();
+    } else if ((e.key === "Backspace" || e.key === "Delete") && codeRefs.current[index]?.value) {
+      await setFieldValue(codeRefs.current[index]?.name, "");
+    } else if (/^\d$/.test(e.key)) {
+      e.preventDefault();
+      await setFieldValue(codeRefs.current[index]?.name, e.key);
       if (index < length - 1) {
-        codeRefs.current[index + 1]?.select();
+        codeRefs.current[index + 1]?.focus();
       }
-    } else if (value.length === 0 && index > 0) {
-      codeRefs.current[index - 1]?.select();
-    }
-  }
-
-  function handleEmptyValueBackspace(e: KeyboardEvent<HTMLInputElement>, index: number): void {
-    if (e.key === "Backspace" && e.currentTarget.value.length === 0) {
-      e.preventDefault();
-      codeRefs.current[index - 1]?.select();
-    }
-    if (e.key === e.currentTarget.value) {
-      e.preventDefault();
-      codeRefs.current[index + 1]?.select();
     }
   }
 
@@ -64,39 +65,45 @@ export default function TwoStepAuthCode(
       </div>
       <Formik
         initialValues={initialValues}
-        onSubmit={() => {}}
+        onSubmit={(values) => {
+          console.log(values);
+        }}
       >
-        <Form className={styles.formWrapper}>
-          <div className={styles.codeWrapper}>
-            <div className={styles.inputs}>
-              {
-                // TODO: fix that annoying ref warning.
-                Object.keys(initialValues).map((key: string, index: number) => (
-                  <SingleCharInput
-                    inputMode={"numeric"}
-                    tabIndex={index + 1}
-                    onChange={(e) => handleInputChange(e)}
-                    onKeyDown={e => handleEmptyValueBackspace(e, index)}
-                    ref={el => codeRefs.current[index] = el}
-                    key={index}
-                    name={key}
-                  />
-                ))
-              }
+        {({setFieldValue}) => (
+          <Form className={styles.formWrapper}>
+            <div className={styles.codeWrapper}>
+              <div className={styles.inputs}>
+                {
+                  Object.keys(initialValues).map((key: string, index: number) => (
+                    <SingleCharInput
+                      autoFocus={true}
+                      tabIndex={index + 1}
+                      ref={inputEl => {
+                        if (inputEl) {
+                          codeRefs.current[index] = inputEl;
+                        }
+                      }}
+                      onKeyDown={e => handleKeydown(e, index, setFieldValue)}
+                      key={index}
+                      name={key}
+                    />
+                  ))
+                }
+              </div>
+              <Button
+                type={"button"}
+                tabIndex={0}
+                className={styles.resendCodeBtn}
+                buttonType={"tertiary"}
+                colorTheme={"secondary"}
+              >resend code
+              </Button>
             </div>
-            <Button
-              type={"button"}
-              tabIndex={0}
-              className={styles.resendCodeBtn}
-              buttonType={"tertiary"}
-              colorTheme={"secondary"}
-            >resend code
-            </Button>
-          </div>
-          <div className={styles.actions}>
-            <Button tabIndex={length} type={"submit"} buttonType={"primary"}>Confirm</Button>
-          </div>
-        </Form>
+            <div className={styles.actions}>
+              <Button tabIndex={length} type={"submit"} buttonType={"primary"}>Confirm</Button>
+            </div>
+          </Form>
+        )}
       </Formik>
     </div>
   );
