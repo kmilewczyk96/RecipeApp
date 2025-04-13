@@ -1,6 +1,10 @@
 import styles from "./Button.module.css";
 
-import type {ButtonHTMLAttributes, ReactElement} from "react";
+import {
+  type ButtonHTMLAttributes,
+  type ReactElement,
+  forwardRef, type ForwardedRef
+} from "react";
 
 
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -10,13 +14,21 @@ interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: string,
 }
 
-export default function Button({buttonType, colorTheme="primary", className="", children, ...props}: IProps): ReactElement {
-  return (
-    <button
-      className={[styles.wrapper, styles[buttonType], styles[colorTheme + "Color"], className].join(" ")}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-}
+const Button = forwardRef<HTMLButtonElement, IProps>(
+  (
+    {buttonType, colorTheme = "primary", className = "", children, ...props}: IProps,
+    ref: ForwardedRef<HTMLButtonElement>
+  ): ReactElement => {
+    return (
+      <button
+        className={[styles.wrapper, styles[buttonType], styles[colorTheme + "Color"], className].join(" ")}
+        {...props}
+        ref={ref}
+      >
+        {children}
+      </button>
+    );
+  }
+);
+
+export default Button;

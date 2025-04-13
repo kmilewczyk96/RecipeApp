@@ -1,11 +1,12 @@
 import styles from "./TwoStepAuthCode.module.css";
 
 import {
+  type ChangeEvent,
   type KeyboardEvent,
   type ReactElement,
   useRef,
 } from "react";
-import {Form, Formik, type FormikErrors} from "formik";
+import {Form, Formik} from "formik";
 
 import SingleCharInput from "~/UI/SingleCharInput";
 import Button from "~/UI/Button";
@@ -27,30 +28,75 @@ export default function TwoStepAuthCode(
     Array.from({length}, (_, index): [string, string] => [`input--${index}`, ""])
   );
   const codeRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const confirmRef = useRef<HTMLButtonElement | null>(null);
 
-  async function handleKeydown(
-    e: KeyboardEvent<HTMLInputElement>,
-    index: number,
-    setFieldValue: (
-      field: string,
-      value: any,
-      shouldValidate?: boolean | undefined
-    ) => Promise<void | FormikErrors<{[k: string]: string}>>
-  ): Promise<void> {
+  function handleChange(e: ChangeEvent<HTMLInputElement>, index: number): void {
+    // Handling moving caret on Input Field changes.
+    if (e.target.value === "") {
+      return;
+    }
+    if (index < length - 1) {
+      codeRefs.current[index + 1]?.select();
+      return;
+    }
+
+    confirmRef.current?.focus();
+    return;
+  }
+
+  function handleClick(index: number): void {
+    // Prevents caret movement on mouse click.
+    codeRefs.current[index]?.select();
+  }
+
+  function handleKeydown(e: KeyboardEvent<HTMLInputElement>, index: number): void {
     if (!codeRefs.current[index]?.name) {
       return;
     }
-    if (e.key === "Backspace" && index > 0 && codeRefs.current[index]?.value === "") {
-      e.preventDefault();
-      codeRefs.current[index - 1]?.focus();
-    } else if ((e.key === "Backspace" || e.key === "Delete") && codeRefs.current[index]?.value) {
-      await setFieldValue(codeRefs.current[index]?.name, "");
-    } else if (/^\d$/.test(e.key)) {
-      e.preventDefault();
-      await setFieldValue(codeRefs.current[index]?.name, e.key);
-      if (index < length - 1) {
-        codeRefs.current[index + 1]?.focus();
-      }
+    switch (e.key) {
+      case "ArrowLeft":
+        // Changes to Shift + Tab behaviour if index > 0.
+        e.preventDefault();
+        if (index > 0) {
+          codeRefs.current[index - 1]?.select();
+        }
+        return;
+
+      case "ArrowRight":
+        // Changes to Tab behaviour if index is not last input.
+        e.preventDefault();
+        if (index < length - 1) {
+          codeRefs.current[index + 1]?.select();
+        }
+        return;
+
+      case "Backspace":
+        // Changes to Shift + Tab behaviour if current index is an empty input.
+        if (index > 0 && codeRefs.current[index]?.value === "") {
+          e.preventDefault();
+          codeRefs.current[index - 1]?.select();
+        }
+        return;
+
+      case codeRefs.current[index]?.value:
+        // Pushes caret to next input when User re-enters value and thus not trigger onChange function.
+        e.preventDefault();
+        if (index < length - 1) {
+          codeRefs.current[index + 1]?.select();
+          return;
+        }
+        confirmRef.current?.focus();
+        return;
+
+      case "Home":
+      case "End":
+      case "PageUp":
+      case "PageDown":
+      case "ArrowUp":
+      case "ArrowDown":
+        // Prevents caret movement on keyboard strokes.
+        e.preventDefault();
+        return;
     }
   }
 
@@ -69,41 +115,41 @@ export default function TwoStepAuthCode(
           console.log(values);
         }}
       >
-        {({setFieldValue}) => (
-          <Form className={styles.formWrapper}>
-            <div className={styles.codeWrapper}>
-              <div className={styles.inputs}>
-                {
-                  Object.keys(initialValues).map((key: string, index: number) => (
-                    <SingleCharInput
-                      autoFocus={true}
-                      tabIndex={index + 1}
-                      ref={inputEl => {
-                        if (inputEl) {
-                          codeRefs.current[index] = inputEl;
-                        }
-                      }}
-                      onKeyDown={e => handleKeydown(e, index, setFieldValue)}
-                      key={index}
-                      name={key}
-                    />
-                  ))
-                }
-              </div>
-              <Button
-                type={"button"}
-                tabIndex={0}
-                className={styles.resendCodeBtn}
-                buttonType={"tertiary"}
-                colorTheme={"secondary"}
-              >resend code
-              </Button>
+        <Form className={styles.formWrapper}>
+          <div className={styles.codeWrapper}>
+            <div className={styles.inputs}>
+              {
+                Object.keys(initialValues).map((key: string, index: number) => (
+                  <SingleCharInput
+                    autoFocus={true}
+                    tabIndex={index + 1}
+                    ref={inputEl => {
+                      if (inputEl) {
+                        codeRefs.current[index] = inputEl;
+                      }
+                    }}
+                    onKeyDown={e => handleKeydown(e, index)}
+                    onClick={() => handleClick(index)}
+                    onChange={(e) => {handleChange(e, index)}}
+                    key={index}
+                    name={key}
+                  />
+                ))
+              }
             </div>
-            <div className={styles.actions}>
-              <Button tabIndex={length} type={"submit"} buttonType={"primary"}>Confirm</Button>
-            </div>
-          </Form>
-        )}
+            <Button
+              type={"button"}
+              tabIndex={0}
+              className={styles.resendCodeBtn}
+              buttonType={"tertiary"}
+              colorTheme={"secondary"}
+            >resend code
+            </Button>
+          </div>
+          <div className={styles.actions}>
+            <Button ref={confirmRef} tabIndex={length} type={"submit"} buttonType={"primary"}>Confirm</Button>
+          </div>
+        </Form>
       </Formik>
     </div>
   );

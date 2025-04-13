@@ -11,7 +11,7 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Home() {
   return (
-    <div className={"flex justify-center items-center h-dvh"}>
+    <div className={"centeredWrapper"}>
       <TwoStepAuthCode/>
     </div>
   );

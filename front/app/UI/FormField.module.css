@@ -15,5 +15,5 @@
 }
 
 .wrapper input::placeholder {
-  color: var(--color-white-500);
+  color: var(--color-gray-500);
 }
