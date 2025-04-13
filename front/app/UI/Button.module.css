@@ -1,10 +1,15 @@
 .wrapper {
+  all: unset;
   cursor: pointer;
   display: block;
   width: min-content;
   text-wrap: nowrap;
   font-style: inherit;
   font-size: 0.75em;
+
+  &:disabled {
+    cursor: unset;
+  }
 }
 
 .primary {
@@ -34,25 +39,32 @@
   background-color: var(--color-teal-800);
   color: var(--color-teal-000);
   border-color: var(--color-teal-700);
+
+  &:disabled {
+    transition: background-color 1s, border 1s;
+    background-color: var(--color-gray-300);
+    color: var(--color-gray-500);
+    border-color: var(--color-gray-400);
+  }
 }
 
 @media (hover:hover) {
-  .primary.primaryColor:hover:not(:active) {
+  .primary.primaryColor:hover:not(:active, :disabled) {
     background-color: var(--color-teal-900);
     border-color: var(--color-teal-900);
   }
 }
 
 .tertiary.primaryColor {
-  color: var(--color-white-700);
+  color: var(--color-gray-700);
 }
 
 .tertiary.secondaryColor {
-  color: var(--color-white-500);
+  color: var(--color-gray-500);
 }
 
 @media (hover:hover) {
-  .tertiary.secondaryColor:hover:not(:active) {
-    color: var(--color-white-700);
+  .tertiary.secondaryColor:hover:not(:active, :disabled) {
+    color: var(--color-gray-700);
   }
 }

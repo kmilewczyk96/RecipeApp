@@ -6,7 +6,7 @@ import RegisterForm from "~/forms/auth/RegisterForm";
 
 export default function Register(): ReactElement {
   return (
-    <div className={"flex justify-center items-center h-dvh"}>
+    <div className={"centeredWrapper"}>
       <AuthForm authType={"register"}>
         <RegisterForm/>
       </AuthForm>

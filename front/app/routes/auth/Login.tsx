@@ -6,7 +6,7 @@ import LoginForm from "~/forms/auth/LoginForm";
 
 export default function Login(): ReactElement {
   return (
-    <div className={"flex justify-center items-center h-dvh"}>
+    <div className={"centeredWrapper"}>
       <AuthForm authType={"login"}>
         <LoginForm/>
       </AuthForm>
