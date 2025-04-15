@@ -6,8 +6,9 @@ import {
   type ReactElement,
   useRef,
 } from "react";
-import {Form, Formik} from "formik";
+import {type FormikValues, Form, Formik, type FormikErrors} from "formik";
 
+import validationErrorMessages from "~/forms/validation-schemas/validationErrorMessages";
 import SingleCharInput from "~/UI/SingleCharInput";
 import Button from "~/UI/Button";
 
@@ -100,6 +101,17 @@ export default function TwoStepAuthCode(
     }
   }
 
+  function handleValidation(values: FormikValues): FormikErrors<any> {
+    const errors: {[k: string]: string} = {};
+    Object.keys(values).forEach(key => {
+      if (!values[key]) {
+        errors[key] = validationErrorMessages.required;
+      }
+    });
+
+    return errors;
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.headerWrapper}>
@@ -111,6 +123,7 @@ export default function TwoStepAuthCode(
       </div>
       <Formik
         initialValues={initialValues}
+        validate={(values) => handleValidation(values)}
         onSubmit={(values) => {
           console.log(values);
         }}
@@ -121,7 +134,6 @@ export default function TwoStepAuthCode(
               {
                 Object.keys(initialValues).map((key: string, index: number) => (
                   <SingleCharInput
-                    autoFocus={true}
                     tabIndex={index + 1}
                     ref={inputEl => {
                       if (inputEl) {

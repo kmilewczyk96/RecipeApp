@@ -1,5 +1,4 @@
 import type { Route } from "./+types/home";
-import TwoStepAuthCode from "~/forms/auth/TwoStepAuthCode";
 
 
 export function meta({}: Route.MetaArgs) {
@@ -12,7 +11,6 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
   return (
     <div className={"centeredWrapper"}>
-      <TwoStepAuthCode/>
     </div>
   );
 }

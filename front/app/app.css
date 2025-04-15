@@ -65,6 +65,28 @@ svg {
   --color-teal-700: #0ca678;
   --color-teal-800: #099268;
   --color-teal-900: #087f5b;
+
+  --color-red-000: #fff5f5;
+  --color-red-100: #ffe3e3;
+  --color-red-200: #ffc9c9;
+  --color-red-300: #ffa8a8;
+  --color-red-400: #ff8787;
+  --color-red-500: #ff6b6b;
+  --color-red-600: #fa5252;
+  --color-red-700: #f03e3e;
+  --color-red-800: #e03131;
+  --color-red-900: #c92a2a;
+
+  --color-blue-000: #e7f5ff;
+  --color-blue-100: #d0ebff;
+  --color-blue-200: #a5d8ff;
+  --color-blue-300: #74c0fc;
+  --color-blue-400: #4dabf7;
+  --color-blue-500: #339af0;
+  --color-blue-600: #228be6;
+  --color-blue-700: #1c7ed6;
+  --color-blue-800: #1971c2;
+  --color-blue-900: #1864ab;
 }
 
 .centeredWrapper {
@@ -85,6 +107,7 @@ svg {
 input,
 select,
 textarea {
+  line-height: 1.15;
   font-style: inherit;
   font-size: inherit;
   outline: none!important;
@@ -95,8 +118,8 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  border: 1px solid transparent;
-  box-shadow: 0 0 3px 1px var(--color-teal-800);
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--color-blue-500);
 }
 
 /* Typography ////////////////////////////////////////////////////////////////////////////////////////////////////////*/

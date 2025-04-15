@@ -13,13 +13,13 @@ export default function FormField({label, ...props}: IProps): ReactElement {
   const hasError = meta.error && meta.touched;
   
   return (
-    <div className={styles.wrapper}>
+    <div className={[styles.wrapper, hasError && styles.error].join(" ")}>
       {label && <label htmlFor={props.name || props.id}>{label}</label>}
       <input
         {...field}
         {...props}
       />
-      {hasError && <span className={""}>{meta.error}</span>}
+      {hasError && <span className={styles.errorMessage}>{meta.error}</span>}
     </div>
   );
 }

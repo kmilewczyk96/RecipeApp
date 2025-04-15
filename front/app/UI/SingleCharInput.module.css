@@ -1,5 +1,6 @@
 .base {
   width: 2ch;
+  aspect-ratio: 3/4;
   font-family: "Righteous", "sans-serif";
   font-size: 1.5em;
   cursor: pointer;
@@ -13,4 +14,14 @@
   &::selection {
     background-color: transparent;
   }
+}
+
+.error {
+  background-color: var(--color-red-000);
+  border-color: var(--color-red-900);
+}
+
+.error:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--color-red-900);
 }
