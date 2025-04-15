@@ -27,6 +27,7 @@
 
 .error input {
   background-color: var(--color-red-000);
+  border-color: var(--color-red-900);
   color: var(--color-red-900);
 }
 

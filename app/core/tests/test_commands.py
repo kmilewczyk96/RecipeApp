@@ -2,7 +2,7 @@ from django.core.management import call_command
 from django.db.utils import OperationalError
 from django.test import SimpleTestCase
 
-from psycopg2 import OperationalError as PsycoError
+from psycopg import OperationalError as PsycoError
 
 from unittest.mock import patch
 
