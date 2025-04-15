@@ -1,5 +1,6 @@
 .base {
   width: 2ch;
+  aspect-ratio: 3/4;
   font-family: "Righteous", "sans-serif";
   font-size: 1.5em;
   cursor: pointer;

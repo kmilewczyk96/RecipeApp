@@ -1,11 +1,12 @@
 .wrapper {
-  all: unset;
   cursor: pointer;
   display: block;
   width: min-content;
   text-wrap: nowrap;
   font-style: inherit;
   font-size: 0.75em;
+  background-color: transparent;
+  border: none;
 
   &:disabled {
     cursor: unset;

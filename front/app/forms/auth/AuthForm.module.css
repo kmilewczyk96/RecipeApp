@@ -37,7 +37,7 @@
 }
 
 .wrapper hr {
-  border-color: var(--color-gray-700);
+  border-color: var(--color-gray-500);
 }
 
 .swapAuthWrapper {

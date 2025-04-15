@@ -8,9 +8,13 @@ import type {ReactElement} from "react";
 
 import Button from "~/UI/Button";
 import FormField from "~/UI/FormField";
+import useModal from "~/hooks/useModal";
+import TwoStepAuthCode from "~/forms/auth/TwoStepAuthCode";
 
 
 export default function RegisterForm(): ReactElement {
+  const {setModalChildren} = useModal();
+
   return (
     <Formik
       initialValues={{
@@ -19,7 +23,9 @@ export default function RegisterForm(): ReactElement {
         password: "",
         passwordConfirmation: "",
     }}
-      onSubmit={() => {}}
+      onSubmit={(values) => {
+        setModalChildren(<TwoStepAuthCode email={values.email}/>)
+      }}
     >
       <Form className={styles.formWrapper}>
         <div className={styles.inputs}>

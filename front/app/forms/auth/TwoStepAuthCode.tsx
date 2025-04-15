@@ -121,7 +121,6 @@ export default function TwoStepAuthCode(
               {
                 Object.keys(initialValues).map((key: string, index: number) => (
                   <SingleCharInput
-                    autoFocus={true}
                     tabIndex={index + 1}
                     ref={inputEl => {
                       if (inputEl) {
