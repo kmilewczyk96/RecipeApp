@@ -6,6 +6,7 @@ import {
 } from "formik";
 import type {ReactElement} from "react";
 
+import loginFormValidationSchema from "~/forms/validation-schemas/loginFormValidationSchema";
 import Button from "~/UI/Button";
 import FormField from "~/UI/FormField";
 
@@ -14,6 +15,7 @@ export default function LoginForm(): ReactElement {
   return (
     <Formik
       initialValues={{email: "", password: ""}}
+      validationSchema={loginFormValidationSchema}
       onSubmit={() => {}}
     >
       <Form className={styles.formWrapper}>

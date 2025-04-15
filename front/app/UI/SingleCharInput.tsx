@@ -7,7 +7,7 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {}
 
 const SingleCharInput = forwardRef<HTMLInputElement, IProps>(
   ({...props}: IProps, ref: ForwardedRef<HTMLInputElement>): ReactElement => {
-    const [field] = useField(props);
+    const [field, meta] = useField(props);
 
     return (
       <input
@@ -18,10 +18,10 @@ const SingleCharInput = forwardRef<HTMLInputElement, IProps>(
         {...field}
         {...props}
         onChange={e => {
-          field.onChange(e);
           props?.onChange && props.onChange(e);
+          field.onChange(e);
         }}
-        className={[props.className, styles.base].join(" ")}
+        className={[props.className, styles.base, meta.error && meta.touched && styles.error].join(" ")}
       />
     );
   }

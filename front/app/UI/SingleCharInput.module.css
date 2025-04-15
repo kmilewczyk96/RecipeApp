@@ -15,3 +15,13 @@
     background-color: transparent;
   }
 }
+
+.error {
+  background-color: var(--color-red-000);
+  border-color: var(--color-red-900);
+}
+
+.error:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--color-red-900);
+}

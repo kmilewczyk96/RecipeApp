@@ -6,10 +6,11 @@ import {
 } from "formik";
 import type {ReactElement} from "react";
 
+import TwoStepAuthCode from "~/forms/auth/TwoStepAuthCode";
+import registrationFormValidationSchema from "~/forms/validation-schemas/registrationFormValidationSchema";
+import useModal from "~/hooks/useModal";
 import Button from "~/UI/Button";
 import FormField from "~/UI/FormField";
-import useModal from "~/hooks/useModal";
-import TwoStepAuthCode from "~/forms/auth/TwoStepAuthCode";
 
 
 export default function RegisterForm(): ReactElement {
@@ -22,7 +23,8 @@ export default function RegisterForm(): ReactElement {
         username: "",
         password: "",
         passwordConfirmation: "",
-    }}
+      }}
+      validationSchema={registrationFormValidationSchema}
       onSubmit={(values) => {
         setModalChildren(<TwoStepAuthCode email={values.email}/>)
       }}
