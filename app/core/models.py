@@ -10,6 +10,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from core.utils.verification_service import VerificationService
+
 
 class UserManager(BaseUserManager):
     """Custom User Manager model."""
@@ -18,10 +20,16 @@ class UserManager(BaseUserManager):
         """Create, save and return a new user."""
         if not email:
             raise ValueError('User must have an email address.')
+
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
-        user.save(using=self._db)
 
+        is_validated = extra_fields.get('is_validated', False)
+        if not is_validated:
+            verification_service = VerificationService(user)
+            verification_service.set_verification_code()
+
+        user.save(using=self._db)
         return user
 
     def create_superuser(self, email: str, password=None):
@@ -31,6 +39,7 @@ class UserManager(BaseUserManager):
             password=password,
             is_staff=True,
             is_superuser=True,
+            is_validated=True,
         )
 
         return su
@@ -44,6 +53,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_validated = models.BooleanField(default=False)
+    verification_code = models.CharField(max_length=6, blank=True, default="")
+    verification_code_timestamp = models.DateTimeField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
@@ -80,6 +92,8 @@ class Recipe(models.Model):
         ('soup', 'Soup'),
         ('other', 'Other'),
     ]
+
+    objects: models.Manager
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(
@@ -136,6 +150,9 @@ class Recipe(models.Model):
 
 class Tag(models.Model):
     """Tag model."""
+
+    objects: models.Manager
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, unique=True)
 
@@ -145,6 +162,9 @@ class Tag(models.Model):
 
 class Ingredient(models.Model):
     """Ingredient model."""
+
+    objects: models.Manager
+
     CATEGORIES = [
         ('bread', 'Bread'),
         ('eggs_and_dairy', 'Eggs & Dairy'),
@@ -201,6 +221,9 @@ class Ingredient(models.Model):
 
 class RecipeIngredient(models.Model):
     """Recipe Ingredient model."""
+
+    objects: models.Manager
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     recipe = models.ForeignKey(to=Recipe, on_delete=models.CASCADE, related_name='r_ingredients')
     ingredient = models.ForeignKey(to=Ingredient, on_delete=models.CASCADE)

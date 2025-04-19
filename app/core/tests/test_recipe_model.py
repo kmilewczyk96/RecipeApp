@@ -14,7 +14,8 @@ def create_ingredient(**params):
     return models.Ingredient.objects.create(**INGREDIENT)
 
 
-def create_recipe_ingredient(recipe, ingredient, **params):
+def create_recipe_ingredient(recipe: models.Recipe, ingredient: models.Ingredient,
+                             **params: dict) -> models.RecipeIngredient:
     RECIPE_INGREDIENT = {
         'recipe': recipe,
         'ingredient': ingredient,
