@@ -30,7 +30,7 @@ class VerificationService:
         self.user.verification_code = ''
         self.user.save(update_fields=['verification_code'])
 
-    def check_verification_code(self, code: str) -> bool:
+    def check_verification_code(self, code: str) -> None:
         """Checks if provided code matches verification code and returns a boolean value."""
         if not self.user.verification_code or not self.user.verification_code_timestamp:
             raise VerificationCodeMissing('Verification code is missing for this User.')
@@ -42,7 +42,7 @@ class VerificationService:
         is_valid = self.user.verification_code == code
         if is_valid:
             self.clear_verification_code()
-            return True
+            return None
 
         raise VerificationCodeInvalid
 
