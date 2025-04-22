@@ -3,6 +3,7 @@ Views for the User API
 """
 from django.contrib.auth import get_user_model
 
+from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -14,8 +15,16 @@ from rest_framework.generics import (
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
+from rest_framework.views import APIView
 
+from core.exceptions import RateLimitExceeded
 from core.permissions import AuthenticatedOrPostOnly
+from core.utils.verification_exceptions import (
+    VerificationCodeExpired,
+    VerificationCodeInvalid,
+    VerificationCodeMissing,
+)
+from core.utils.verification_service import VerificationService
 from user import serializers
 
 
@@ -60,3 +69,27 @@ class CreateTokenView(ObtainAuthToken):
             'token': token.key,
             'userID': user.id
         })
+
+
+class VerifyUserView(APIView):
+    """Verifies User if provided correct credentials."""
+    def post(self, request):
+        try:
+            vs = VerificationService(request.user)
+            vs.check_rate_limit()
+            vs.check_verification_code(request.data.get('verification_code'))
+        except (VerificationCodeExpired, VerificationCodeInvalid, VerificationCodeMissing) as error:
+            return Response(
+                data={'msg': error},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except RateLimitExceeded as error:
+            return Response(
+                data={'msg': error},
+                status=status.HTTP_429_TOO_MANY_REQUESTS
+            )
+
+        return Response(
+            data={'message': 'Verification successful.'},
+            status=status.HTTP_200_OK
+        )
