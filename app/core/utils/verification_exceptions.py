@@ -6,6 +6,11 @@ class VerificationError(APIError):
     pass
 
 
+class EmailNotVerified(VerificationError):
+    """Raised when trying to log in with an unverified account."""
+    pass
+
+
 class VerificationCodeExpired(VerificationError):
     """Raised when verification code has expired."""
     pass

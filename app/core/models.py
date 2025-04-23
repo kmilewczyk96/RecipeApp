@@ -24,8 +24,8 @@ class UserManager(BaseUserManager):
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
 
-        is_validated = extra_fields.get('is_validated', False)
-        if not is_validated:
+        is_verified = extra_fields.get('is_verified', False)
+        if not is_verified:
             verification_service = VerificationService(user)
             verification_service.set_verification_code()
 
@@ -39,7 +39,7 @@ class UserManager(BaseUserManager):
             password=password,
             is_staff=True,
             is_superuser=True,
-            is_validated=True,
+            is_verified=True,
         )
 
         return su
@@ -53,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    is_validated = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
     verification_code = models.CharField(max_length=6, blank=True, default="")
     verification_code_timestamp = models.DateTimeField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)

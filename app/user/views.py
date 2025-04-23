@@ -20,6 +20,7 @@ from rest_framework.views import APIView
 from core.exceptions import RateLimitExceeded
 from core.permissions import AuthenticatedOrPostOnly
 from core.utils.verification_exceptions import (
+    EmailNotVerified,
     VerificationCodeExpired,
     VerificationCodeInvalid,
     VerificationCodeMissing,
@@ -61,10 +62,17 @@ class CreateTokenView(ObtainAuthToken):
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            user = serializer.validated_data['user']
+            token, created = Token.objects.get_or_create(user=user)
+        except EmailNotVerified as error:
+            return Response(
+                data={'msg': str(error)},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
         return Response({
             'token': token.key,
             'userID': user.id

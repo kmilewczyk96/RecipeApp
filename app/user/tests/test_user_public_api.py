@@ -14,9 +14,9 @@ def get_detail_url(user_ID):
     return reverse('user:details', args=[user_ID])
 
 
-def create_user(**params):
+def create_verified_user(**params):
     """Create and return a new user."""
-    return get_user_model().objects.create_user(**params)
+    return get_user_model().objects.create_user(**params, is_verified=True)
 
 
 class UserPublicAPITests(TestCase):
@@ -45,7 +45,7 @@ class UserPublicAPITests(TestCase):
             'email': 'test@example.com',
             'password': 'some_password123',
         }
-        create_user(**payload)
+        create_verified_user(**payload)
         res = self.client.post(path=USER_URL, data=payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
@@ -68,7 +68,7 @@ class UserPublicAPITests(TestCase):
             'email': 'test@example.com',
             'password': 'some_password123',
         }
-        create_user(**params)
+        create_verified_user(**params)
 
         payload = {
             'email': params['email'],
@@ -79,13 +79,26 @@ class UserPublicAPITests(TestCase):
         self.assertIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
+    def test_deny_token_for_unverified_user(self):
+        """Test if an error is thrown when trying to log in without prior email verification."""
+        payload = {
+            'email': 'unverified@example.com',
+            'password': 'Password123',
+        }
+
+        get_user_model().objects.create_user(**payload)
+        res = self.client.post(path=TOKEN_URL, data=payload)
+
+        self.assertNotIn('token', res.data)
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+
     def test_deny_token_for_user(self):
-        """Test if error is thrown upon providing invalid credentials."""
+        """Test if an error is thrown upon providing invalid credentials."""
         params = {
             'email': 'test@example.com',
             'password': 'some_password123',
         }
-        create_user(**params)
+        create_verified_user(**params)
 
         payload = {
             'email': params['email'],

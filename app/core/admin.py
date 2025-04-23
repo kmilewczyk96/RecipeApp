@@ -15,6 +15,7 @@ class UserAdmin(BaseUserAdmin):
             {
                 'fields': (
                     'email',
+                    'name',
                     'password',
                 )
             }
@@ -26,6 +27,7 @@ class UserAdmin(BaseUserAdmin):
                     'is_active',
                     'is_staff',
                     'is_superuser',
+                    'is_verified',
                 )
             }
         ),
@@ -60,6 +62,7 @@ class UserAdmin(BaseUserAdmin):
                     'is_active',
                     'is_staff',
                     'is_superuser',
+                    'is_verified',
                     'created',
                     'modified',
                 ),

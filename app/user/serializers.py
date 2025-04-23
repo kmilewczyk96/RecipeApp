@@ -6,6 +6,8 @@ from django.utils.translation import gettext as _
 
 from rest_framework import serializers
 
+from core.utils.verification_exceptions import EmailNotVerified
+
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the User object."""
@@ -63,6 +65,9 @@ class AuthTokenSerializer(serializers.Serializer):
         if not user:
             msg = _('Unable to authenticate with provided credentials.')
             raise serializers.ValidationError(detail=msg, code='authorization')
+
+        if not user.is_verified:
+            raise EmailNotVerified(_('Please verify your email before logging in.'))
 
         attrs['user'] = user
         return attrs
