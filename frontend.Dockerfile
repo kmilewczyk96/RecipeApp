@@ -1,8 +1,8 @@
 FROM node:20-alpine3.21
 LABEL maintainer="kmilewczyk"
 
-COPY ./frontend /frontend
-WORKDIR /frontend
+COPY ./front /front
+WORKDIR /front
 EXPOSE 5173
 
 RUN npm install

@@ -208,7 +208,7 @@ class Ingredient(models.Model):
         if self.alt_to_unit_conversion is not None and self.alt_to_unit_conversion <= 0:
             raise ValidationError('Alt to unit conversion must be greater than 0!')
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    def save(self, *args, force_insert=False, force_update=False, using=None, update_fields=None):
         self.full_clean()
         super().save()
 
@@ -229,7 +229,7 @@ class RecipeIngredient(models.Model):
     ingredient = models.ForeignKey(to=Ingredient, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)])
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    def save(self, *args, force_insert=False, force_update=False, using=None, update_fields=None):
         self.full_clean()
         super().save()
 
