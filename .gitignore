@@ -187,3 +187,27 @@ cython_debug/
 /frontend/*.njsproj
 /frontend/*.sln
 /frontend/*.sw?
+
+/front/logs
+/front/*.log
+/front/npm-debug.log*
+/front/yarn-debug.log*
+/front/yarn-error.log*
+/front/pnpm-debug.log*
+/front/lerna-debug.log*
+
+/front/node_modules
+/front/dist
+/front/dist-ssr
+/front/*.local
+
+/front/# Editor directories and files
+/front/.vscode/*
+/front/!.vscode/extensions.json
+/front/.idea
+/front/.DS_Store
+/front/*.suo
+/front/*.ntvs*
+/front/*.njsproj
+/front/*.sln
+/front/*.sw?
