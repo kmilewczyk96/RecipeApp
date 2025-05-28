@@ -1,0 +1,142 @@
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+* {
+  overflow-wrap: break-word;
+  margin: 0;
+  padding: 0;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  min-height: 100vh;
+  font-size: 2.4rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+:root {
+  font-family: Inter, "sans-serif";
+
+  color: var(--color-gray-700);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url("assets/backgrounds/light_mode_main.svg");
+  background-attachment: fixed;
+  min-height: 100vh;
+  background-size: 300px;
+
+  --color-gray-000: #f8f9fa;
+  --color-gray-100: #f1f3f5;
+  --color-gray-200: #e9ecef;
+  --color-gray-300: #dee2e6;
+  --color-gray-400: #ced4da;
+  --color-gray-500: #adb5bd;
+  --color-gray-600: #868e96;
+  --color-gray-700: #495057;
+  --color-gray-800: #343a40;
+  --color-gray-900: #212529;
+
+  --color-teal-000: #e6fcf5;
+  --color-teal-100: #c3fae8;
+  --color-teal-200: #96f2d7;
+  --color-teal-300: #63e6be;
+  --color-teal-400: #38d9a9;
+  --color-teal-500: #20c997;
+  --color-teal-600: #12b886;
+  --color-teal-700: #0ca678;
+  --color-teal-800: #099268;
+  --color-teal-900: #087f5b;
+
+  --color-red-000: #fff5f5;
+  --color-red-100: #ffe3e3;
+  --color-red-200: #ffc9c9;
+  --color-red-300: #ffa8a8;
+  --color-red-400: #ff8787;
+  --color-red-500: #ff6b6b;
+  --color-red-600: #fa5252;
+  --color-red-700: #f03e3e;
+  --color-red-800: #e03131;
+  --color-red-900: #c92a2a;
+
+  --color-blue-000: #e7f5ff;
+  --color-blue-100: #d0ebff;
+  --color-blue-200: #a5d8ff;
+  --color-blue-300: #74c0fc;
+  --color-blue-400: #4dabf7;
+  --color-blue-500: #339af0;
+  --color-blue-600: #228be6;
+  --color-blue-700: #1c7ed6;
+  --color-blue-800: #1971c2;
+  --color-blue-900: #1864ab;
+}
+
+.centeredWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100dvh;
+}
+
+/* Base HTML elements styling ////////////////////////////////////////////////////////////////////////////////////////*/
+@supports (-moz-appearance: none) {
+  input[type="password"] {
+    /* Prevent super huge dots in password type input fields on Firefox browser. */
+    font-family: "Creative", system-ui;
+  }
+}
+
+input,
+select,
+textarea {
+  line-height: 1.15;
+  font-style: inherit;
+  font-size: inherit;
+  outline: none!important;
+  border: 1px solid var(--color-gray-500);
+  border-radius: 9px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--color-blue-500);
+}
+
+/* Typography ////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+  font-family: "Righteous", "sans-serif";
+  font-weight: 400;
+  color: var(--color-gray-900);
+}
+
+em {
+  all: unset;
+  color: var(--color-teal-700);
+}
