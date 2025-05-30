@@ -72,7 +72,7 @@ export default function TwoStepAuthCode(
         return;
 
       case "Backspace":
-        // Changes to Shift + Tab behaviour if current index is an empty input.
+        // Changes to Shift + Tab behaviour if the current index is an empty input.
         if (index > 0 && codeRefs.current[index]?.value === "") {
           e.preventDefault();
           codeRefs.current[index - 1]?.select();

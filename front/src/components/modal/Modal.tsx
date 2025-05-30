@@ -1,14 +1,13 @@
-import {useEffect, useRef} from "react";
-import {createPortal} from "react-dom";
+import { useEffect, useRef } from "react";
 
 import styles from "./Modal.module.css";
 
-import type {ReactPortal, RefObject} from "react";
+import type {ReactElement, RefObject} from "react";
 
 import useModal from "@/hooks/useModal";
 
 
-export default function Modal(): ReactPortal {
+export default function Modal(): ReactElement {
   const dialog: RefObject<HTMLDialogElement | null> = useRef(null);
   const {content, clear} = useModal();
 
@@ -27,16 +26,13 @@ export default function Modal(): ReactPortal {
 
 
   return (
-    createPortal((
-      <dialog
-        ref={dialog}
-        onClose={clear}
-        className={styles.wrapper}
-      >
-        {content}
-      </dialog>
-      ),
-      // @ts-ignore
-      document.getElementById("modal"))
+    <dialog
+      id={"modal"}
+      ref={dialog}
+      onClose={clear}
+      className={styles.wrapper}
+    >
+      {content}
+    </dialog>
   );
 }

@@ -58,7 +58,7 @@ export default function RegisterForm(): ReactElement {
           />
         </div>
         <div className={styles.actions}>
-          <Button buttonType={"primary"}>Register</Button>
+          <Button buttonType={"primary"} type={"submit"}>Register</Button>
         </div>
       </Form>
     </Formik>

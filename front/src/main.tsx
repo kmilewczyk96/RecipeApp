@@ -9,6 +9,8 @@ import { routeTree } from './routeTree.gen'
 
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
+import Modal from "@/components/modal/Modal.tsx";
+import {ModalContextProvider} from "@/store/contexts/ModalContext.tsx";
 
 // Create a new router instance
 const router = createRouter({
@@ -36,7 +38,12 @@ if (rootElement && !rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <TanStackQueryProvider.Provider>
-        <RouterProvider router={router} />
+        <ModalContextProvider>
+          <>
+            <Modal/>
+            <RouterProvider router={router} />
+          </>
+        </ModalContextProvider>
       </TanStackQueryProvider.Provider>
     </StrictMode>,
   )
