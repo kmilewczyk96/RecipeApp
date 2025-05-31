@@ -29,11 +29,13 @@ export default function RegisterForm(): ReactElement {
         passwordConfirmation: "",
       }}
       validationSchema={registrationFormValidationSchema}
-      onSubmit={(values): void => {
-        // TODO: there should be a request to backend that will validate form data and attempt to create a new user.
-        registerMutation.mutate(values);
-        // TODO: handle potential errors sent from backend (ex. email has been already taken).
-        setModalChildren(<TwoStepAuthCode email={values.email}/>)
+      onSubmit={async (values, {setErrors}): Promise<void> => {
+        try {
+          await registerMutation.mutateAsync(values);
+          setModalChildren(<TwoStepAuthCode email={values.email}/>);
+        } catch (error: any) {
+          setErrors(error.response?.data);
+        }
       }}
     >
       <Form className={styles.formWrapper}>

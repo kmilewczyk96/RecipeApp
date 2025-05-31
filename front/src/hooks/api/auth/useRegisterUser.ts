@@ -8,6 +8,13 @@ interface IRegistrationFormData {
   passwordConfirmation: string,
 }
 
+interface IRegistrationFormErrors {
+  email?: Array<string>,
+  username?: Array<string>,
+  password?: Array<string>,
+  passwordConfirmation?: Array<string>,
+}
+
 async function registerUser(formData: IRegistrationFormData): Promise<void> {
   const response = await fetch("http://localhost:8000/api/user/users/", {
     method: "POST",
@@ -18,10 +25,16 @@ async function registerUser(formData: IRegistrationFormData): Promise<void> {
   });
 
   if (!response.ok) {
-    throw new Error("Registration failed.");
+    const errorData: IRegistrationFormErrors = await response.json();
+    console.log(errorData);
+    throw {
+      response: {
+        data: errorData
+      }
+    }
   }
 
-  return response.json();
+  return await response.json();
 }
 
 export default function useRegisterUser() {

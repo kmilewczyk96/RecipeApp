@@ -13,12 +13,6 @@ class UserSerializer(serializers.ModelSerializer):
     """Serializer for the User object."""
     passwordConfirmation = serializers.CharField(write_only=True)
 
-    def validate(self, attrs: dict):
-        if attrs.get('password') != attrs.pop('passwordConfirmation', None):
-            raise ValueError('Password and password confirmation are not the same!')
-
-        return attrs
-
     class Meta:
         model = get_user_model()
         fields = ['id', 'email', 'password', 'passwordConfirmation', 'username']
@@ -41,6 +35,14 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
+
+    def validate(self, attrs: dict):
+        if attrs.get('password') != attrs.pop('passwordConfirmation', None):
+            raise serializers.ValidationError({
+                'passwordConfirmation': ['Password are not the same!']
+            })
+
+        return attrs
 
 
 class UserStrictSerializer(serializers.ModelSerializer):
