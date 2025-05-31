@@ -25,7 +25,7 @@ class UserPrivateAPITests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = create_user(
-            name='Test User',
+            username='Test User',
             email='test@example.com',
             password='some_password123',
         )
@@ -34,13 +34,14 @@ class UserPrivateAPITests(TestCase):
     def test_update_user_profile(self):
         """Test if updating the User data if successful."""
         payload = {
-            'name': 'My New Name',
+            'username': 'My New Name',
             'password': 'updated_password123',
+            'passwordConfirmation': 'updated_password123',
         }
         res = self.client.patch(path=USER_ME, data=payload)
 
         self.user.refresh_from_db()
-        self.assertEqual(self.user.name, payload['name'])
+        self.assertEqual(self.user.username, payload['username'])
         self.assertTrue(self.user.check_password(payload['password']))
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
@@ -56,8 +57,9 @@ class UserPrivateAPITests(TestCase):
         """User can modify his profile or delete it permanently."""
         payload = {
             'email': 'other_email@example.com',
-            'name': 'Some name',
-            'password': 'SomeNewPassword123'
+            'username': 'Some name',
+            'password': 'SomeNewPassword123',
+            'passwordConfirmation': 'SomeNewPassword123',
         }
         responses = [
             self.client.patch(USER_ME, payload),

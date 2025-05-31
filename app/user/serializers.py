@@ -11,20 +11,28 @@ from core.utils.verification_exceptions import EmailNotVerified
 
 class UserSerializer(serializers.ModelSerializer):
     """Serializer for the User object."""
+    passwordConfirmation = serializers.CharField(write_only=True)
+
+    def validate(self, attrs: dict):
+        if attrs.get('password') != attrs.pop('passwordConfirmation', None):
+            raise ValueError('Password and password confirmation are not the same!')
+
+        return attrs
 
     class Meta:
         model = get_user_model()
-        fields = ['id', 'email', 'password', 'name']
+        fields = ['id', 'email', 'password', 'passwordConfirmation', 'username']
+        read_only_fields = ['id']
         extra_kwargs = {
-            'password': {'write_only': True, 'min_length': 5}
+            'password': {'write_only': True, 'min_length': 5},
         }
 
-    def create(self, validated_data):
-        """Create and return a User with encrypted password."""
+    def create(self, validated_data: dict):
+        """Create and return a User with an encrypted password."""
         return get_user_model().objects.create_user(**validated_data)
 
     def update(self, instance: get_user_model(), validated_data: dict):
-        """Update and return a User with encrypted password."""
+        """Update and return a User with an encrypted password."""
         password = validated_data.pop('password', None)
         user = super().update(instance, validated_data)
 
@@ -40,7 +48,7 @@ class UserStrictSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ['id', 'name']
+        fields = ['id', 'username']
         read_only_fields = fields
 
 

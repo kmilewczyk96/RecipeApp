@@ -30,7 +30,8 @@ class UserPublicAPITests(TestCase):
         payload = {
             'email': 'user@example.com',
             'password': 'some_password123',
-            'name': 'John Doe',
+            'passwordConfirmation': 'some_password123',
+            'username': 'John Doe',
         }
         res = self.client.post(path=USER_URL, data=payload)
 
@@ -41,11 +42,17 @@ class UserPublicAPITests(TestCase):
 
     def test_create_user_exists(self):
         """Test if attempting to duplicate email fails."""
-        payload = {
+        params = {
             'email': 'test@example.com',
             'password': 'some_password123',
         }
-        create_verified_user(**payload)
+        create_verified_user(**params)
+
+        payload = {
+            'email': params['email'],
+            'password': 'some_password123',
+            'passwordConfirmation': 'some_password123',
+        }
         res = self.client.post(path=USER_URL, data=payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
@@ -54,7 +61,8 @@ class UserPublicAPITests(TestCase):
         """Test if attempting to set too short password fails."""
         payload = {
             'email': 'test@example.com',
-            'password': 'pass'
+            'password': 'pass',
+            'passwordConfirmation': 'pass',
         }
         res = self.client.post(path=USER_URL, data=payload)
 
@@ -73,6 +81,7 @@ class UserPublicAPITests(TestCase):
         payload = {
             'email': params['email'],
             'password': params['password'],
+            'passwordConfirmation': params['password'],
         }
         res = self.client.post(path=TOKEN_URL, data=payload)
 
@@ -81,12 +90,18 @@ class UserPublicAPITests(TestCase):
 
     def test_deny_token_for_unverified_user(self):
         """Test if an error is thrown when trying to log in without prior email verification."""
-        payload = {
+        params = {
             'email': 'unverified@example.com',
             'password': 'Password123',
         }
+        get_user_model().objects.create_user(**params)
 
-        get_user_model().objects.create_user(**payload)
+        payload = {
+            'email': 'unverified@example.com',
+            'password': 'Password123',
+            'passwordConfirmation': 'Password123',
+        }
+
         res = self.client.post(path=TOKEN_URL, data=payload)
 
         self.assertNotIn('token', res.data)
@@ -103,6 +118,7 @@ class UserPublicAPITests(TestCase):
         payload = {
             'email': params['email'],
             'password': 'different_password123',
+            'passwordConfirmation': 'different_password123',
         }
         res = self.client.post(path=TOKEN_URL, data=payload)
 

@@ -12,11 +12,13 @@ import registrationFormValidationSchema from "@/components/forms/validation-sche
 import Button from "@/components/UI/Button";
 import FormField from "@/components/UI/FormField";
 
-import useModal from "@/hooks/useModal";
+import useModal from "@/hooks/useModal.ts";
+import useRegisterUser from "@/hooks/api/auth/useRegisterUser.ts";
 
 
 export default function RegisterForm(): ReactElement {
   const {setModalChildren} = useModal();
+  const registerMutation = useRegisterUser();
 
   return (
     <Formik
@@ -27,7 +29,10 @@ export default function RegisterForm(): ReactElement {
         passwordConfirmation: "",
       }}
       validationSchema={registrationFormValidationSchema}
-      onSubmit={(values) => {
+      onSubmit={(values): void => {
+        // TODO: there should be a request to backend that will validate form data and attempt to create a new user.
+        registerMutation.mutate(values);
+        // TODO: handle potential errors sent from backend (ex. email has been already taken).
         setModalChildren(<TwoStepAuthCode email={values.email}/>)
       }}
     >

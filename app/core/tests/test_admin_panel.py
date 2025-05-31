@@ -20,7 +20,7 @@ class AdminPanelTests(TestCase):
         self.user = get_user_model().objects.create_user(
             email='user1@example.com',
             password='password123',
-            name='BaseUser001'
+            username='BaseUser001'
         )
 
     def test_users_list(self):
@@ -29,7 +29,7 @@ class AdminPanelTests(TestCase):
         res = self.client.get(url)
 
         self.assertContains(res, self.user.email),
-        self.assertContains(res, self.user.name)
+        self.assertContains(res, self.user.username)
 
     def test_edit_user_panel(self):
         """Test if Users can be edited."""

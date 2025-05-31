@@ -40,7 +40,7 @@ class RecipeModelTests(TestCase):
 
     def setUp(self):
         self.user = get_user_model().objects.create_user(
-            name='TestUser',
+            username='TestUser',
             email='test@example.com',
             password='some_password123'
         )

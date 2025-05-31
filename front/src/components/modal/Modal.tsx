@@ -4,7 +4,7 @@ import styles from "./Modal.module.css";
 
 import type {ReactElement, RefObject} from "react";
 
-import useModal from "@/hooks/useModal";
+import useModal from "@/hooks/useModal.ts";
 
 
 export default function Modal(): ReactElement {

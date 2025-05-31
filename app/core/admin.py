@@ -8,14 +8,14 @@ from django.utils.translation import gettext_lazy as _
 class UserAdmin(BaseUserAdmin):
     """Custom Admin Page for Users."""
     ordering = ['id']
-    list_display = ['email', 'name']
+    list_display = ['email', 'username']
     fieldsets = (
         (
             None,
             {
                 'fields': (
                     'email',
-                    'name',
+                    'username',
                     'password',
                 )
             }
@@ -58,7 +58,7 @@ class UserAdmin(BaseUserAdmin):
                     'email',
                     'password1',
                     'password2',
-                    'name',
+                    'username',
                     'is_active',
                     'is_staff',
                     'is_superuser',
