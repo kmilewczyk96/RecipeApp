@@ -1,4 +1,5 @@
 .wrapper {
+  position: relative;
   cursor: pointer;
   display: block;
   width: min-content;
@@ -67,5 +68,35 @@
 @media (hover:hover) {
   .tertiary.secondaryColor:hover:not(:active, :disabled) {
     color: var(--color-gray-700);
+  }
+}
+
+.fetching:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: inherit;
+}
+
+.fetching:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 2em;
+  height: 2em;
+  border: 0.25em solid transparent;
+  border-radius: 100%;
+  border-top-color: currentColor;
+  margin: auto;
+
+  animation: infinite fetching-spinner ease-in-out 1s;
+}
+
+@keyframes fetching-spinner {
+  0% {
+    rotate: 0;
+  }
+  100% {
+    rotate: 1turn;
   }
 }

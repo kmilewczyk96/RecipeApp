@@ -65,7 +65,13 @@ export default function RegisterForm(): ReactElement {
           />
         </div>
         <div className={styles.actions}>
-          <Button buttonType={"primary"} type={"submit"}>Register</Button>
+          <Button
+            buttonType={"primary"}
+            type={"submit"}
+            fetching={registerMutation.isPending}
+            disabled={registerMutation.isPending}
+          >Register
+          </Button>
         </div>
       </Form>
     </Formik>
