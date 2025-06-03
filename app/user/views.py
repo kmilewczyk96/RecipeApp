@@ -20,7 +20,6 @@ from rest_framework.views import APIView
 from core.exceptions import RateLimitExceeded
 from core.permissions import AuthenticatedOrPostOnly
 from core.utils.verification_exceptions import (
-    EmailNotVerified,
     VerificationCodeExpired,
     VerificationCodeInvalid,
     VerificationCodeMissing,
@@ -62,16 +61,10 @@ class CreateTokenView(ObtainAuthToken):
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
     def post(self, request, *args, **kwargs):
-        try:
-            serializer = self.get_serializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            user = serializer.validated_data['user']
-            token, created = Token.objects.get_or_create(user=user)
-        except EmailNotVerified as error:
-            return Response(
-                data={'msg': str(error)},
-                status=status.HTTP_403_FORBIDDEN,
-            )
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
 
         return Response({
             'token': token.key,
@@ -88,16 +81,16 @@ class VerifyUserView(APIView):
             vs.check_verification_code(request.data.get('verification_code'))
         except (VerificationCodeExpired, VerificationCodeInvalid, VerificationCodeMissing) as error:
             return Response(
-                data={'msg': error},
+                data={'msg': str(error)},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         except RateLimitExceeded as error:
             return Response(
-                data={'msg': error},
+                data={'msg': str(error)},
                 status=status.HTTP_429_TOO_MANY_REQUESTS
             )
 
         return Response(
-            data={'message': 'Verification successful.'},
+            data={'msg': 'Verification successful.'},
             status=status.HTTP_200_OK
         )

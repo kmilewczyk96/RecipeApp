@@ -23,7 +23,7 @@ class UserPublicAPITests(TestCase):
     """Test public features of the User API."""
 
     def setUp(self):
-        self.client = APIClient()
+        self.client: APIClient = APIClient()
 
     def test_create_user_success(self):
         """Test if creating new User with valid payload is successful."""
@@ -87,25 +87,6 @@ class UserPublicAPITests(TestCase):
 
         self.assertIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-
-    def test_deny_token_for_unverified_user(self):
-        """Test if an error is thrown when trying to log in without prior email verification."""
-        params = {
-            'email': 'unverified@example.com',
-            'password': 'Password123',
-        }
-        get_user_model().objects.create_user(**params)
-
-        payload = {
-            'email': 'unverified@example.com',
-            'password': 'Password123',
-            'passwordConfirmation': 'Password123',
-        }
-
-        res = self.client.post(path=TOKEN_URL, data=payload)
-
-        self.assertNotIn('token', res.data)
-        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_deny_token_for_user(self):
         """Test if an error is thrown upon providing invalid credentials."""

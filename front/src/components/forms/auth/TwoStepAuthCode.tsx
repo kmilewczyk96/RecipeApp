@@ -117,7 +117,7 @@ export default function TwoStepAuthCode(
       <div className={styles.headerWrapper}>
         <h3>{title}</h3>
         <p>
-          Please enter authentication code that we've sent to:<br/>
+          Please enter the authentication code that we've sent to:<br/>
           {email && <u>{email}</u>}
         </p>
       </div>

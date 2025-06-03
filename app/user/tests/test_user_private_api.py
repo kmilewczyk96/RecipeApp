@@ -6,8 +6,9 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 
-USER_URL = reverse('user:list-create')
 USER_ME = reverse('user:me')
+USER_URL = reverse('user:list-create')
+USER_VERIFY = reverse('user:verify-user')
 
 
 def get_detail_url(user_ID):
@@ -23,7 +24,7 @@ class UserPrivateAPITests(TestCase):
     """Test private features of the User API."""
 
     def setUp(self):
-        self.client = APIClient()
+        self.client: APIClient = APIClient()
         self.user = create_user(
             username='Test User',
             email='test@example.com',
@@ -70,3 +71,14 @@ class UserPrivateAPITests(TestCase):
 
         del_res = self.client.delete(USER_ME)
         self.assertEqual(del_res.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_verify_user_email(self):
+        """User can verify his email."""
+        verification_code = str(self.user.verification_code)
+        self.assertFalse(self.user.is_verified)
+
+        self.client.post(USER_VERIFY, data={
+            'verification_code': verification_code,
+        })
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.is_verified)

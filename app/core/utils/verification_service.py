@@ -23,12 +23,14 @@ class VerificationService:
     def set_verification_code(self) -> None:
         """Sets verification code for the User."""
         self.user.verification_code = str(randint(0, 999999)).zfill(6)
-        self.user.save(update_fields=['verification_code'])
+        self.user.verification_code_timestamp = timezone.now()
+        self.user.save(update_fields=['verification_code', 'verification_code_timestamp'])
 
     def clear_verification_code(self) -> None:
         """Clears verification code of the User."""
         self.user.verification_code = ''
-        self.user.save(update_fields=['verification_code'])
+        self.user.verification_code_timestamp = None
+        self.user.save(update_fields=['verification_code', 'verification_code_timestamp'])
 
     def check_verification_code(self, code: str) -> None:
         """Checks if provided code matches verification code and returns a boolean value."""
@@ -42,6 +44,8 @@ class VerificationService:
         is_valid = self.user.verification_code == code
         if is_valid:
             self.clear_verification_code()
+            self.user.is_verified = True
+            self.user.save(update_fields=['is_verified'])
             return None
 
         raise VerificationCodeInvalid

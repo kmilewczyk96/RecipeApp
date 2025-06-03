@@ -7,7 +7,7 @@
   background-color: var(--color-gray-000);
   border-radius: 9px;
   gap: 1.5em;
-  padding: 4em;
+  padding: 4em 3em;
 }
 
 .headerWrapper {
