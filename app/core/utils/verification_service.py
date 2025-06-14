@@ -9,7 +9,7 @@ from .verification_exceptions import (
     VerificationCodeInvalid,
     VerificationCodeMissing,
 )
-from ..exceptions import RateLimitExceeded
+from core.exceptions import RateLimitExceeded
 
 
 class VerificationService:
@@ -55,7 +55,7 @@ class VerificationService:
         cache_key = f'verification_attempts_of_{self.user.id}'
         attempts = cache.get(cache_key, 0)
 
-        if attempts >= 5:
+        if attempts >= self.REQUEST_LIMIT:
             raise RateLimitExceeded('Too many requests, please try again later.')
 
         cache.set(cache_key, attempts + 1, timeout=1800)

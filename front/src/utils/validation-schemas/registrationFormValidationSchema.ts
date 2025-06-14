@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import validationErrorMessages from "@/components/forms/validation-schemas/validationErrorMessages";
+import validationErrorMessages from "@/utils/error-messages/validationErrorMessages.ts";
 
 
 const registrationFormValidationSchema = Yup.object({

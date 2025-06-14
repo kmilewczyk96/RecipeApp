@@ -8,12 +8,11 @@ import styles from "./AuthForm.module.css";
 import type {ReactElement} from "react";
 
 import TwoStepAuthCode from "@/components/forms/auth/TwoStepAuthCode";
-import registrationFormValidationSchema from "@/components/forms/validation-schemas/registrationFormValidationSchema";
 import Button from "@/components/UI/Button";
 import FormField from "@/components/UI/FormField";
-
 import useModal from "@/hooks/useModal.ts";
 import useRegisterUser from "@/hooks/api/auth/useRegisterUser.ts";
+import registrationFormValidationSchema from "@/utils/validation-schemas/registrationFormValidationSchema.ts";
 
 
 export default function RegisterForm(): ReactElement {

@@ -5,9 +5,9 @@ import {
 import styles from "./AuthForm.module.css";
 import type {ReactElement} from "react";
 
-import loginFormValidationSchema from "@/components/forms/validation-schemas/loginFormValidationSchema";
 import Button from "@/components/UI/Button";
 import FormField from "@/components/UI/FormField";
+import loginFormValidationSchema from "@/utils/validation-schemas/loginFormValidationSchema.ts";
 
 
 export default function LoginForm(): ReactElement {

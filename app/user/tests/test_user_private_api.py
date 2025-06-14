@@ -5,6 +5,8 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
+from core.utils.verification_service import VerificationService
+
 
 USER_ME = reverse('user:me')
 USER_URL = reverse('user:list-create')
@@ -74,7 +76,7 @@ class UserPrivateAPITests(TestCase):
 
     def test_verify_user_email(self):
         """User can verify his email."""
-        verification_code = str(self.user.verification_code)
+        verification_code = self.user.verification_code
         self.assertFalse(self.user.is_verified)
 
         self.client.post(USER_VERIFY, data={
@@ -82,3 +84,15 @@ class UserPrivateAPITests(TestCase):
         })
         self.user.refresh_from_db()
         self.assertTrue(self.user.is_verified)
+
+    def test_verify_user_email_rate_limit(self):
+        """User should have a limited number of tries to prevent brute force validation."""
+        verification_code = self.user.verification_code
+        request_limit = VerificationService.REQUEST_LIMIT
+
+        for _ in range(request_limit + 1):
+            res = self.client.post(USER_VERIFY, data={
+                'verification_code': verification_code[1:]
+            })
+
+        self.assertEqual(res.status_code, status.HTTP_429_TOO_MANY_REQUESTS)

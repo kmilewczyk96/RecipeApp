@@ -8,9 +8,9 @@ import styles from "./TwoStepAuthCode.module.css";
 import type {FormikErrors, FormikValues} from "formik";
 import type {ChangeEvent, KeyboardEvent, ReactElement} from "react";
 
-import validationErrorMessages from "@/components/forms/validation-schemas/validationErrorMessages";
 import Button from "@/components/UI/Button";
 import SingleCharInput from "@/components/UI/SingleCharInput";
+import validationErrorMessages from "@/utils/error-messages/validationErrorMessages.ts";
 
 
 interface IProps {
