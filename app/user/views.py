@@ -61,22 +61,27 @@ class CreateTokenView(ObtainAuthToken):
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
+        if not user.is_verified:
+            return Response(data={'Email is not verified!'}, status=status.HTTP_403_FORBIDDEN)
+
         token, created = Token.objects.get_or_create(user=user)
-
-        return Response({
-            'token': token.key,
-            'userID': user.id
-        })
+        return Response(data={'token': token.key}, status=status.HTTP_200_OK)
 
 
-class VerifyUserView(APIView):
+class VerifyUserEmailView(APIView):
     """Verifies User if provided correct credentials."""
+    serializer_class = serializers.AuthTokenWithVerificationCodeSerializer
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+
     def post(self, request):
         try:
-            vs = VerificationService(request.user)
+            serializer = self.serializer_class(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            user = serializer.validated_data['user']
+            vs = VerificationService(user)
             vs.check_rate_limit()
             vs.check_verification_code(request.data.get('verification_code'))
         except (VerificationCodeExpired, VerificationCodeInvalid, VerificationCodeMissing) as error:
@@ -90,7 +95,8 @@ class VerifyUserView(APIView):
                 status=status.HTTP_429_TOO_MANY_REQUESTS
             )
 
+        token, created = Token.objects.get_or_create(user=user)
         return Response(
-            data={'msg': 'Verification successful.'},
+            data={'token': token.key},
             status=status.HTTP_200_OK
         )

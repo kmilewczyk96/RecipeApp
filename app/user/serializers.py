@@ -76,3 +76,13 @@ class AuthTokenSerializer(serializers.Serializer):
 
         attrs['user'] = user
         return attrs
+
+
+class AuthTokenWithVerificationCodeSerializer(AuthTokenSerializer):
+    """Extended serializer that allows to send User Verification Code along with User's credentials."""
+
+    verification_code = serializers.CharField(
+        style={'input_type': 'password'},
+        min_length=6,
+        max_length=6,
+    )
